@@ -16,6 +16,75 @@ class ListNode{
 }
 
 public class LinkedListOps {
+	public static ListNode reverseList(ListNode head) {
+		ListNode reversed = null;
+        while(head!=null){
+            ListNode newHead = head;
+            head=head.next;
+            newHead.next = reversed;
+            reversed=newHead;
+        }
+        return reversed;
+	}
+	
+	private static void reverseList_test(String testInput, String testOutput) {
+		try {
+			File inputFile = new File("src/practice/"+testInput);
+			File outputFile = new File("src/practice/"+testOutput);
+			
+			Scanner inScan = new Scanner(inputFile);
+			Scanner outScan = new Scanner(outputFile);
+			
+			while(inScan.hasNextLine() && outScan.hasNextLine()) {
+				int listSize = inScan.nextInt();
+				ListNode head = null;
+				ListNode iter = head;
+				
+				System.out.print("Original List: ");
+				while(listSize>0) {
+					if(head==null) {
+						head=new ListNode(inScan.nextInt());
+						iter=head;
+						System.out.print(iter.val);
+					}else {
+						iter.next=new ListNode(inScan.nextInt());
+						iter=iter.next;
+						System.out.print(", "+iter.val);
+					}
+					listSize--;
+				}
+				
+				System.out.print("\nReversed List: ");
+				ListNode reversedList = LinkedListOps.reverseList(head);
+				boolean isCorrect = true;
+				int reversedListSize = outScan.nextInt();
+				
+				while(reversedListSize>0 && reversedList!=null) {
+					if(reversedListSize>1) System.out.print(reversedList.val+", ");
+					else System.out.print(reversedList.val);
+					
+					if(outScan.nextInt()!=reversedList.val) isCorrect=false;
+					
+					reversedListSize--;
+					reversedList=reversedList.next;
+				}
+				
+				System.out.println();
+				
+				if(isCorrect) System.out.println("CORRECT\n");
+				else System.out.println("NOT CORRECT\n");
+				
+			}
+			
+			inScan.close();
+			outScan.close();
+			
+		}catch(Exception e) {
+			System.out.println("ERROR:: INVALID FILE "+e);
+		}
+	}
+	
+	
 	public static ListNode removeElementsWithVal(ListNode head, int val) {
 		ListNode prev=new ListNode();
         prev.next=head;
@@ -29,10 +98,11 @@ public class LinkedListOps {
         return prev.next;
 	}
 	
-	public static void main (String[] args) {
+	
+	private static void removeElementsWithVal_test(String testInput, String testOutput) {
 		try {
-			File inputFile = new File("src/practice/LinkedListOps_RemoveElementsWithVal_TestInput.txt");
-			File outputFile = new File("src/practice/LinkedListOps_RemoveElementsWithVal_TestOutput.txt");
+			File inputFile = new File("src/practice/"+testInput);
+			File outputFile = new File("src/practice/"+testOutput);
 		
 			Scanner inputScan = new Scanner(inputFile);
 			Scanner outputScan = new Scanner(outputFile);
@@ -83,9 +153,44 @@ public class LinkedListOps {
 			inputScan.close();
 			outputScan.close();
 		}catch(Exception e) {
-			System.out.println("ERROR:: "+e);
+			System.out.println("ERROR:: INVALID FILE "+e);
 		}
+	}
+	
+	public static void main (String[] args) {
+		System.out.println("LinkedListOps has the following functions: \n"
+				+ "1. reverseList \n"
+				+ "2. removeElementsWithVal \n"
+				+ "\nPlease enter the numeric selection: ");
+		Scanner inScan = new Scanner(System.in);
 		
+		try {
+			int opSelection = inScan.nextInt();
+			System.out.println("Please enter the input test .txt file name (include the .txt extension): ");
+			
+			try {
+				String inputFileName = inScan.next();
+				System.out.println("Now please enter the output test .txt file name (include the .txt extension): ");
+				
+				try {
+					String outputFileName = inScan.next();
+					if(opSelection==1) LinkedListOps.reverseList_test(inputFileName, outputFileName);
+					else if(opSelection==2) LinkedListOps.removeElementsWithVal_test(inputFileName, outputFileName);
+					
+					inScan.close();
+				}catch(Exception e) {
+					System.out.println("ERROR:: INVALID OUTPUT TEST FILE. "+e);
+				}
+				
+				
+			}catch(Exception e) {
+				System.out.println("ERROR:: INVALID INPUT TEST FILE. "+e);
+			}
+			
+			
+		}catch(Exception e) {
+			System.out.println("ERROR:: INVALID SELECTION. "+e);
+		}
 	
 	}
 }
