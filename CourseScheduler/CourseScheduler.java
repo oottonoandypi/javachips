@@ -7,21 +7,37 @@ import java.io.File;
 import java.util.Scanner;
 
 public class CourseScheduler {
-	class Course{
-        int courseNum;
-        List<Course> prereqs;
+	private int lastCourseOrder = -1;
+	
+	public int[] findOrder(int numCourses, int[][] prerequisites, Course[] courses) { // get the order of courses to take
+        if(canFinishCourses(numCourses, prerequisites, courses)){
+            int[] orders = new int[numCourses];
+            for(Course course: courses){
+                if(!course.taken) takeCourse(course, orders);
+            }
+            /*for(Course course: courses){
+                System.out.print(course.taken+ " ");
+            }*/
+            return orders;
+        }else return new int[0];
         
-        public Course(){}
-        public Course(int courseNum){
-            this.courseNum=courseNum;
-            this.prereqs = new ArrayList<Course>();
+    }
+    
+    private void takeCourse(Course course, int[] orders){
+        if(course.taken) return;
+        
+        for(Course prereq: course.prereqs){
+            if(!prereq.taken){
+                takeCourse(prereq, orders);
+            }
         }
+        
+        orders[++lastCourseOrder]=course.courseNum;
+        course.taken=true;
+        course.order=lastCourseOrder;
     }
 	
-	public boolean canFinishCourses(int numCourses, int[][] prerequisites) { // runtime: prerequisites*(numCourses+edges/connections between courses)
-        Course[] courses = new Course[numCourses];
-        for(int i=0; i<courses.length; i++) courses[i]=new Course(i);
-        
+	public boolean canFinishCourses(int numCourses, int[][] prerequisites, Course[] courses) { // runtime: prerequisites*(numCourses+edges/connections between courses)
         for(int[] prerequisite: prerequisites){
             int course = prerequisite[0];
             int prereq = prerequisite[1];
@@ -117,20 +133,34 @@ public class CourseScheduler {
     		
     		while(inScan.hasNextLine() && outScan.hasNextLine()) {
     			int numCourses=inScan.nextInt();
+    			Course[] courses = new Course[numCourses];
+    	        for(int i=0; i<courses.length; i++) courses[i]=new Course(i);
+    	        
     			if(inScan.hasNextLine()) {
     				int prerequisitesSize = inScan.nextInt();
         			String prerequisitesArr_str=inScan.next();
         			// Convert prerequisitesArr_str to 2D array;
         			int[][] prerequisites = convertStr_2DArray(prerequisitesArr_str, prerequisitesSize, 2);
         			CourseScheduler scheduler = new CourseScheduler();
-        			boolean canFinish = scheduler.canFinishCourses(numCourses, prerequisites);
+        			boolean canFinish = scheduler.canFinishCourses(numCourses, prerequisites, courses);
         			
         			// validate
         			String testoutput = outScan.next();
         			System.out.print("Result: "+canFinish+"; ");
         			System.out.print("TestOutput: "+testoutput+"; ");
-        			if((canFinish && testoutput.equals("true")) || (!canFinish && testoutput.equals("false"))) System.out.println("CORRECT");
-        			else System.out.println("NOT CORRECT");
+        			if((canFinish && testoutput.equals("true")) || (!canFinish && testoutput.equals("false"))) {
+        				System.out.println("CORRECT");
+     
+        				if(!canFinish) System.out.println("Impossible to finish!\n");
+        				else {
+        					System.out.print("The order of courses to take is: [");
+        					int[] courseOrders = scheduler.findOrder(numCourses, prerequisites, courses);
+            				for(int c: courseOrders) {
+            					System.out.print(c+", ");
+            				}
+            				System.out.println("]\n");
+        				}
+        			}else System.out.println("NOT CORRECT");
     			}else {
     				System.out.println("ERROR:: INVALID INPUT.");
     			}
@@ -140,5 +170,20 @@ public class CourseScheduler {
     	}catch(Exception e) {
     		System.out.println("ERROR:: INVALID FILE. "+e);
     	}
+    }
+}
+
+class Course{
+    int courseNum;
+    List<Course> prereqs;
+    boolean taken;
+    int order;
+    
+    public Course(){}
+    public Course(int courseNum){
+    	this.courseNum=courseNum;
+        this.prereqs = new ArrayList<Course>();
+        this.taken=false;
+        this.order=-1;
     }
 }
