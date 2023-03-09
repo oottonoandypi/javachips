@@ -17,8 +17,27 @@ public class CourseScheduler {
             this.prereqs = new ArrayList<Course>();
         }
     }
+	
+	public boolean canFinishCourses(int numCourses, int[][] prerequisites) { // runtime: prerequisites*(numCourses+edges/connections between courses)
+        Course[] courses = new Course[numCourses];
+        for(int i=0; i<courses.length; i++) courses[i]=new Course(i);
+        
+        for(int[] prerequisite: prerequisites){
+            int course = prerequisite[0];
+            int prereq = prerequisite[1];
+            
+            if(course==prereq) return false;
+            
+            // if courses[prereq] and courses[course] both existed; 
+            // need to scan if course has already been taken in prereqs of prereq.
+            if(lookupCourse(course, courses[prereq].prereqs, new boolean[numCourses])) return false;
+            else courses[course].prereqs.add(courses[prereq]);
+        }
+        
+        return true;
+    }
     
-    public boolean canFinishCourses(int numCourses, int[][] prerequisites) { // runtime: prerequisites*(numCourses+edges/connections between courses)
+    /* public boolean canFinishCourses_deprecated(int numCourses, int[][] prerequisites) { // runtime: prerequisites*(numCourses+edges/connections between courses)
         Course[] courses = new Course[numCourses];
         
         for(int[] prerequisite: prerequisites){
@@ -46,7 +65,7 @@ public class CourseScheduler {
         }
         
         return true;
-    }
+    }*/
     
     // helper function that searches if course has been taken as a prereq already
     private boolean lookupCourse(int course, List<Course> prereqs, boolean[] hasVisited){
