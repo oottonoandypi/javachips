@@ -4,10 +4,11 @@ Stay Toned..</br>
 
 ----------------------------------</br>
 Last Updated on <b>March 9th, 2023</b>
-- ArrayOfIntOps.minSubArrayLen
+- ArrayOfIntOps.minSubArrayLen and .findKthLargest
 - CourseScheduler.canFinishCourses and .findOrder
 - Trie
 - WordDictionary
+- GreedyHouseRobber.maxAmount_circularHourses
 
 ------------------</br>
 <b>March 2nd, 2023</b> and prior
