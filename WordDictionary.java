@@ -1,4 +1,4 @@
-package practice;
+package javachips;
 
 import java.util.HashMap;
 

@@ -1,4 +1,4 @@
-package practice;
+package javachips;
 import java.io.File;
 import java.util.Scanner;
 
