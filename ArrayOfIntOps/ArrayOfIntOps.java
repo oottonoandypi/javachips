@@ -1,6 +1,54 @@
 package practice;
 
 public class ArrayOfIntOps {
+	// find the kth largest num in the array
+	public int findKthLargest(int[] nums, int k) {
+        int rangeStart=0;
+        int rangeEnd=nums.length-1;
+        int kth=k;
+        
+        while(rangeStart<=rangeEnd){
+            int pivot = findPivot(nums,rangeStart, rangeEnd);
+            if(rangeEnd-pivot+1==kth) return nums[pivot];
+            else if(rangeEnd-pivot+1>kth) rangeStart=pivot+1;
+            else{
+                kth-=rangeEnd-pivot+1;
+                rangeEnd=pivot-1;
+            }
+        }
+        return -1;
+    }
+    
+	// helper func for findKthLargest
+    private int findPivot(int[] nums, int rangeStart, int rangeEnd){
+        int randomPivot =  (int) ((Math.random() * (rangeEnd - rangeStart)) + rangeStart);
+        // int randomPivot =  (rangeStart+rangeEnd)/2;
+        int randomPivot_num = nums[randomPivot];
+        
+        swap(nums, randomPivot, rangeEnd);
+        randomPivot=rangeEnd;
+        
+        for(int i=rangeStart; i<randomPivot; i++){
+            int n=nums[i];
+            if(n>randomPivot_num){
+                swap(nums, randomPivot, i);
+                swap(nums, i, randomPivot-1);
+                randomPivot--;
+                i--;
+            }
+        }
+        return randomPivot;
+    }
+    
+    // helper func for findKthLargest
+    private void swap(int[] nums, int indexa, int indexb){
+        // System.out.println("indexa: "+indexa);
+        // System.out.println("indexb: "+indexb);
+        int temp = nums[indexa];
+        nums[indexa] = nums[indexb];
+        nums[indexb] = temp;
+    }
+	
 	// minSubArratLen takes a target val and an array os integers;
 	// returns the minimum length of a subarray of the array that has a sum >= target.
 	public static int minSubArrayLen(int target, int[] nums) { // runtime O(n)
