@@ -1,8 +1,11 @@
-package practice;
+package javachips;
+
+import java.io.File;
+import java.util.Scanner;
 
 public class ArrayOfIntOps {
 	// find the kth largest num in the array
-	public int findKthLargest(int[] nums, int k) {
+	public static int findKthLargest(int[] nums, int k) {
         int rangeStart=0;
         int rangeEnd=nums.length-1;
         int kth=k;
@@ -18,9 +21,25 @@ public class ArrayOfIntOps {
         }
         return -1;
     }
+	
+	private static void findKthLargest_test(Scanner inScan, Scanner outScan) {
+		while(inScan.hasNextLine() && outScan.hasNextLine()) {
+			int k = inScan.nextInt();
+			int[] nums=new int[inScan.nextInt()];
+			for(int i=0; i<nums.length; i++) nums[i]=inScan.nextInt();
+			
+			int result = findKthLargest(nums, k);
+			int expected = outScan.nextInt();
+			
+			System.out.print("Result: "+result+"; ");
+			System.out.print("Expected: "+expected+"; ");
+			if(result== expected) System.out.println("CORRECT.");
+			else System.out.println("NOT CORRECT.");
+		}
+	}
     
 	// helper func for findKthLargest
-    private int findPivot(int[] nums, int rangeStart, int rangeEnd){
+    private static int findPivot(int[] nums, int rangeStart, int rangeEnd){
         int randomPivot =  (int) ((Math.random() * (rangeEnd - rangeStart)) + rangeStart);
         // int randomPivot =  (rangeStart+rangeEnd)/2;
         int randomPivot_num = nums[randomPivot];
@@ -41,7 +60,7 @@ public class ArrayOfIntOps {
     }
     
     // helper func for findKthLargest
-    private void swap(int[] nums, int indexa, int indexb){
+    private static void swap(int[] nums, int indexa, int indexb){
         // System.out.println("indexa: "+indexa);
         // System.out.println("indexb: "+indexb);
         int temp = nums[indexa];
@@ -78,7 +97,58 @@ public class ArrayOfIntOps {
         return minLen;
     }
 	
+	private static void minSubArrayLen_test(Scanner inScan, Scanner outScan) {
+		while(inScan.hasNextLine() && outScan.hasNextLine()) {
+			int target = inScan.nextInt();
+			int[] nums = new int[inScan.nextInt()];
+			for(int i=0; i<nums.length; i++) nums[i]=inScan.nextInt();
+			
+			int result = minSubArrayLen(target, nums);
+			int expected = outScan.nextInt();
+			
+			System.out.print("Result: "+result+"; ");
+			System.out.print("Expected: "+expected+"; ");
+			if(result== expected) System.out.println("CORRECT.");
+			else System.out.println("NOT CORRECT.");
+		}
+		
+	}
+	
 	public static void main(String[] args) {
 		// test to be updated..
+		System.out.println("Please select the alphabetic number of the operation you want to perform: \n"
+				+ "1 minSubArrayLen\n"
+				+ "2 findKthLargest\n");
+		Scanner scanUserInput = new Scanner(System.in);
+		int userinput = scanUserInput.nextInt();
+		if(userinput<1 || userinput>2) System.out.println("Invalid selection.");
+		else {
+			System.out.println("Please enter the input file directory path: ");
+			String inputFileDir = scanUserInput.next();
+			try {
+				File testinputFile =new File(inputFileDir);
+				Scanner inScan = new Scanner(testinputFile);
+				System.out.println("Please enter the output file directory path: ");
+				try {
+					String outputFileDir = scanUserInput.next();
+					File testoutputFile =new File(outputFileDir);
+					Scanner outScan = new Scanner(testoutputFile);
+					scanUserInput.close();
+					
+					if(userinput==1) {
+						minSubArrayLen_test(inScan, outScan);
+					}else if(userinput==2) {
+						findKthLargest_test(inScan, outScan);
+					}
+					outScan.close();
+					inScan.close();
+				}catch(Exception e) {
+					System.out.println("ERROR:: INVALID OUTPUT FILE. "+e);
+				}
+			}catch(Exception e) {
+				System.out.println("ERROR:: INVALID INPUT FILE. "+e);
+			}
+		}
+		
 	}
 }
