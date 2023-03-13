@@ -128,10 +128,10 @@ public class RotateArray {
 	public static void main(String[] args) {
 		try {
 			// test input
-			File testfile = new File("src/practice/RotateArray_TestInput.txt");
+			File testfile = new File("src/javachips/RotateArray_TestInput.txt");
 			Scanner scan = new Scanner(testfile);
 			// test output
-			File testanswer=new File("src/practice/RotateArray_TestOutput.txt");
+			File testanswer=new File("src/javachips/RotateArray_TestOutput.txt");
 			Scanner scan2=new Scanner(testanswer);
 			
 			// for every test case, print out input data; output data; output match with test output

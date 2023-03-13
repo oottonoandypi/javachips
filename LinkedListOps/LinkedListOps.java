@@ -29,8 +29,8 @@ public class LinkedListOps {
 	
 	private static void reverseList_test(String testInput, String testOutput) {
 		try {
-			File inputFile = new File("src/practice/"+testInput);
-			File outputFile = new File("src/practice/"+testOutput);
+			File inputFile = new File("src/javachips/"+testInput);
+			File outputFile = new File("src/javachips/"+testOutput);
 			
 			Scanner inScan = new Scanner(inputFile);
 			Scanner outScan = new Scanner(outputFile);

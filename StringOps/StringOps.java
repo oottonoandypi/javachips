@@ -24,8 +24,8 @@ public class StringOps {
 	
 	public static void main(String[] args) {
 		try {
-			File testInput = new File("src/practice/StringOps_isIsomorphicStrings_TestInput.txt");
-			File testOutput = new File("src/practice/StringOps_isIsomorphicStrings_TestOutput.txt");
+			File testInput = new File("src/javachips/StringOps_isIsomorphicStrings_TestInput.txt");
+			File testOutput = new File("src/javachips/StringOps_isIsomorphicStrings_TestOutput.txt");
 			
 			Scanner inScan = new Scanner(testInput);
 			Scanner outScan = new Scanner(testOutput);
