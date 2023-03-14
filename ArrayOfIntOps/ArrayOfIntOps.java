@@ -2,8 +2,19 @@ package javachips;
 
 import java.io.File;
 import java.util.Scanner;
+import java.util.HashSet;
 
 public class ArrayOfIntOps {
+	// check if any dupliated numbers in the array
+	// test cases to be added...
+	public static boolean containsDuplicate(int[] nums) { // runtime O(nums.length); memory O(nums.length)
+		HashSet<Integer> existed=new HashSet<Integer>();
+        for(int i=0; i<nums.length; i++){
+        	if(!existed.add(nums[i])) return true;
+        }
+        return false;
+	}
+	
 	// find the kth largest num in the array
 	public static int findKthLargest(int[] nums, int k) {
         int rangeStart=0;
@@ -115,7 +126,6 @@ public class ArrayOfIntOps {
 	}
 	
 	public static void main(String[] args) {
-		// test to be updated..
 		System.out.println("Please select the alphabetic number of the operation you want to perform: \n"
 				+ "1 minSubArrayLen\n"
 				+ "2 findKthLargest\n");
