@@ -15,6 +15,15 @@ public class ArrayOfIntOps {
         return false;
 	}
 	
+	public boolean containsDuplicateInDistance(int[] nums, int k) { // runtime O(n); memory O(n)
+        HashSet<Integer> visited=new HashSet<Integer>();
+        for(int i=0; i<nums.length; i++){
+            if(i>k) visited.remove(nums[i-k-1]);
+            if(!visited.add(nums[i])) return true;
+        }
+        return false;
+    }
+	
 	// find the kth largest num in the array
 	public static int findKthLargest(int[] nums, int k) {
         int rangeStart=0;
