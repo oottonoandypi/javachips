@@ -42,8 +42,8 @@ public class BinaryTreeRightViewer {
 	
 	public static void main(String[] args) {
 		try {
-			File testInputFile = new File("src/practice/BinaryTreeRightViewer_TestInput.txt");
-			File testOutputFile = new File("src/practice/BinaryTreeRightViewer_TestOutput.txt");
+			File testInputFile = new File("txt/BinaryTreeRightViewer/BinaryTreeRightViewer_TestInput.txt");
+			File testOutputFile = new File("txt/BinaryTreeRightViewer/BinaryTreeRightViewer_TestOutput.txt");
 		
 			Scanner inputScan = new Scanner(testInputFile);
 			Scanner outputScan = new Scanner(testOutputFile);

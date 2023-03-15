@@ -125,8 +125,8 @@ public class CourseScheduler {
     
     public static void main(String[] args) {
     	try {
-    		File inputFile = new File("src/javachips/CourseScheduler_canFinishCourses_TestInput.txt");
-    		File outputFile = new File("src/javachips/CourseScheduler_canFinishCourses_TestOutput.txt");
+    		File inputFile = new File("txt/CourseScheduler/CourseScheduler_canFinishCourses_TestInput.txt");
+    		File outputFile = new File("txt/CourseScheduler/CourseScheduler_canFinishCourses_TestOutput.txt");
     		
     		Scanner inScan = new Scanner(inputFile);
     		Scanner outScan = new Scanner(outputFile);

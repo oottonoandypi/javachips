@@ -40,8 +40,8 @@ public class GreedyHouseRobber {
 	
 	public static void main(String[] args) {
 		try {
-			File testInputFile = new File("src/javachips/GreedyHouseRobber_TestInput.txt");
-			File testOutputFile = new File("src/javachips/GreedyHouseRobber_TestOutput.txt");
+			File testInputFile = new File("txt/GreedyHouseRobber/GreedyHouseRobber_TestInput.txt");
+			File testOutputFile = new File("txt/GreedyHouseRobber/GreedyHouseRobber_TestOutput.txt");
 		
 
 			Scanner inputScan = new Scanner(testInputFile);
