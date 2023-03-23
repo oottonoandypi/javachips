@@ -3,7 +3,14 @@ More Javachips coming Every Thursdays!</br>
 Stay Toned!!</br>
 
 ------------------------------------</br>
-Last Updated on <b>March 16th, 2023</b></br>
+Last Updated on <b>March 23rd, 2023</b></br>
+<b>ADDED: </b>
+- RectangleArea.getTotalArea
+- MyStackWithQueues
+- BinaryTree.invertTree
+
+-------------------</br>
+<b>March 16th, 2023</b></br>
 <b>ADDED: </b>
 - ArrayCombo
 - ArrayOfIntOps.containsDuplicate and .containsDuplicateInDistance
