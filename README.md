@@ -8,6 +8,7 @@ Last Updated on <b>March 23rd, 2023</b></br>
 - RectangleArea.getTotalArea
 - MyStackWithQueues
 - BinaryTree.invertTree
+- BasicCalculator.calculate_2stacks and .calculate_1stack and .calculate
 
 -------------------</br>
 <b>March 16th, 2023</b></br>
