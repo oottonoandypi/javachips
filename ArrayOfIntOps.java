@@ -3,8 +3,28 @@ package javachips;
 import java.io.File;
 import java.util.Scanner;
 import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ArrayOfIntOps {
+	// Summarize ranges (inclusive) into range strings
+	public static List<String> summaryRanges(int[] nums) {
+        List<String> res = new ArrayList<String>();
+        if(nums.length==0) return res;
+        int rangeStart = 0;
+        
+        for(int i=1; i<nums.length; i++){
+            if(nums[i]-1>nums[i-1]) {
+                if(i-1==rangeStart) res.add(""+nums[rangeStart]);
+                else res.add(""+nums[rangeStart]+"->"+nums[i-1]);
+                rangeStart=i;
+            }
+        }
+        if(rangeStart==nums.length-1) res.add(""+nums[rangeStart]);
+        else res.add(""+nums[rangeStart]+"->"+nums[nums.length-1]);
+        return res;
+    }
+	
 	// check if any dupliated numbers in the array
 	// test cases to be added...
 	public static boolean containsDuplicate(int[] nums) { // runtime O(nums.length); memory O(nums.length)
