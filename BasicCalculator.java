@@ -3,10 +3,6 @@ package javachips;
 import java.util.Stack;
 
 public class BasicCalculator {
-	public int calculate(String s) {
-		
-	}
-	
 	// use 1 stack for tracking numbers
     public int calculate_1stack(String s) {
         Stack<Integer> nums = new Stack<Integer>();
