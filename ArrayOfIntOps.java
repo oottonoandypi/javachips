@@ -3,10 +3,114 @@ package javachips;
 import java.io.File;
 import java.util.Scanner;
 import java.util.HashSet;
+import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Arrays;
 
 public class ArrayOfIntOps {
+	// find all the majority numbers that appear more than Math.floor(nums.length/3)
+	public static List<Integer> findMajorityNums_optimized(int[] nums){
+		// // runtime O(n), additional memory usage O(1)
+		List<Integer> majorities = new ArrayList<Integer>();
+        
+        int appearAtLeast = nums.length/3+1;
+        // maxPossibleMajorityNums = nums.length/appearAtLeast, which is 2 in this case
+        int[] majorityNums = new int[2];
+        int[] countMajorityNums=new int[2];
+        
+        for (int i=0; i<nums.length; i++){
+            if(nums[i]==majorityNums[0]) countMajorityNums[0]++;
+            else if(nums[i]==majorityNums[1]) countMajorityNums[1]++;
+            else if(countMajorityNums[0]==0) {
+                majorityNums[0]=nums[i];
+                countMajorityNums[0]=1;
+            }else if(countMajorityNums[1]==0) {
+                majorityNums[1]=nums[i];
+                countMajorityNums[1]=1;
+            }else{
+                countMajorityNums[1]--;
+                countMajorityNums[0]--;
+            }
+        }
+        
+        countMajorityNums[0]=0;
+        countMajorityNums[1]=0;
+        
+        for(int num: nums){
+            if(num==majorityNums[0]) countMajorityNums[0]++;
+            else if(num==majorityNums[1]) countMajorityNums[1]++;
+        }
+        
+        if(countMajorityNums[0]>=appearAtLeast) majorities.add(majorityNums[0]);
+        if(countMajorityNums[1]>=appearAtLeast) majorities.add(majorityNums[1]);
+        
+        return majorities;
+	}
+	
+	// find all the majority numbers that appear more than Math.floor(nums.length/3)
+	public static List<Integer> findMajorityNums_hashmap(int[] nums){
+		// // runtime O(n), additional memory usage O(n)
+		HashMap<Integer, Integer> numAppeared = new HashMap<Integer, Integer>();
+        List<Integer> majorityNums = new ArrayList<Integer>();
+        int minReq = nums.length/3;
+        for(int num: nums){
+            if(numAppeared.containsKey(num)) {
+                if(numAppeared.get(num)==minReq) majorityNums.add(num);
+                numAppeared.put(num, numAppeared.get(num)+1);
+            }else{
+                if(minReq==0) majorityNums.add(num);
+                numAppeared.put(num, 1);
+            }
+        }
+        
+        return majorityNums;
+	}
+	
+	// find all the majority numbers that appear more than Math.floor(nums.length/3)
+	public static List<Integer> findMajorityNums_sort(int[] nums){
+		// with sort, runtime O(nlgn+n), additional memory usage O(1)
+		Arrays.sort(nums);
+        List<Integer> majorityNums = new ArrayList<Integer>();
+        if(nums.length==0) return majorityNums;
+        else if(nums.length==1){
+            majorityNums.add(nums[0]);
+            return majorityNums;
+        }
+        int startRange = 0;
+        int minReq = nums.length/3;
+        for(int i=1; i<nums.length; i++){
+            if(nums[i]>nums[startRange]) {
+                if(i-startRange>minReq) majorityNums.add(nums[startRange]);
+                startRange = i;
+            }
+        }
+        if(nums.length-startRange>minReq) majorityNums.add(nums[startRange]);
+        return majorityNums;
+	}
+	
+	// find numbers that appear more than math.floor(nums.length) times.
+	public static List<Integer> findMajorityInts_nlng(int[] nums){
+		// with sort, runtime O(nlgn+n), memory usage O(result.size+1)
+        Arrays.sort(nums);
+        List<Integer> majorityNums = new ArrayList<Integer>();
+        if(nums.length==0) return majorityNums;
+        else if(nums.length==1){
+            majorityNums.add(nums[0]);
+            return majorityNums;
+        }
+        int startRange = 0;
+        int minReq = nums.length/3;
+        for(int i=1; i<nums.length; i++){
+            if(nums[i]>nums[startRange]) {
+                if(i-startRange>minReq) majorityNums.add(nums[startRange]);
+                startRange = i;
+            }
+        }
+        if(nums.length-startRange>minReq) majorityNums.add(nums[startRange]);
+        return majorityNums;
+	}
+	
 	// Summarize ranges (inclusive) into range strings
 	public static List<String> summaryRanges(int[] nums) {
         List<String> res = new ArrayList<String>();
