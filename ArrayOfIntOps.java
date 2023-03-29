@@ -89,28 +89,6 @@ public class ArrayOfIntOps {
         return majorityNums;
 	}
 	
-	// find numbers that appear more than math.floor(nums.length) times.
-	public static List<Integer> findMajorityInts_nlng(int[] nums){
-		// with sort, runtime O(nlgn+n), memory usage O(result.size+1)
-        Arrays.sort(nums);
-        List<Integer> majorityNums = new ArrayList<Integer>();
-        if(nums.length==0) return majorityNums;
-        else if(nums.length==1){
-            majorityNums.add(nums[0]);
-            return majorityNums;
-        }
-        int startRange = 0;
-        int minReq = nums.length/3;
-        for(int i=1; i<nums.length; i++){
-            if(nums[i]>nums[startRange]) {
-                if(i-startRange>minReq) majorityNums.add(nums[startRange]);
-                startRange = i;
-            }
-        }
-        if(nums.length-startRange>minReq) majorityNums.add(nums[startRange]);
-        return majorityNums;
-	}
-	
 	// Summarize ranges (inclusive) into range strings
 	public static List<String> summaryRanges(int[] nums) {
         List<String> res = new ArrayList<String>();
