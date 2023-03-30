@@ -14,7 +14,30 @@ public class BinaryTree {
 		}
 	}
 	
-	public TreeNode invertTree(TreeNode root) {
+	int kth = -1;
+    int K=1;
+    // find the kth smallest integer from the Tree
+	public int kthSmallest(TreeNode root, int k) {
+        K=k;
+        searchKth(root);
+        return kth;
+    }
+    
+	// helper function for kthSmallest
+    private void searchKth(TreeNode root){
+        if(root==null) return;
+        if(kth==-1){
+            searchKth(root.left);
+            if(K==1 && kth==-1) {
+                kth=root.val;
+            }else{
+                K--;
+                searchKth(root.right);
+            }  
+        }
+    }
+	
+	public static TreeNode invertTree(TreeNode root) {
         if(root==null) return root;
         TreeNode right=invertTree(root.left);
         root.left=invertTree(root.right);
