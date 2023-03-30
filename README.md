@@ -1,9 +1,16 @@
 # Javachips 🍪
-More Javachips coming Every Thursdays!</br>
-Stay Toned!!</br>
+More chips are coming on Every Thursday!</br>
 
 ------------------------------------</br>
-Last Updated on <b>March 23rd, 2023</b></br>
+Last Updated on <b>March 30th, 2023</b></br>
+<b>ADDED: </b>
+- ArrayOfIntOps.summaryRanges, .findMajorityNums_sort, .findMajorityNums_hashmap, and .findMajorityNums_optimized
+- BinaryTree.kthSmallest and .kthSmallest_arraylist
+- IntegerOps.isPowerOfTwo and .isPowerOfTwo_bin
+- MyQueueWithStacks
+
+-------------------</br>
+<b>March 23rd, 2023</b></br>
 <b>ADDED: </b>
 - RectangleArea.getTotalArea
 - MyStackWithQueues
