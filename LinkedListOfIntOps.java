@@ -2,7 +2,7 @@ package javachips;
 import java.io.File;
 import java.util.Scanner;
 
-
+// utility class
 class ListNode{
 	int val;
 	ListNode next;
@@ -15,7 +15,57 @@ class ListNode{
 	
 }
 
-public class LinkedListOps {
+public class LinkedListOfIntOps {
+	// check if a linkedlist is Palindrome
+	// approach: modify first half of the list to be reversed order then compare with the second half
+	// runtime O(n+n/2) additional memory usage O(1)
+	public static boolean isPalindrome_reverselist(ListNode head) {
+        ListNode reversedHalfStart = null;
+        ListNode reversedHalfEnd = null;
+        
+        while(head!=null && head.next!=null){
+            if(reversedHalfStart==null) {
+                reversedHalfStart = head;
+                reversedHalfEnd = head;
+            }else{
+                ListNode newHead = reversedHalfEnd.next;
+                reversedHalfEnd.next = newHead.next;
+                newHead.next = reversedHalfStart;
+                reversedHalfStart = newHead;
+            }
+            head=head.next.next;
+        }
+        
+        if(reversedHalfEnd==null) return true;
+        
+        if(head==null) head = reversedHalfEnd.next;
+        else head = reversedHalfEnd.next.next;
+        
+        while(head!=null){
+            if(reversedHalfStart.val!=head.val) return false;
+            reversedHalfStart=reversedHalfStart.next;
+            head=head.next;
+        }
+        return true;
+        
+    }
+	
+	// check if a linkedlist is Palindrome
+	// only applicable when integers are between [0, 9]
+	// runtime O(5n/2) additional memory usage O(n)
+	public static boolean isPalindrome_stringbuilder(ListNode head) {
+        StringBuilder str = new StringBuilder();
+        
+        while(head!=null){ // O(n)
+            str.append(head.val);
+            head=head.next;
+        }
+        
+        int mid = (str.length()-1)/2;
+        return str.substring(0, mid+1).equals(str.reverse().substring(0, mid+1)); // O(3n/2)
+    }
+	
+	
 	public static ListNode reverseList(ListNode head) {
 		ListNode reversed = null;
         while(head!=null){
@@ -55,7 +105,7 @@ public class LinkedListOps {
 				}
 				
 				System.out.print("\nReversed List: ");
-				ListNode reversedList = LinkedListOps.reverseList(head);
+				ListNode reversedList = LinkedListOfIntOps.reverseList(head);
 				boolean isCorrect = true;
 				int reversedListSize = outScan.nextInt();
 				
@@ -127,7 +177,7 @@ public class LinkedListOps {
 				}
 				System.out.println("] "+val);
 				
-				ListNode afterRemoval = LinkedListOps.removeElementsWithVal(head, val);
+				ListNode afterRemoval = LinkedListOfIntOps.removeElementsWithVal(head, val);
 				boolean isMatchOutput = true;
 				
 				System.out.print("After removing "+val+", the list looks like this: [ ");
@@ -174,8 +224,8 @@ public class LinkedListOps {
 				
 				try {
 					String outputFileName = inScan.next();
-					if(opSelection==1) LinkedListOps.reverseList_test(inputFileName, outputFileName);
-					else if(opSelection==2) LinkedListOps.removeElementsWithVal_test(inputFileName, outputFileName);
+					if(opSelection==1) LinkedListOfIntOps.reverseList_test(inputFileName, outputFileName);
+					else if(opSelection==2) LinkedListOfIntOps.removeElementsWithVal_test(inputFileName, outputFileName);
 					
 					inScan.close();
 				}catch(Exception e) {
