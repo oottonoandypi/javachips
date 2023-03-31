@@ -8,6 +8,7 @@ Last Updated on <b>March 30th, 2023</b></br>
 - BinaryTree.kthSmallest and .kthSmallest_arraylist
 - IntegerOps.isPowerOfTwo and .isPowerOfTwo_bin
 - MyQueueWithStacks
+- LinkedListOfIntOps.isPalindrome_reverselist and .isPalindrome_stringbuilder
 
 -------------------</br>
 <b>March 23rd, 2023</b></br>
@@ -42,7 +43,7 @@ Last Updated on <b>March 30th, 2023</b></br>
 - FindPrimes
 - GreedyHouseRobber.maxAmount
 - HappyNumber
-- LinkedListOps.reverseList and .removeElementsWithVal
+- LinkedListOps.reverseList and .removeElementsWithVal (*Renamed LinkedListOps -> LinkedListOfIntOps)
 - ReverseBitCalculator
 - RotateArray
 - StringOps.isIsomorphicStrings
