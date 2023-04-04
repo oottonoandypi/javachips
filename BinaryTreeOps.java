@@ -17,7 +17,40 @@ public class BinaryTreeOps {
 		}
 	}
 	
-	private static int kth = -1; // local variable for kthSmallest
+	// --------------------------------------------------------------------------------------
+	// helper local variable for the lowestCommonAncestor_dfs function below
+	private static TreeNode lca=null;
+    // find the lowest common ancestor for the given 2 nodes in a binary tree
+    public static TreeNode lowestCommonAncestor_dfs(TreeNode root, TreeNode p, TreeNode q) {
+        // lowest ancestor of each node is itself
+        // when reaching a node that has both targets visited as its children on left or right
+        //.  that is the lowestCommonAncestor;
+        // DFS approach postorder; runtime O(n)
+        searchLCA(root, p.val, q.val);
+        return lca;
+    }
+    // helper function for the lowestCommonAncestor_dfs function above
+    private static boolean searchLCA(TreeNode node, int pVal, int qVal){
+        if(node==null) return false;
+        
+        boolean left=searchLCA(node.left, pVal, qVal);
+        boolean right=searchLCA(node.right, pVal, qVal);
+        
+        if(node.val==pVal){
+            if(left || right) lca=node;
+            return true;
+        }else if(node.val==qVal){
+            if(left || right) lca=node;
+            return true;
+        }
+        
+        if(left && right && lca==null) lca=node;
+        
+        return left || right;
+    }
+	
+    // --------------------------------------------------------------------------------------
+	private static int kth = -1; // local variable for the kthSmallest function below
 	private static int K=1; // local variable for kthSmallest
     // find the kth smallest integer from the Tree
     // DFS without using arraylist to store values in order.
@@ -40,6 +73,7 @@ public class BinaryTreeOps {
         }
     }
     
+    // --------------------------------------------------------------------------------------
     // find the kth smallest integer from the Tree
     // DFS without using arraylist to store values in order.
     public static int kthSmallest_arraylist(TreeNode root, int k) {
@@ -55,7 +89,9 @@ public class BinaryTreeOps {
         inorder.add(root.val);
         treeToArray(root.right, inorder);
     }
-	
+    
+    
+    // --------------------------------------------------------------------------------------
 	public static TreeNode invertTree(TreeNode root) {
         if(root==null) return root;
         TreeNode right=invertTree(root.left);
