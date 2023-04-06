@@ -2,10 +2,16 @@
 More chips are coming on Every Thursday!</br>
 
 ------------------------------------</br>
-Last Updated on <b>March 30th, 2023</b></br>
+Last Updated on <b>April 6th, 2023</b></br>
+<b>ADDED: </b>
+- BinarySearchTreeOps.lowestCommonAncestor_iter and .lowestCommonAncestor_recur
+- BinaryTreeOps.lowestCommonAncestor_dfs
+
+-------------------</br>
+<b>March 30th, 2023</b></br>
 <b>ADDED: </b>
 - ArrayOfIntOps.summaryRanges, .findMajorityNums_sort, .findMajorityNums_hashmap, and .findMajorityNums_optimized
-- BinaryTree.kthSmallest and .kthSmallest_arraylist
+- BinaryTree.kthSmallest and .kthSmallest_arraylist (*Renamed BinaryTree -> BinaryTreeOps)
 - IntegerOps.isPowerOfTwo and .isPowerOfTwo_bin
 - MyQueueWithStacks
 - LinkedListOfIntOps.isPalindrome_reverselist and .isPalindrome_stringbuilder
@@ -15,7 +21,7 @@ Last Updated on <b>March 30th, 2023</b></br>
 <b>ADDED: </b>
 - RectangleArea.getTotalArea
 - MyStackWithQueues
-- BinaryTree.invertTree
+- BinaryTree.invertTree (*Renamed BinaryTree -> BinaryTreeOps)
 - BasicCalculator.calculate_2stacks and .calculate_1stack and .calculate
 
 -------------------</br>
