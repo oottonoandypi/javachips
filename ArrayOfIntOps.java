@@ -9,6 +9,28 @@ import java.util.List;
 import java.util.Arrays;
 
 public class ArrayOfIntOps {
+	// find product of nums except each num itself
+	public static int[] productExceptSelf(int[] nums) {
+        int countOfZeros = 0;
+        int prodWithNoZeros = 1;
+        int[] res = new int[nums.length];
+        
+        for (int num: nums){
+            if(num==0) countOfZeros++;
+            else prodWithNoZeros*=num;
+        }
+        
+        if(countOfZeros>1) return res;
+        
+        for (int i=0; i<nums.length; i++){
+            if (nums[i]!=0){
+                if(countOfZeros==0) res[i]=prodWithNoZeros/nums[i];
+            }else res[i]=prodWithNoZeros;
+        }
+        
+        return res;
+    }
+	
 	// find all the majority numbers that appear more than Math.floor(nums.length/3)
 	public static List<Integer> findMajorityNums_optimized(int[] nums){
 		// // runtime O(n), additional memory usage O(1)
