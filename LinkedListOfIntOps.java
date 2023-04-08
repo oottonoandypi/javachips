@@ -16,6 +16,13 @@ class ListNode{
 }
 
 public class LinkedListOfIntOps {
+	public static void deleteNode(ListNode node) {
+		// given a node in a linkedlist, with no head information, delete the given node from the linkedlist
+		// the given node is guaranteed NOT the tail node of the list  
+		node.val=node.next.val;
+		node.next=node.next.next;
+	}
+	
 	// check if a linkedlist is Palindrome
 	// approach: modify first half of the list to be reversed order then compare with the second half
 	// runtime O(n+n/2) additional memory usage O(1)
