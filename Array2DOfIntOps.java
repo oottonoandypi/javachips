@@ -1,7 +1,7 @@
 package javachips;
 
 public class Array2DOfIntOps {
-	public static boolean searchMatrix_nlgn(int[][] matrix, int target) {
+	public static boolean searchTarget_nlgn(int[][] matrix, int target) {
 		// Approach: binary search on row and column for every diagonal top left cell
 		// runtime O(nlgn)
         int h=matrix.length;
@@ -33,7 +33,7 @@ public class Array2DOfIntOps {
         return false;
     }
 	
-	public static boolean searchMatrix_optimized(int[][] matrix, int target) { 
+	public static boolean searchTarget_optimized(int[][] matrix, int target) { 
 		// O(row+col)
         int x=0;
         int y=matrix[x].length-1;
