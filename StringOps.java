@@ -1,9 +1,63 @@
 package javachips;
+
 import java.io.File;
 import java.util.Scanner;
 import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 
 public class StringOps {
+	// find all the possible computation results of putting parentheses around 
+	public static List<Integer> diffWaysToCompute(String expression) {
+        List<Integer> nums=new ArrayList<Integer>();
+        List<Character> ops=new ArrayList<Character>();
+        
+        int num=0;
+        for (int i=0; i<expression.length(); i++){
+            char c = expression.charAt(i);
+            if (c>='0' && c<='9'){
+                num=num*10+c-48;
+            }else if(c=='+' || c=='-' || c=='/' || c=='*'){
+                nums.add(num);
+                num=0;
+                ops.add(c);
+            }else {
+                return new ArrayList<Integer>();
+            }
+        }
+        nums.add(num);
+        
+        return findComputations(nums, ops, 0, 0, nums.size()-1, ops.size()-1);
+    }
+	// helper function for diffWaysToCompute
+	private static List<Integer> findComputations(List<Integer> nums, List<Character> ops, int numsStart, int opsStart, int numsEnd, int opsEnd){
+        List<Integer> res=new ArrayList<Integer>();
+        
+        if (opsStart>opsEnd) {
+            res.add(nums.get(numsEnd));
+        }else{
+            for(int i=numsStart; i<numsEnd; i++){
+                List<Integer> leftRes=findComputations(nums, ops, numsStart, opsStart, i, opsStart+(i-numsStart-1));
+                char op = ops.get(opsStart+(i-numsStart));
+                List<Integer> rightRes=findComputations(nums, ops, i+1, opsStart+(i-numsStart)+1, numsEnd, opsEnd);
+
+                for(int l=0; l<leftRes.size(); l++){
+                    for(int r=0; r<rightRes.size(); r++){
+                        if(op=='+') res.add(leftRes.get(l)+rightRes.get(r));
+                        else if(op=='-') res.add(leftRes.get(l)-rightRes.get(r));
+                        else if(op=='*') res.add(leftRes.get(l)*rightRes.get(r));
+                        else res.add(leftRes.get(l)/rightRes.get(r));
+                    }
+                }
+
+
+            }
+        }
+        
+        
+        return res;
+    }
+	
 	public static boolean isAnagramStrings_hashmap(String s, String t) { // O(s+t) using HashMap
 		HashMap<Character, Integer> count = new HashMap<Character, Integer>();
         for(int i=0; i<s.length(); i++){
