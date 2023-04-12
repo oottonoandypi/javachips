@@ -1,8 +1,45 @@
 package javachips;
 import java.io.File;
 import java.util.Scanner;
+import java.util.HashMap;
 
 public class StringOps {
+	public static boolean isAnagramStrings_hashmap(String s, String t) { // O(s+t) using HashMap
+		HashMap<Character, Integer> count = new HashMap<Character, Integer>();
+        for(int i=0; i<s.length(); i++){
+            char c = s.charAt(i);
+            if(count.get(c)==null) count.put(c, 1);
+            else count.put(c, count.get(c)+1);
+        }
+        
+        for(int i=0; i<t.length(); i++){
+            char c = t.charAt(i);
+            if(count.get(c)==null) return false;
+            else if(count.get(c)==1) count.remove(c);
+            else count.put(c, count.get(c)-1);
+        }
+        
+        return count.isEmpty();
+    }
+	
+	public static boolean isAnagramStrings_array(String s, String t) { // O(s+t+26) using array
+        if(s.length()!=t.length()) return false;
+        int[] count = new int[26];
+        
+        for(int i=0; i<s.length(); i++){
+            count[s.charAt(i)-97]++;
+        }
+        
+        for(int i=0; i<t.length(); i++){
+            count[t.charAt(i)-97]--;
+        }
+        
+        for(int c: count){
+            if(c!=0) return false;
+        }
+        return true;
+    }
+	
 	public static boolean isIsomorphicStrings(String s, String t) {// runtime (s.length) memory O(1) 256
 		if(s.length() != t.length()) return false;
         char[] replacementMapS = new char[128];
