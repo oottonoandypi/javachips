@@ -1,8 +1,17 @@
 # Javachips 🍪
 More chips are coming on Every Thursday!</br>
 
-------------------------------------</br>
-Last Updated on <b>April 6th, 2023</b></br>
+-----------------------------------</br>
+Last Updated on <b>April 13th, 2023</b></br>
+<b>ADDED: </b>
+- LinkedListOfIntOps.deleteNode
+- ArrayOfIntOps.productExceptSelf
+- Array2DOfIntOps.searchTarget_nlgn and .optimized
+- StringOps.isAnagramStrings_hashmap and .isAnagramStrings_array, .diffWaysToCompute
+- BinaryTreeOps.binaryTreePaths
+
+------------------</br>
+<b>April 6th, 2023</b></br>
 <b>ADDED: </b>
 - BinarySearchTreeOps.lowestCommonAncestor_iter and .lowestCommonAncestor_recur
 - BinaryTreeOps.lowestCommonAncestor_dfs
