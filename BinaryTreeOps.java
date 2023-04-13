@@ -18,6 +18,38 @@ public class BinaryTreeOps {
 	}
 	
 	// --------------------------------------------------------------------------------------
+	// binaryTreePaths find all the root->leaf paths and return a list of strings in format of "nodeValue1->nodeValue2->...->nodeValueN"
+	public static List<String> binaryTreePaths(TreeNode root) {
+        // preorder dfs; runtime O(tree size+ edges) -> O(n)
+        List<String> res=new ArrayList<String>();
+        buildPaths(res, new StringBuilder(), root);
+        return res;
+    }
+    // helper function for binaryTreePaths
+    private static void buildPaths(List<String> res, StringBuilder path, TreeNode node){
+        int valLen=0;
+        if(path.length()>0){
+            path.append("->");
+            valLen+=2;
+        }
+        path.append(node.val);
+        if(node.val<0) valLen++;
+        
+        valLen+=(int)(Math.log10(Math.abs(node.val))+1);
+        
+        if(node.left==null && node.right==null){
+            res.add(path.toString());
+            path.delete(path.length()-valLen, path.length());
+            return;
+        }
+        
+        if(node.left!=null) buildPaths(res, path, node.left);
+        if(node.right!=null) buildPaths(res, path, node.right);
+        
+        path.delete(path.length()-valLen, path.length());
+    }
+	
+	// --------------------------------------------------------------------------------------
 	// helper local variable for the lowestCommonAncestor_dfs function below
 	private static TreeNode lca=null;
     // find the lowest common ancestor for the given 2 nodes in a binary tree
