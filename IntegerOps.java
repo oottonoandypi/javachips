@@ -1,6 +1,54 @@
 package javachips;
 
+import java.util.List;
+import java.util.ArrayList;
+
 public class IntegerOps {
+	public static int numSquares_nSqrtn_array(int n) { 
+        int[] countSqs = new int[n+1];
+        for(int i=1; i<=n; i++){
+            countSqs[i]=i;
+            for(int j=1; j*j<=i; j++){
+                countSqs[i]=Math.min(countSqs[i], countSqs[i-j*j]+1);
+            }
+        }
+        
+        return countSqs[n];
+    }
+	
+	// ---------------------------------------------------------
+	// Find the least number of square integers that sum up to the target n
+	// square integers ex: 1, 4, 9, 16,... 
+	public static int numSquares_nSqrtn_arraylist(int n) {
+		List<Integer> perfectSquares=new ArrayList<Integer>(); 
+        return minNumSquares(perfectSquares, n, 0);
+	}
+	private static int minNumSquares(List<Integer> perfectSquares, int n, int maxSq){
+        if (Math.pow(maxSq+1, 2) > n) return n;
+        
+        perfectSquares.add((int)Math.pow(maxSq+1, 2));
+        int minCount= minNumSquares(perfectSquares, n, maxSq+1);
+        
+        int countMaxSq=n/perfectSquares.get(maxSq);
+        int remaining=n%perfectSquares.get(maxSq);
+        int countRemaining = remaining;
+        
+        for(int i=maxSq-1; i>=0; i--){
+            // countRemaining=Math.min(minNumSquares(perfectSquares, visited, remaining, i),countRemaining);
+            int index=i;
+            int countMinRemaining=0;
+            int calcRemaining=remaining;
+            while(calcRemaining>0){
+                countMinRemaining+=calcRemaining/perfectSquares.get(index);
+                calcRemaining%=perfectSquares.get(index--);
+            }
+            countRemaining=Math.min(countRemaining, countMinRemaining);
+        }
+        
+        return Math.min(minCount, countMaxSq+countRemaining);
+    }
+	
+	// ---------------------------------------------------------
 	// Find the nth positive integer that is limited to only 3 prime factors: 2, 3, 5
 	public static int nthIntLimitedToPrimeFactors_235(int n) {
 		// runtime O(n)
