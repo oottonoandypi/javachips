@@ -39,14 +39,19 @@ public class ArrayOfIntOps {
 		// Approach: have all the values sorted in ascending order, so everything to the right of a given index are >= [index]; 
 		// when at an index that its value is >= the remaining length (because the remaining will be >=[index].
 		// then the remaining length is the hIndex.
-		// runtime O(nlgn+n)
+		// use binary search to locate that index and return citations.length-index;
+		// runtime O(nlgn+lgn)
         Arrays.sort(citations);
-        int hIndex=0;
-        for(int i=0; i<citations.length; i++){
-            if(citations[i]<citations.length-i) hIndex++;
-            else break;
+        int left=0;
+        int right=citations.length-1;
+        while(left<=right){
+            int mid=(left+right)/2;
+            if(citations[mid]==citations.length-mid) return citations.length-mid;
+            else if(citations[mid]>citations.length-mid) right=mid-1;
+            else left=mid+1;
         }
-        return citations.length-hIndex;
+        
+        return citations.length-left;
     }
 	
 	// ---------------------------------------------------------
