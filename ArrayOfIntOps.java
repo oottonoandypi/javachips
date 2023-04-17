@@ -9,6 +9,47 @@ import java.util.List;
 import java.util.Arrays;
 
 public class ArrayOfIntOps {
+	// ---------------------------------------------------------
+	// The h-index is defined as the maximum value of h such that 
+	// the given researcher has published at least h papers that have each been cited at least h times.
+	public int hIndex_n(int[] citations){ 
+		// General idea: highest index where everything towards to the right (including itself) has a value>=index+1
+		// Approach: count number of values that are >= each index+1; then find the biggest index+1 where count is >=index+1, and that index+1 is the hIndex.
+		// runtime O(n); memory O(n)
+		int len=citations.length;
+        int[] countCitations=new int[len+1];
+        for(int c: citations){
+            if(c<len){
+                countCitations[c]++;
+            }else{
+                countCitations[len]++;
+            }
+        }
+        
+        for(int i=len; i>=1; i--){
+            if(i<len) countCitations[i]+=countCitations[i+1];
+            if(countCitations[i]>=i) return i;
+        }
+        
+        return 0;
+    }
+	
+	public int hIndex_nlgn(int[] citations) { 
+		// General idea: highest index where everything towards to the right (including itself) has a value>=index+1
+		// Approach: have all the values sorted in ascending order, so everything to the right of a given index are >= [index]; 
+		// when at an index that its value is >= the remaining length (because the remaining will be >=[index].
+		// then the remaining length is the hIndex.
+		// runtime O(nlgn+n)
+        Arrays.sort(citations);
+        int hIndex=0;
+        for(int i=0; i<citations.length; i++){
+            if(citations[i]<citations.length-i) hIndex++;
+            else break;
+        }
+        return citations.length-hIndex;
+    }
+	
+	// ---------------------------------------------------------
 	// find product of nums except each num itself
 	public static int[] productExceptSelf(int[] nums) {
         int countOfZeros = 0;
@@ -31,6 +72,7 @@ public class ArrayOfIntOps {
         return res;
     }
 	
+	// ---------------------------------------------------------
 	// find all the majority numbers that appear more than Math.floor(nums.length/3)
 	public static List<Integer> findMajorityNums_optimized(int[] nums){
 		// // runtime O(n), additional memory usage O(1)
@@ -70,6 +112,7 @@ public class ArrayOfIntOps {
         return majorities;
 	}
 	
+	// ---------------------------------------------------------
 	// find all the majority numbers that appear more than Math.floor(nums.length/3)
 	public static List<Integer> findMajorityNums_hashmap(int[] nums){
 		// // runtime O(n), additional memory usage O(n)
@@ -89,6 +132,7 @@ public class ArrayOfIntOps {
         return majorityNums;
 	}
 	
+	// ---------------------------------------------------------
 	// find all the majority numbers that appear more than Math.floor(nums.length/3)
 	public static List<Integer> findMajorityNums_sort(int[] nums){
 		// with sort, runtime O(nlgn+n), additional memory usage O(1)
@@ -111,6 +155,7 @@ public class ArrayOfIntOps {
         return majorityNums;
 	}
 	
+	// ---------------------------------------------------------
 	// Summarize ranges (inclusive) into range strings
 	public static List<String> summaryRanges(int[] nums) {
         List<String> res = new ArrayList<String>();
@@ -129,6 +174,7 @@ public class ArrayOfIntOps {
         return res;
     }
 	
+	// ---------------------------------------------------------
 	// check if any dupliated numbers in the array
 	// test cases to be added...
 	public static boolean containsDuplicate(int[] nums) { // runtime O(nums.length); memory O(nums.length)
@@ -139,6 +185,7 @@ public class ArrayOfIntOps {
         return false;
 	}
 	
+	// ---------------------------------------------------------
 	public boolean containsDuplicateInDistance(int[] nums, int k) { // runtime O(n); memory O(n)
         HashSet<Integer> visited=new HashSet<Integer>();
         for(int i=0; i<nums.length; i++){
@@ -148,6 +195,7 @@ public class ArrayOfIntOps {
         return false;
     }
 	
+	// ---------------------------------------------------------
 	// find the kth largest num in the array
 	public static int findKthLargest(int[] nums, int k) {
         int rangeStart=0;
@@ -181,7 +229,9 @@ public class ArrayOfIntOps {
 			else System.out.println("NOT CORRECT.");
 		}
 	}
-    
+	
+	
+	// ---------------------------------------------------------
 	// helper func for findKthLargest
     private static int findPivot(int[] nums, int rangeStart, int rangeEnd){
         int randomPivot =  (int) ((Math.random() * (rangeEnd - rangeStart)) + rangeStart);
@@ -211,7 +261,9 @@ public class ArrayOfIntOps {
         nums[indexa] = nums[indexb];
         nums[indexb] = temp;
     }
-	
+    
+    
+    // ---------------------------------------------------------
 	// minSubArratLen takes a target val and an array os integers;
 	// returns the minimum length of a subarray of the array that has a sum >= target.
 	public static int minSubArrayLen(int target, int[] nums) { // runtime O(n)
