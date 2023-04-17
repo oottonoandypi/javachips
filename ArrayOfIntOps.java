@@ -10,6 +10,25 @@ import java.util.Arrays;
 
 public class ArrayOfIntOps {
 	// ---------------------------------------------------------
+	public static void moveZeroes(int[] nums) {
+		// General Idea: move all zeros to the end of the array, there will be an index where all the numbers after index are 0's;
+		// Approach: find the start index of the zeros; when there is a non-zeros, swap zero at startIndex of zeros with the non-zero;
+		// new start index of zeros are now incremented by 1
+		// repeat until the end of nums
+		// runtime: O(n); Additional memory O(0)
+        int startZero=-1;
+        for(int i=0; i<nums.length; i++){
+            if(nums[i]!=0){
+                if(startZero>=0){
+                    nums[startZero]=nums[i];
+                    nums[i]-=nums[startZero];
+                    startZero++;
+                }
+            }else if(startZero<0) startZero=i;
+        }
+    }
+	
+	// ---------------------------------------------------------
 	// The h-index is defined as the maximum value of h such that 
 	// the given researcher has published at least h papers that have each been cited at least h times.
 	public int hIndex_n(int[] citations){ 
