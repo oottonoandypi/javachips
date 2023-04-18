@@ -10,6 +10,20 @@ import java.util.Arrays;
 
 public class ArrayOfIntOps {
 	// ---------------------------------------------------------
+	// Given an array of integers nums containing n + 1 integers where each integer is in the range [1, n] inclusive.
+	// There is only one repeated number in nums, return this repeated number.
+	public int findDuplicate(int[] nums) {
+        int next=nums[0];
+        
+        while(next!=nums[next]){
+            int temp=nums[next];
+            nums[next]=next;
+            next=temp;
+        }
+        return next;
+    }
+	
+	// ---------------------------------------------------------
 	public static void moveZeroes(int[] nums) {
 		// General Idea: move all zeros to the end of the array, there will be an index where all the numbers after index are 0's;
 		// Approach: find the start index of the zeros; when there is a non-zeros, swap zero at startIndex of zeros with the non-zero;
