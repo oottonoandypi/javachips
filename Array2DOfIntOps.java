@@ -1,6 +1,48 @@
 package javachips;
 
 public class Array2DOfIntOps {
+	// ---------------------------------------------------------
+	// Game of Life; find the next state
+	// The board is made up of an m x n grid of cells, where each cell has an initial state: live (represented by a 1) or dead (represented by a 0). 
+	// Each cell interacts with its eight neighbors (horizontal, vertical, diagonal) using the following four rules:
+		// Any live cell with fewer than two live neighbors dies as if caused by under-population.
+		// Any live cell with two or three live neighbors lives on to the next generation.
+		// Any live cell with more than three live neighbors dies, as if by over-population.
+		// Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.
+	// The next state is created by applying the above rules simultaneously to every cell in the current state, where births and deaths occur simultaneously. Given the current state of the m x n grid board, return the next state.
+	public static void gameOfLife(int[][] board) {
+		// Runtime O(rows*cols)
+        for (int i=0; i<board.length; i++){
+            for(int j=0; j<board[i].length; j++){
+                int livingNeighbors=0;
+                if(i-1>=0 && board[i-1][j]>=1) livingNeighbors++;
+                if(i+1<board.length && board[i+1][j]>=1) livingNeighbors++;
+                if(j-1>=0 && board[i][j-1]>=1) livingNeighbors++;
+                if(j+1<board[i].length && board[i][j+1]>=1) livingNeighbors++;
+                if(i-1>=0 && j-1>=0 && board[i-1][j-1]>=1) livingNeighbors++;
+                if(i+1<board.length && j+1<board[i].length && board[i+1][j+1]>=1) livingNeighbors++;
+                if(i+1<board.length && j-1>=0 && board[i+1][j-1]>=1) livingNeighbors++;
+                if(i-1>=0 && j+1<board[i].length && board[i-1][j+1]>=1) livingNeighbors++;
+                
+                if(board[i][j]==0) board[i][j]=0-livingNeighbors;
+                else board[i][j]+=livingNeighbors;
+            }
+        }
+        
+        for(int i=0; i<board.length; i++){
+            for(int j=0; j<board[i].length; j++){
+                if(board[i][j]<0){
+                    if(board[i][j]==-3) board[i][j]=1;
+                    else board[i][j]=0;
+                }else{
+                    if(board[i][j]==3 || board[i][j]==4) board[i][j]=1;
+                    else board[i][j]=0;
+                }
+            }
+        }
+    }
+	
+	// ---------------------------------------------------------
 	public static boolean searchTarget_nlgn(int[][] matrix, int target) {
 		// Approach: binary search on row and column for every diagonal top left cell
 		// runtime O(nlgn)
@@ -33,6 +75,7 @@ public class Array2DOfIntOps {
         return false;
     }
 	
+	// ---------------------------------------------------------
 	public static boolean searchTarget_optimized(int[][] matrix, int target) { 
 		// O(row+col)
         int x=0;
