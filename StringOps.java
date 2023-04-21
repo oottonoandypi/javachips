@@ -7,6 +7,36 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class StringOps {
+	// Given a pattern and a string, find if the string follows the same pattern
+	// Ex, pattern="abba" string="dog cat cat dog". this string follows the pattern
+	public boolean wordPattern(String pattern, String s) {
+        HashMap<Character, String> map=new HashMap<Character, String>();
+        HashMap<String, Character> mapRev=new HashMap<String, Character>();
+        int wordStart=0;
+        int wordEnd=wordStart+1;
+        for(int i=0; i<pattern.length(); i++){
+            if(wordStart-1==s.length()) return false;
+            char c = pattern.charAt(i);
+            while(wordEnd<=s.length() && s.charAt(wordEnd-1)!=' ') wordEnd++;
+            
+            String word=s.substring(wordStart, wordEnd-1);
+            
+            if(map.containsKey(c)){
+                if(!map.get(c).equals(word)) return false;
+            }else if(mapRev.containsKey(word)){
+                if(mapRev.get(word)!=c) return false;
+            }else{
+                map.put(c, word);
+                mapRev.put(word, c);
+            }
+            
+            wordStart=wordEnd;
+            wordEnd=wordStart+1;
+        }
+        return wordStart-1==s.length();
+    }
+	
+	// ---------------------------------------------------------
 	// find all the possible computation results of putting parentheses around 
 	public static List<Integer> diffWaysToCompute(String expression) {
         List<Integer> nums=new ArrayList<Integer>();
@@ -58,6 +88,7 @@ public class StringOps {
         return res;
     }
 	
+	// ---------------------------------------------------------
 	public static boolean isAnagramStrings_hashmap(String s, String t) { // O(s+t) using HashMap
 		HashMap<Character, Integer> count = new HashMap<Character, Integer>();
         for(int i=0; i<s.length(); i++){
@@ -76,6 +107,7 @@ public class StringOps {
         return count.isEmpty();
     }
 	
+	// ---------------------------------------------------------
 	public static boolean isAnagramStrings_array(String s, String t) { // O(s+t+26) using array
         if(s.length()!=t.length()) return false;
         int[] count = new int[26];
@@ -94,6 +126,7 @@ public class StringOps {
         return true;
     }
 	
+	// ---------------------------------------------------------
 	public static boolean isIsomorphicStrings(String s, String t) {// runtime (s.length) memory O(1) 256
 		if(s.length() != t.length()) return false;
         char[] replacementMapS = new char[128];
