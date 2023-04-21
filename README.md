@@ -8,6 +8,7 @@ Last Updated on <b>April 21st, 2023</b></br>
 - ArrayOfIntOps.hIndex_nlgn, .hIndex_n, .moveZeroes, .findDuplicate
 - PeekingIterator
 - Array2DOfIntOps.gameOfLife
+- StringOps.wordPattern
 
 ------------------</br>
 b>April 13th, 2023</b></br>
