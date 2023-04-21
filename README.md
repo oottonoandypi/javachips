@@ -11,7 +11,7 @@ Last Updated on <b>April 21st, 2023</b></br>
 - StringOps.wordPattern
 
 ------------------</br>
-b>April 13th, 2023</b></br>
+<b>April 13th, 2023</b></br>
 <b>ADDED: </b>
 - LinkedListOfIntOps.deleteNode
 - ArrayOfIntOps.productExceptSelf
