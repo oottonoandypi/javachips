@@ -4,6 +4,25 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class IntegerOps {
+	// Initially, there is a heap of stones on the table.
+	// You and your friend will alternate taking turns, and you go first.
+	// On each turn, the person whose turn it is will remove 1 to 3 stones from the heap.
+	// The one who removes the last stone is the winner.
+	
+	// Given n, the number of stones in the heap, return true if you can win the game assuming both you and your friend play optimally, 
+	// otherwise return false
+	public static boolean canWinNimGame(int n) {
+		// General Idea: case n=1, you win by taking 1; case n=2, you win by taking 2; case n=3, you win by taking 3
+		// case 4, no matter you take 1, 2, or 3, your friend can take the last 3, 2, or 1 stone(s) to win; you lose any way
+		// case 5, you can take 1 then leave 4 for your friend; case 6, you can take 2 then leave 4 to friend; same as case 7
+		// when case 8, you take 1, friend can take 3 and that will leave you a 4 then you lose; you take 2, friend can take 2 and again 4 for you; same as when you take 3 will leave you a 4
+		// Assumption: any number of stones that is a multiply of 4 will make you lose
+		// Proof: when 4*k=n where k is an integer, your friend has opportunity to leave you a 4 when you have to lose because your friend can choose to leave only 4 stones after his 2nd to last turn; no matter how you played before that.
+        return n%4!=0;
+    }
+	
+	
+	// ---------------------------------------------------------
 	public static int numSquares_nSqrtn_array(int n) { 
         int[] countSqs = new int[n+1];
         for(int i=1; i<=n; i++){
