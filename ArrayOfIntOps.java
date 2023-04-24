@@ -10,9 +10,89 @@ import java.util.Arrays;
 
 public class ArrayOfIntOps {
 	// ---------------------------------------------------------
+	// Longest Increasing Subsequence problem:
+	// Given an integer array nums, return the length of the longest strictly increasing subsequence
+	// Ex. Input: nums = [10,9,2,5,3,7,101,18]
+	// Output: 4
+	public static int lengthOfLIS_optimized(int[] nums) {
+		// runtime O(nlgn)
+        int[] lis=new int[nums.length];
+        lis[0]=nums[0];
+        int endOfLis=1;
+        int maxLen=1;
+        
+        for(int i=1; i<nums.length; i++){
+            int n=nums[i];
+            int toInsert=searchLargestSmaller(lis, endOfLis, n);
+            lis[toInsert]=n;
+            if(toInsert==endOfLis) endOfLis++;
+            
+            if(endOfLis>maxLen) maxLen=endOfLis;
+        }
+        
+        return maxLen;
+    }
+    // helper function for lengthOfLIS_optimized
+    private static int searchLargestSmaller(int[] lis, int endOfLis, int target){
+        int l=0;
+        int r=endOfLis-1;
+        while(l<=r){
+            int m=(l+r)/2;
+            if(target>lis[m]) l=m+1;
+            else if(target<lis[m]) r=m-1;
+            else return m;
+        }
+        
+        return l;
+    }
+	
+	public static int lengthOfLIS_1stAttempt(int[] nums) {
+		// runtime O(n^2*lgn)
+        List<List<Integer>> paths = new ArrayList<>();
+        paths.add(new ArrayList<Integer>());
+        paths.get(0).add(nums[0]);
+        
+        for(int n: nums){
+            int pL=0;
+            int largestSmaller=searchLargestSmaller_lengthOfLIS_1stAttempt(paths.get(pL), n);
+
+            while(pL<paths.size() && largestSmaller>=0){
+                if(n>paths.get(pL).get(largestSmaller)){
+                    pL++;
+                    if(pL<paths.size()) largestSmaller=searchLargestSmaller_lengthOfLIS_1stAttempt(paths.get(pL), n);
+                }else break;
+            }
+            if(largestSmaller==-1 && n==paths.get(pL).get(0)) continue;
+            if(pL==paths.size()) {
+                paths.add(new ArrayList<Integer>());
+                paths.get(pL).add(n);
+            }else{
+                paths.get(pL).add(largestSmaller+1, n);
+            }
+            
+        }
+        
+        return paths.size();
+    }
+	// helper function for lengthOfLIS_1stAttempt
+	private static int searchLargestSmaller_lengthOfLIS_1stAttempt(List<Integer> level, int target){
+        int l=0;
+        int r=level.size()-1;
+        while(l<=r){
+            int m=(l+r)/2;
+            if(target>level.get(m)) l=m+1;
+            else if(target<level.get(m)) r=m-1;
+            else return m-1;
+        }
+        
+        return l-1;
+    }
+	
+	
+	// ---------------------------------------------------------
 	// Given an array of integers nums containing n + 1 integers where each integer is in the range [1, n] inclusive.
 	// There is only one repeated number in nums, return this repeated number.
-	public int findDuplicate(int[] nums) {
+	public static int findDuplicate(int[] nums) {
         int next=nums[0];
         
         while(next!=nums[next]){
