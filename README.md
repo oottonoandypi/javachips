@@ -2,7 +2,15 @@
 More chips are coming on Every Thursday!</br>
 
 -----------------------------------</br>
-Last Updated on <b>April 21st, 2023</b></br>
+Last Updated on <b>April 28th, 2023</b></br>
+<b>ADDED: </b>
+- IntegerOps.canWinNimGame
+- BullsAndCows.getHint_optimized and .getHint 
+- ArrayOfIntOps.lengthOfLIS_optimized and .lengthOfLIS_1stAttempt
+- AddictiveNumber
+
+-------------------</br>
+<b>April 21st, 2023</b></br>
 <b>ADDED: </b>
 - IntegerOps.isLimitedToPrimeFactors_235, .nthIntLimitedToPrimeFactors_235, .numSquares_nSqrtn_arraylist, .numSquares_nSqrtn_array
 - ArrayOfIntOps.hIndex_nlgn, .hIndex_n, .moveZeroes, .findDuplicate
