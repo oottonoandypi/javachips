@@ -4,6 +4,34 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class IntegerOps {
+	public static int nthIntUglyNumberLimitedToPrimeFactors(int n, int[] primes) {
+		// runtime O(n*primes.length)
+        if(n==1) return 1;
+        
+        long[] sequence=new long[n];
+        sequence[0]=1;
+        n--;
+        
+        int[] records=new int[primes.length];
+        
+        while(n>0){
+            long minNext=primes[0]*sequence[records[0]];
+            
+            for(int i=1; i<primes.length; i++){
+                minNext=Math.min(minNext, primes[i]*sequence[records[i]]);
+            }
+            sequence[sequence.length-n]=minNext;
+            
+            for(int i=0; i<records.length; i++){
+                if(minNext==primes[i]*sequence[records[i]]) records[i]++;
+            }
+            n--;
+        }
+        
+        return (int)sequence[sequence.length-1];
+    }
+	
+	// ---------------------------------------------------------
 	// Initially, there is a heap of stones on the table.
 	// You and your friend will alternate taking turns, and you go first.
 	// On each turn, the person whose turn it is will remove 1 to 3 stones from the heap.
