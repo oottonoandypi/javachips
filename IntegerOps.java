@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class IntegerOps {
-	public static int nthIntUglyNumberLimitedToPrimeFactors(int n, int[] primes) {
+	public static int nthIntLimitedToPrimeFactors(int n, int[] primes) {
 		// runtime O(n*primes.length)
         if(n==1) return 1;
         
