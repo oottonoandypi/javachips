@@ -5,8 +5,88 @@ import java.util.Scanner;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Stack;
 
 public class StringOps {
+	public String removeDuplicateLetters_stack(String s) {
+		// Given a string s, remove duplicate letters so that every letter appears once and only once. 
+		// must make sure the result is the smallest in lexicographical order among all possible results
+		// runtime O(n)
+        HashMap<Character, Integer> charCounts=new HashMap<Character, Integer>();
+        HashSet<Character> inStack=new HashSet<Character>();
+        Stack<Character> stack=new Stack<Character>();
+        
+        for(int i=0; i<s.length(); i++){
+            char c = s.charAt(i);
+            if(!charCounts.containsKey(c)) charCounts.put(c, 0);
+            charCounts.put(c, charCounts.get(c)+1);
+        }
+        
+        
+        for(int i=0; i<s.length(); i++){
+            char c=s.charAt(i);
+            if(inStack.contains(c)) {
+                charCounts.put(c, charCounts.get(c)-1);
+                continue;
+            }
+            
+            while(!stack.empty() && stack.peek()>c && charCounts.get(stack.peek())>0){
+                inStack.remove(stack.pop());
+            }
+            
+            stack.push(c);
+            inStack.add(c);
+            charCounts.put(c, charCounts.get(c)-1);
+        }
+        
+        StringBuilder smallestLexOrder= new StringBuilder();
+        while(!stack.empty()) smallestLexOrder.append(stack.pop());
+            
+        return smallestLexOrder.reverse().toString();
+    }
+	
+	public String removeDuplicateLetters(String s) {
+		// Given a string s, remove duplicate letters so that every letter appears once and only once. 
+		// must make sure the result is the smallest in lexicographical order among all possible results
+		// runtime O(n)
+        HashMap<Character, Integer> charCounts=new HashMap<Character, Integer>();
+        HashSet<Character> inStr=new HashSet<Character>();
+        
+        for(int i=0; i<s.length(); i++){
+            char c = s.charAt(i);
+            if(!charCounts.containsKey(c)) charCounts.put(c, 0);
+            charCounts.put(c, charCounts.get(c)+1);
+        }
+        
+        StringBuilder smallestLexOrder= new StringBuilder();
+        for(int i=0; i<s.length(); i++){
+            char c=s.charAt(i);
+            if(inStr.contains(c)){
+                charCounts.put(c, charCounts.get(c)-1);
+                continue;
+            }
+            // System.out.println("Next char: "+c);
+            while(smallestLexOrder.length()>0 && smallestLexOrder.charAt(smallestLexOrder.length()-1)>c && charCounts.get(smallestLexOrder.charAt(smallestLexOrder.length()-1))>0){
+                // System.out.println("check end of smallestLexOrder: "+smallestLexOrder.charAt(smallestLexOrder.length()-1));
+                //charCounts.put(smallestLexOrder.charAt(smallestLexOrder.length()-1), charCounts.get(smallestLexOrder.charAt(smallestLexOrder.length()-1))-1);
+                // System.out.println(smallestLexOrder.charAt(smallestLexOrder.length()-1)+"'s remaining count: "+charCounts.get(smallestLexOrder.charAt(smallestLexOrder.length()-1)));
+                inStr.remove(smallestLexOrder.charAt(smallestLexOrder.length()-1));
+                smallestLexOrder.deleteCharAt(smallestLexOrder.length()-1);
+            }
+            
+            smallestLexOrder.append(c);
+            inStr.add(c);
+            charCounts.put(c, charCounts.get(c)-1);
+            // System.out.println(c+": "+charCounts.get(c));
+            // System.out.println(smallestLexOrder.toString());
+        }
+        
+        
+        return smallestLexOrder.toString();
+    }
+	
+	// ---------------------------------------------------------
 	// Given a pattern and a string, find if the string follows the same pattern
 	// Ex, pattern="abba" string="dog cat cat dog". this string follows the pattern
 	public boolean wordPattern(String pattern, String s) {
