@@ -2,7 +2,18 @@
 More chips are coming on Every Thursday!</br>
 
 -----------------------------------</br>
-Last Updated on <b>April 28th, 2023</b></br>
+Last Updated on <b>May 5th, 2023</b></br>
+<b>ADDED: </b>
+- NumArray: An immutable integer array class with an operation of sumRange
+- NumMatrix: An immutable integer 2D matrix array class with an operation of sumRegion
+- Stock.maxProfit_DP and .maxProfit_naive
+- MinHeightTrees.findMHTs_linear and .findMHTs_naive
+- IntegerOps.nthIntLimitedToPrimeFactors
+- NumArray_Mutable: A mutable integer array class with 2 implementations of 2 operations: update and sumRange
+- StringOps.removeDuplicateLetters_stack and .removeDuplicateLetters
+
+-------------------</br>
+<b>April 28th, 2023</b></br>
 <b>ADDED: </b>
 - IntegerOps.canWinNimGame
 - BullsAndCows.getHint_optimized and .getHint 
