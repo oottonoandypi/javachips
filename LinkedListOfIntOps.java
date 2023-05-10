@@ -19,6 +19,7 @@ public class LinkedListOfIntOps {
 	// Given a linkedlist, return the linkedlist with all the odd nodes in front of the even nodes;
 	// EX. Input: head = [1,2,3,4,5] Output: [1,3,5,2,4]
 	public static ListNode oddEvenList(ListNode head) {
+		// runtime O(n)
         if(head==null || head.next==null) return head;
         
         ListNode lastOdd=head;
