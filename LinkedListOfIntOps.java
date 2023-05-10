@@ -16,6 +16,34 @@ class ListNode{
 }
 
 public class LinkedListOfIntOps {
+	// Given a linkedlist, return the linkedlist with all the odd nodes in front of the even nodes;
+	// EX. Input: head = [1,2,3,4,5] Output: [1,3,5,2,4]
+	public static ListNode oddEvenList(ListNode head) {
+        if(head==null || head.next==null) return head;
+        
+        ListNode lastOdd=head;
+        ListNode lastEven=head.next;
+        ListNode firstEven=lastEven;
+        if(lastEven!=null) {
+            lastOdd.next=lastEven.next;
+            lastEven.next=null;
+        }
+        
+        while(lastOdd.next!=null){
+            lastOdd=lastOdd.next;
+            if(lastOdd.next!=null){
+                lastEven.next=lastOdd.next;
+                lastEven=lastEven.next;
+                lastOdd.next=lastEven.next;
+                lastEven.next=null;
+            }
+        }
+        
+        lastOdd.next=firstEven;
+        return head;
+    }
+	
+	// ---------------------------------------------------------
 	public static void deleteNode(ListNode node) {
 		// given a node in a linkedlist, with no head information, delete the given node from the linkedlist
 		// the given node is guaranteed NOT the tail node of the list  
