@@ -10,6 +10,60 @@ import java.util.Arrays;
 
 public class ArrayOfIntOps {
 	// ---------------------------------------------------------
+	// Assume there are infinite counts of each integer in an array of nums,
+	// find the minimum count of integers that will sum to target
+	public static int minCountToTarget_dp_iter(int[] nums, int target) {	
+		// iterative dp approach: for every possible sums <= target, record minimum counts of nums that make to sums
+		// then at sums i, its counts could be counts[i-nums[k]] where counts[i-nums[k]] was recorded
+		// for sums i, record the min counts out of 1+counts[i-nums[...k]]
+		// on and on until reach sums i==target
+		// time complexity O(nums.length*target)
+		
+        int[] visitedAmount=new int[target+1];
+        Arrays.sort(nums);
+        
+        for(int i=1; i<=target; i++){
+            int minCounts=-1;
+            for(int n: nums){
+                if(n<=i){
+                    if(visitedAmount[i-n]>-1){
+                        if(minCounts==-1) minCounts=1+visitedAmount[i-n];
+                        else minCounts=Math.min(minCounts, 1+visitedAmount[i-n]);
+                    }
+                }else break;
+            }
+            visitedAmount[i]=minCounts;
+        }
+        
+        return visitedAmount[target];
+		
+	}
+	
+	public static int minCountToTarget_dp_recur(int[] nums, int target) {
+		// Similar idea as the iterative approach but recursive
+		// time complexity O(nums.length*target)
+		return minCountToTarget_recursionHelper(nums, target, new int[target+1]);
+	}
+	
+	private static int minCountToTarget_recursionHelper(int[] nums, int remainTarget, int[] visitedAmount){
+        if(remainTarget==0) return 0;
+        if(visitedAmount[remainTarget]!=0) return visitedAmount[remainTarget];
+        
+        int minCoins=-1;
+        for(int n: nums){
+            if(n<=remainTarget) {
+                int countCoins=1+minCountToTarget_recursionHelper(nums, remainTarget-n, visitedAmount);
+                if(countCoins>0) {
+                    if(minCoins==-1) minCoins=countCoins;
+                    else minCoins=Math.min(minCoins, countCoins);
+                }
+            }
+        }
+        
+        visitedAmount[remainTarget] = minCoins;
+        return minCoins;
+    }
+	// ---------------------------------------------------------
 	// Longest Increasing Subsequence problem:
 	// Given an integer array nums, return the length of the longest strictly increasing subsequence
 	// Ex. Input: nums = [10,9,2,5,3,7,101,18]
