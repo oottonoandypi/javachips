@@ -4,6 +4,24 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class IntegerOps {
+	// ---------------------------------------------------------
+	// return if a given integer is power of 3
+	public static boolean isPowerOfThree_math(int n) {
+        if(n<1) return false;
+        return (Math.log10(n)/Math.log10(3))%1==0;
+    }
+	
+	public static boolean isPowerOfThree_lgn(int n) {
+        if(n<1) return false;
+        
+        while(n>=3 && n%3==0){
+            n/=3;
+        }
+        
+        return n==1;
+    }
+	
+	// ---------------------------------------------------------
 	public static int nthIntLimitedToPrimeFactors(int n, int[] primes) {
 		// runtime O(n*primes.length)
         if(n==1) return 1;
