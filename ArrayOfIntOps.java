@@ -10,6 +10,23 @@ import java.util.Arrays;
 
 public class ArrayOfIntOps {
 	// ---------------------------------------------------------
+	// Reorder array such that nums[0] < nums[1] > nums[2] < nums[3]....
+	public static void wiggleSort(int[] nums) {
+        // runtime O(nlgn)
+        Arrays.sort(nums);
+        int[] copyNums=new int[nums.length];
+        for(int i=0; i<nums.length; i++){
+            copyNums[i]=nums[i];
+        }
+        
+        int index=0;
+        for(int i=(nums.length-1)/2; i>=0 && index<nums.length; i--){
+            nums[index++]=copyNums[i];
+            if(i+(nums.length)/2<nums.length && i+(nums.length)/2>(nums.length-1)/2) nums[index++]=copyNums[i+(nums.length)/2];
+        }
+    }
+	
+	// ---------------------------------------------------------
 	// Assume there are infinite counts of each integer in an array of nums,
 	// find the minimum count of integers that will sum to target
 	public static int minCountToTarget_dp_iter(int[] nums, int target) {	
