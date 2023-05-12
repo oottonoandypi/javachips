@@ -10,6 +10,46 @@ import java.util.Arrays;
 
 public class ArrayOfIntOps {
 	// ---------------------------------------------------------
+	// Given an unordered array
+	// Return true if there is a triplet indices (i, j, k) such that i < j < k and nums[i] < nums[j] < nums[k]; 
+	// Otherwise, false.
+	public boolean hasIncreasingTriplet_n_optimized(int[] nums) {
+		// Same approach as the hasIncreasingTriplet_n
+		// but with less additional memory usage and no inner loop
+        int triplet_1=Integer.MAX_VALUE;
+        int triplet_2=Integer.MAX_VALUE;
+        
+        for(int n: nums){
+            if(n<=triplet_1) triplet_1=n;
+            else if(n<=triplet_2) triplet_2=n;
+            else return true;
+        }
+        return false;
+    }
+	
+	public static boolean hasIncreasingTriplet_n(int[] nums) {
+		// Approach: keep past nums' increasing order in the triplet; when a new num is smaller than any of the past num, replace the past num with it
+		// so that when there is a num in the remaining array that is greater than this replaced num, it can still build a valid triplet
+		// Time complexity O(2n)
+        int[] triplet=new int[3];
+        triplet[0]=nums[0];
+        int index=0;
+        for(int i=1; i<nums.length; i++){
+            int nextNum=nums[i];
+            
+            int j=index;
+            while(j>=0){
+                if(nextNum>triplet[j]) break;
+                j--;
+            }
+            triplet[++j]=nextNum;
+            index=Math.max(index, j);
+            if(index==2) return true;
+        }
+        return false;
+    }
+	
+	// ---------------------------------------------------------
 	// Reorder array such that nums[0] < nums[1] > nums[2] < nums[3]....
 	public static void wiggleSort(int[] nums) {
         // runtime O(nlgn)
