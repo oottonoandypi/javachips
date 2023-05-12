@@ -2,7 +2,17 @@
 More chips are coming on Every Thursday!</br>
 
 -----------------------------------</br>
-Last Updated on <b>May 5th, 2023</b></br>
+Last Updated on <b>May 11th, 2023</b></br>
+<b>ADDED: </b>
+- ArrayOfStringsOps.maxProduct_bitCompare and .maxProduct_naive
+- ArrayOfIntOps.minCountToTarget_dp_iter and .minCountToTarget_dp_recur, .wiggleSort
+- IntegerOps.isPowerOfThree_lgn and isPowerOfThree_math
+- LinkedListOfIntOps.oddEvenList
+- BinaryTreeInStringOps.isValidSerialization
+- ArrayOfIntOps.hasIncreasingTriplet_n and .hasIncreasingTriplet_n_optimized
+
+--------------------</br>
+<b>May 5th, 2023</b></br>
 <b>ADDED: </b>
 - NumArray: An immutable integer array class with an operation of sumRange
 - NumMatrix: An immutable integer 2D matrix array class with an operation of sumRegion
