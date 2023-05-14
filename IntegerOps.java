@@ -5,6 +5,56 @@ import java.util.ArrayList;
 
 public class IntegerOps {
 	// ---------------------------------------------------------
+	// Given an integer n, return an array ans of length n + 1 such that 
+	// for each i (0 <= i <= n), ans[i] is the number of 1's in the binary representation of i
+	public int[] countBits_nMemory_optimized(int n) {
+		// Time complexity: O(n)
+        int[] res=new int[n+1];
+        if(n==0) return res;
+        res[1]=1;
+        int end=1;
+        int iter=0;
+        
+        for(int i=2; i<=n; i++){
+            res[i]=1+res[iter++];
+            if(iter>end){
+                iter=0;
+                end=i;
+            }
+        }
+        return res;
+    }
+	
+	public static int[] countBits_nlgnMemory_mathLog(int n) {
+		// Time complexity: O(nlgn)
+		int[] res=new int[n+1];
+        if(n==0) return res;
+        res[1]=1;
+        
+        for(int i=2; i<=n; i++){
+            res[i]=1+res[i-(int)Math.pow(2, (int)(Math.log(i)/Math.log(2)))];
+        }
+        return res;
+	}
+	
+	public static int[] countBits_nlgn(int n) {
+		// Time complexity: O(nlgn)
+		int[] res=new int[n+1];
+        for(int i=1; i<=n; i++){
+            int count1s=0;
+            int init=i;
+            while(init>0){
+                count1s+=init%2;
+                init/=2;
+            }
+            res[i]=count1s;
+        }
+        
+        return res;
+	}
+	
+	
+	// ---------------------------------------------------------
 	// return if a given integer is power of 3
 	public static boolean isPowerOfThree_math(int n) {
         if(n<1) return false;
