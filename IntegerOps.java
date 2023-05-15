@@ -5,9 +5,27 @@ import java.util.ArrayList;
 
 public class IntegerOps {
 	// ---------------------------------------------------------
+	// Given an integer n, return true if it is a power of four. Otherwise, return false.
+	public static boolean isPowerOfFour_recur(int n){
+        if(n==1) return true;
+        if(n==0 || n%4!=0) return false;
+        return isPowerOfFour_recur(n/4);
+    }
+	
+	public static boolean isPowerOfFour_loop(int n){
+        if(n==0) return false;
+        while(n%4==0) n/=4;
+        return n==1;
+    }
+	
+	public static boolean isPowerOfFour_math(int n) {
+        return n!=0 && (int)Math.pow(4, (int)(Math.log(n)/Math.log(4)))==n;
+    }
+	
+	// ---------------------------------------------------------
 	// Given an integer n, return an array ans of length n + 1 such that 
 	// for each i (0 <= i <= n), ans[i] is the number of 1's in the binary representation of i
-	public int[] countBits_nMemory_optimized(int n) {
+	public static int[] countBits_nMemory_optimized(int n) {
 		// Time complexity: O(n)
         int[] res=new int[n+1];
         if(n==0) return res;
