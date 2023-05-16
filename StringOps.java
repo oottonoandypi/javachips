@@ -9,7 +9,40 @@ import java.util.HashSet;
 import java.util.Stack;
 
 public class StringOps {
-	public String removeDuplicateLetters_stack(String s) {
+	// ---------------------------------------------------------
+	// Given a string s, reverse only all the vowels in the string and return it.
+	public static String reverseVowels(String s) {
+		// runtime O(n)
+        StringBuilder sb=new StringBuilder(s);
+        int l=0;
+        int r=s.length()-1;
+        
+        while(l<r){
+            boolean isLVowel=isVowel(s.charAt(l));
+            boolean isRVowel=isVowel(s.charAt(r));
+            if(isRVowel && isLVowel){
+                sb.setCharAt(l, s.charAt(r));
+                sb.setCharAt(r, s.charAt(l));
+                l++;
+                r--;
+            }else if(isLVowel) r--;
+            else if(isRVowel) l++;
+            else{
+                l++;
+                r--;
+            }
+        }
+        
+        return sb.toString();
+    }
+    // Helper function for reverseVowels() ^^
+    private static boolean isVowel(char c){
+        return c=='a' || c=='A' || c=='e' || c=='E' || c=='i' || c=='I' || c=='o' || c=='O' || c=='u' || c=='U';
+    }
+	
+	
+	// ---------------------------------------------------------
+	public static String removeDuplicateLetters_stack(String s) {
 		// Given a string s, remove duplicate letters so that every letter appears once and only once. 
 		// must make sure the result is the smallest in lexicographical order among all possible results
 		// runtime O(n)
@@ -46,7 +79,7 @@ public class StringOps {
         return smallestLexOrder.reverse().toString();
     }
 	
-	public String removeDuplicateLetters(String s) {
+	public static String removeDuplicateLetters(String s) {
 		// Given a string s, remove duplicate letters so that every letter appears once and only once. 
 		// must make sure the result is the smallest in lexicographical order among all possible results
 		// runtime O(n)
@@ -89,7 +122,7 @@ public class StringOps {
 	// ---------------------------------------------------------
 	// Given a pattern and a string, find if the string follows the same pattern
 	// Ex, pattern="abba" string="dog cat cat dog". this string follows the pattern
-	public boolean wordPattern(String pattern, String s) {
+	public static boolean wordPattern(String pattern, String s) {
         HashMap<Character, String> map=new HashMap<Character, String>();
         HashMap<String, Character> mapRev=new HashMap<String, Character>();
         int wordStart=0;
