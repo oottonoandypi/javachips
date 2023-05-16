@@ -5,6 +5,31 @@ import java.util.ArrayList;
 
 public class IntegerOps {
 	// ---------------------------------------------------------
+	// Given an integer n, break it into the sum of k positive integers, where k >= 2, and maximize the product of those integers.
+	// Return the maximum product you can get.
+	public static int integerBreak(int n) {
+		// Approach: takes O(n) additional memory space using an array, record max products for every integers from 2...n
+		// Base cases: [2]=1; [3]=2; [4]=4;
+		// Starting at 4, all the max products are >= the integer itself; 
+		// so it is safe to propose that [i-3]*3 is the max product for integer i (but because [i-3] could reach base cases, so take max([i-3], i-3)*3 instead
+		// runtime O(n)
+        int[] maxProds=new int[n+1];
+        maxProds[2]=1;
+        if(n==2) return 1;
+        maxProds[3]=2;
+        if(n==3) return 2;
+        maxProds[4]=4;
+        
+        for(int i=5; i<=n; i++){
+            maxProds[i]=Math.max(i-3, maxProds[i-3])*3;
+            //System.out.print(i+": ");
+            //System.out.println(maxProds[i]);
+        }
+        
+        return maxProds[n];
+    }
+	
+	// ---------------------------------------------------------
 	// Given an integer n, return true if it is a power of four. Otherwise, return false.
 	public static boolean isPowerOfFour_recur(int n){
         if(n==1) return true;
