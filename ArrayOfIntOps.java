@@ -7,13 +7,50 @@ import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
+import java.util.Iterator;
 
 public class ArrayOfIntOps {
+	// ---------------------------------------------------------
+	// Given an integer array nums and an integer k, return the k most frequent elements. You may return the answer in any order.
+	public static int[] topKFrequent(int[] nums, int k) {
+		// Runtime O(2n)
+        HashSet<Integer>[] frequencies=new HashSet[nums.length/k+3];
+        HashMap<Integer, Integer> visitedNums=new HashMap<Integer, Integer>();
+        
+        for(int n: nums){
+            if(visitedNums.containsKey(n)){
+                int lastFreq=visitedNums.get(n);
+                frequencies[lastFreq].remove(n);
+                if(frequencies[lastFreq+1]==null) frequencies[lastFreq+1]=new HashSet<Integer>();
+                frequencies[lastFreq+1].add(n);
+                visitedNums.put(n, lastFreq+1);
+            }else{
+                visitedNums.put(n, 1);
+                if(frequencies[1]==null) frequencies[1]=new HashSet<Integer>();
+                frequencies[1].add(n);
+            }
+        }
+        
+        int[] res=new int[k];
+        int index=0;
+        
+        for(int i= frequencies.length-1; i>=0 && index<k; i--){
+            HashSet<Integer> numWithFreq=frequencies[i];
+            if(numWithFreq==null) continue;
+            Iterator<Integer> it=numWithFreq.iterator();
+            while(it.hasNext() && index<k){
+                res[index++]=it.next();
+            }
+        }
+        
+        return res;
+    }
+	
 	// ---------------------------------------------------------
 	// Given an unordered array
 	// Return true if there is a triplet indices (i, j, k) such that i < j < k and nums[i] < nums[j] < nums[k]; 
 	// Otherwise, false.
-	public boolean hasIncreasingTriplet_n_optimized(int[] nums) {
+	public static boolean hasIncreasingTriplet_n_optimized(int[] nums) {
 		// Same approach as the hasIncreasingTriplet_n
 		// but with less additional memory usage and no inner loop
         int triplet_1=Integer.MAX_VALUE;
