@@ -14,6 +14,7 @@ Last Updated on <b>May 18th, 2023</b></br>
 - ArrayOfIntOps.topKFrequent_solution1 and .topKFrequent_solution2
 - ArrayOfIntOps.findIntersectionsOfTwoArrays
 - ArrayOfIntOps.findIntersectionsOfTwoArraysII_hashmap and .findIntersectionsOfTwoArraysII_array
+- MiniTwitter
 
 ---------------------</br>
 <b>May 11th, 2023</b></br>
