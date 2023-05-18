@@ -12,6 +12,48 @@ import java.util.Iterator;
 public class ArrayOfIntOps {
 	// ---------------------------------------------------------
 	// Given two integer arrays nums1 and nums2, return an array of their intersection. 
+	// Each element in the result must appear as many times as it shows in both arrays 
+	public static int[] findIntersectionsOfTwoArraysII_array(int[] nums1, int[] nums2) {
+		// runtime O(n)
+        int[] nums1Counts=new int[1001];
+        for(int n: nums1) nums1Counts[n]++;
+        
+        int lastIntersection=-1;
+        for(int i=0; i<nums2.length; i++){
+            int n=nums2[i];
+            if(nums1Counts[n]>0){
+                nums2[++lastIntersection]=n;
+                nums1Counts[n]--;
+            }
+        }
+        if(lastIntersection==-1) return new int[0];
+        return Arrays.copyOfRange(nums2, 0, lastIntersection+1);
+    }
+	
+	public static int[] findIntersectionsOfTwoArraysII_hashmap(int[] nums1, int[] nums2) {
+		// runtime O(n)
+        HashMap<Integer, Integer> nums1Counts=new HashMap<Integer, Integer>();
+        for(int n: nums1){
+            if(nums1Counts.containsKey(n)) nums1Counts.put(n, nums1Counts.get(n)+1);
+            else nums1Counts.put(n, 1);
+        }
+        
+        int lastIntersection=-1;
+        for(int i=0; i<nums2.length && !nums1Counts.isEmpty(); i++){
+            int n=nums2[i];
+            if(nums1Counts.containsKey(n)){
+                nums2[++lastIntersection]=n;
+                if(nums1Counts.get(n)==1) nums1Counts.remove(n);
+                else nums1Counts.put(n, nums1Counts.get(n)-1);
+            }
+        }
+        if(lastIntersection==-1) return new int[0];
+        return Arrays.copyOfRange(nums2, 0, lastIntersection+1);
+    }
+	
+	
+	// ---------------------------------------------------------
+	// Given two integer arrays nums1 and nums2, return an array of their intersection. 
 	// Each element in the result must be unique and you may return the result in any order.
 	public static int[] findIntersectionsOfTwoArrays(int[] nums1, int[] nums2) {
         HashSet<Integer> nums1Set=new HashSet<Integer>();
