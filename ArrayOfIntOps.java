@@ -11,9 +11,71 @@ import java.util.Iterator;
 
 public class ArrayOfIntOps {
 	// ---------------------------------------------------------
+	// Given two integer arrays nums1 and nums2, return an array of their intersection. 
+	// Each element in the result must be unique and you may return the result in any order.
+	public static int[] findIntersectionsOfTwoArrays(int[] nums1, int[] nums2) {
+        HashSet<Integer> nums1Set=new HashSet<Integer>();
+        for(int n: nums1){
+            nums1Set.add(n);
+        }
+        
+        ArrayList<Integer> intersections=new ArrayList<Integer>();
+        for(int n: nums2){
+            if(nums1Set.contains(n)) {
+                intersections.add(n);
+                nums1Set.remove(n);
+            }
+        }
+        
+        int[] res=new int[intersections.size()];
+        for(int i=0; i<intersections.size(); i++){
+            res[i]=intersections.get(i);
+        }
+        
+        return res;
+    }
+	
+	// ---------------------------------------------------------
 	// Given an integer array nums and an integer k, return the k most frequent elements. You may return the answer in any order.
-	public static int[] topKFrequent(int[] nums, int k) {
-		// Runtime O(2n)
+	public static int[] topKFrequent_solution2(int[] nums, int k) {
+        // runtime O(n)
+		HashMap<Integer, Integer> visitedNums=new HashMap<Integer, Integer>();
+        ArrayList<Integer> uniqueNums=new ArrayList<Integer>();
+        int maxFreq=1;
+        
+        for(int n: nums){
+            if(!visitedNums.containsKey(n)) {
+                visitedNums.put(n, 1);
+                uniqueNums.add(n);
+            }else{
+                int newFreq=visitedNums.get(n)+1;
+                visitedNums.put(n, newFreq);
+                if(newFreq>maxFreq) maxFreq=newFreq;
+            }
+        }
+        
+        ArrayList<Integer>[] freq=new ArrayList[maxFreq];
+        for(int i=0; i<uniqueNums.size(); i++){
+            int n=uniqueNums.get(i);
+            int f=visitedNums.get(n);
+            if(freq[f-1]==null) freq[f-1]=new ArrayList<Integer>();
+            freq[f-1].add(n);
+        }
+        
+        int[] res=new int[k];
+        for(int i=freq.length-1; i>=0 && k>0; i--){
+            ArrayList<Integer> f=freq[i];
+            if(f==null) continue;
+            for(int j=0; j<f.size() && k>0; j++){
+                res[--k]=f.get(j);
+            }
+        }
+        
+        return res;
+    }
+	
+	public static int[] topKFrequent_solution1(int[] nums, int k) {
+		// Runtime O(n)
         HashSet<Integer>[] frequencies=new HashSet[nums.length/k+3];
         HashMap<Integer, Integer> visitedNums=new HashMap<Integer, Integer>();
         
