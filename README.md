@@ -2,7 +2,21 @@
 More chips are coming on Every Thursday!</br>
 
 -----------------------------------</br>
-Last Updated on <b>May 11th, 2023</b></br>
+Last Updated on <b>May 18th, 2023</b></br>
+<b>ADDED: </b>
+- GreedyHouseRobber2
+- IntegerOps.countBits_nlgn, .countBits_nlgnMemory_mathLog, .countBits_nMemory_optimized
+- IntegerOps.isPowerOfFour_math, .isPowerOfFour_loop, .isPowerOfFour_recur
+- IntegerOps.integerBreak
+- ArrayOfCharOps.reverseString
+- StringOps.reverseVowels
+- NestedIterator
+- ArrayOfIntOps.topKFrequent_solution1 and .topKFrequent_solution2
+- ArrayOfIntOps.findIntersectionsOfTwoArrays
+- ArrayOfIntOps.findIntersectionsOfTwoArraysII_hashmap and .findIntersectionsOfTwoArraysII_array
+
+---------------------</br>
+<b>May 11th, 2023</b></br>
 <b>ADDED: </b>
 - ArrayOfStringsOps.maxProduct_bitCompare and .maxProduct_naive
 - ArrayOfIntOps.minCountToTarget_dp_iter and .minCountToTarget_dp_recur, .wiggleSort
