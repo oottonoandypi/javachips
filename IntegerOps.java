@@ -5,6 +5,29 @@ import java.util.ArrayList;
 
 public class IntegerOps {
 	// ---------------------------------------------------------
+	// Given an integer n, return the count of all numbers with unique digits, x, where 0 <= x < 10^n
+	public static int countNumbersWithUniqueDigits(int n) {
+		// Runtime O(n)
+		// Approach: count possibilities cumulatively when digits are 0,1,2...,n 
+        int count=1;
+        if(n==0) return count;
+        count+=9;
+        int lastCount=9;
+        n--;
+        int options=9;
+        
+        while(n>0){
+            lastCount*=options;
+            count+=lastCount;
+            n--;
+            options--;
+        }
+        
+        return count;
+        
+    }
+	
+	// ---------------------------------------------------------
 	// Given an integer n, break it into the sum of k positive integers, where k >= 2, and maximize the product of those integers.
 	// Return the maximum product you can get.
 	public static int integerBreak(int n) {
