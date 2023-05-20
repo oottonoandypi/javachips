@@ -5,6 +5,25 @@ import java.util.ArrayList;
 
 public class IntegerOps {
 	// ---------------------------------------------------------
+	public static boolean isPerfectSquare(int num) {
+		// runtime O(lgn)
+        if(num==1) return true;
+        
+        long small=1;
+        long big=num/2;
+        
+        while(small<=big){
+            long mid=(small+big)/2;
+            long sq=mid*mid;
+            if(sq==(long)num) return true;
+            else if(sq>(long)num) big=mid-1;
+            else small=mid+1;
+        }
+        return false;
+    }
+	
+	
+	// ---------------------------------------------------------
 	// Given an integer n, return the count of all numbers with unique digits, x, where 0 <= x < 10^n
 	public static int countNumbersWithUniqueDigits(int n) {
 		// Runtime O(n)
