@@ -11,6 +11,87 @@ import java.util.Iterator;
 
 public class ArrayOfIntOps {
 	// ---------------------------------------------------------
+	// Given a set of distinct positive integers nums, return the largest subset answer such that every pair (answer[i], answer[j]) of elements in this subset satisfies:
+
+	//	answer[i] % answer[j] == 0, or
+	//	answer[j] % answer[i] == 0
+	//	If there are multiple solutions, return any of them.
+	public static List<Integer> largestDivisibleSubset(int[] nums) {
+		// Same approach as thought process below but uses less time and memory
+		// runtime O(n^2(+nlgn+n)) ; additional memory usage O(n)
+		// reduced runtime of copying subArray by taking and retrieving memory of visited num's largest divisible subset
+        // also reduced additional memory usage
+		Arrays.sort(nums);
+        
+        int[][] longestSubset=new int[nums.length][2];
+        int longestIndex=nums.length-1;
+        int longest=0;
+        
+        for(int i=nums.length-1; i>=0; i--){
+            longestSubset[i][0]=i;
+            for(int j=i+1; j<nums.length; j++){
+                if(nums[j]%nums[i]==0){
+                    if(longestSubset[j][1]>longestSubset[i][1]){
+                        longestSubset[i][1]=longestSubset[j][1];
+                        longestSubset[i][0]=j;
+                    }
+                }
+            }
+            longestSubset[i][1]++;
+            if(longestSubset[i][1]>=longest) {
+                longest=longestSubset[i][1];
+                longestIndex=i;
+            }
+        }
+        
+        List<Integer> res=new ArrayList<Integer>();
+        while(longestSubset[longestIndex][0]>longestIndex){
+            res.add(nums[longestIndex]);
+            longestIndex=longestSubset[longestIndex][0];
+        }
+        res.add(nums[longestIndex]);
+        return res;
+    }
+	// Thought process, first attempt
+	/* public static List<Integer> largestDivisibleSubset_attempt1(int[] nums) {
+	 	// Approach: if x is a multiple of y where y<x; z is a multiple of y where z>x
+	 	// Observation: however, there could be another k<z or k>z where is a multiple of y but not a multiple of x or z
+        // too slow; O(n^3+nlgn+n)
+        // additional memory usage: 
+        Arrays.sort(nums);
+        List<List<Integer>> choices=new ArrayList<>();
+        List<Integer> res;
+        
+        for(int k=nums.length-1; k>=0; k--){
+            int n=nums[k];
+            boolean foundList=false;
+            for(int i=choices.size()-1; i>=0; i--){
+                List<Integer> list=choices.get(i);
+                int smallest=list.get(list.size()-1);
+                if(smallest%n==0) {
+                    List<Integer> newList=new ArrayList<Integer>(list);
+                    newList.add(n);
+                    choices.add(newList);
+                    foundList=true;
+                }
+            }
+            
+            if(!foundList){
+                List<Integer> newList=new ArrayList<Integer>();
+                newList.add(n);
+                choices.add(newList);
+            }
+        }
+        
+        res=choices.get(0);
+        for(int i=1; i<choices.size(); i++){
+            if(choices.get(i).size()>res.size()) res=choices.get(i);
+        }
+        
+        return res;
+    } */
+	
+	// ---------------------------------------------------------
 	// Given two integer arrays nums1 and nums2, return an array of their intersection. 
 	// Each element in the result must appear as many times as it shows in both arrays 
 	public static int[] findIntersectionsOfTwoArraysII_array(int[] nums1, int[] nums2) {
