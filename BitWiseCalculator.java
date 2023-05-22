@@ -2,6 +2,20 @@ package javachips;
 import java.util.Scanner;
 
 public class BitWiseCalculator {
+	public int getSum(int a, int b) {
+		// Approach: 0+1 or 1+0 is 1 with no carry; 1+1 is 0 with carry; 0+0 is 0 with no carry => xor can do the sum part
+		// and can do the carry part because only 1+1 has carry; so whenever the carry continues, carry move forward a digit to the left
+		// update a with the latest sum; b carries the carry
+		// repeat until carry is 0
+        while(b!=0){
+            int aDuplicate=a;
+            a=a^b;
+            b=(aDuplicate&b)<<1;
+        }
+        return a;
+    }
+	
+	// ---------------------------------------------------------
 	public int andOfRange(int left, int right) { // runtime O(lg(left))
 		if(left==right) return left;
         int digit = 0;
