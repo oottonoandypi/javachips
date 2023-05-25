@@ -10,6 +10,22 @@ import java.util.Stack;
 
 public class StringOps {
 	// ---------------------------------------------------------
+	// Given two strings ransomNote and magazine, return true if ransomNote can be constructed by using the letters from magazine and false otherwise.
+	// Each letter in magazine can only be used once in ransomNote.
+	public static boolean canConstruct(String ransomNote, String magazine) {
+		// runtime O(n)
+        if(ransomNote.length()>magazine.length()) return false;
+        int[] letters=new int[26];
+        for(int i=0; i<magazine.length(); i++){
+            letters[magazine.charAt(i)-97]++;
+        }
+        for(int i=0; i<ransomNote.length(); i++){
+            if(--letters[ransomNote.charAt(i)-97]<0) return false;
+        }
+        return true;
+    }
+	
+	// ---------------------------------------------------------
 	// Given a string s, reverse only all the vowels in the string and return it.
 	public static String reverseVowels(String s) {
 		// runtime O(n)
