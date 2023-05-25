@@ -10,10 +10,26 @@ import java.util.Stack;
 
 public class StringOps {
 	// ---------------------------------------------------------
+	// Given a string s, find the first non-repeating character in it and return its index. If it does not exist, return -1.
+	public static int firstUniqChar(String s) {
+		// runtime O(n); additional memory usage O(1)
+        int[] letters=new int[26];
+        for(int i=0; i<s.length(); i++){
+            letters[s.charAt(i)-97]++;
+        }
+        
+        for(int i=0; i<s.length(); i++){
+            if(letters[s.charAt(i)-97]==1) return i;
+        }
+        
+        return -1;
+    }
+	
+	// ---------------------------------------------------------
 	// Given two strings ransomNote and magazine, return true if ransomNote can be constructed by using the letters from magazine and false otherwise.
 	// Each letter in magazine can only be used once in ransomNote.
 	public static boolean canConstruct(String ransomNote, String magazine) {
-		// runtime O(n)
+		// runtime O(n); additional memory usage O(1)
         if(ransomNote.length()>magazine.length()) return false;
         int[] letters=new int[26];
         for(int i=0; i<magazine.length(); i++){
