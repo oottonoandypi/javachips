@@ -17,6 +17,44 @@ public class BinaryTreeOps {
 		}
 	}
 	
+	// Given the root of a binary tree, return the sum of all left leaves.
+	// A leaf is a node with no children. A left leaf is a leaf that is the left child of another node.
+	
+	public static int sumOfLeftLeaves_solution1(TreeNode root) {
+		// O(n)
+        if(root==null) return 0;
+        if(root.left==null){
+            if(root.right==null) return 0;
+            else return sumOfLeftLeaves_solution1(root.right);
+        }
+        
+        int sum=0;
+        if(root.left.left==null){
+            if(root.left.right==null) sum+=root.left.val;
+            else sum+=sumOfLeftLeaves_solution1(root.left.right);
+        }else sum+=sumOfLeftLeaves_solution1(root.left);
+        sum+=sumOfLeftLeaves_solution1(root.right);
+        
+        return sum;
+        
+    }
+	
+	public static int sumOfLeftLeaves_solution2(TreeNode root) {
+		// O(n)
+        return findSumOfLeftLeaves(root, false);
+        
+    }
+	// helper function for sumOfLeftLeaves_solution2 ^^
+    private static int findSumOfLeftLeaves(TreeNode node, boolean isLeft){
+        if(node==null) return 0;
+        if(node.left==null && node.right==null){
+            if(isLeft) return node.val;
+            else return 0;
+        }
+        
+        return findSumOfLeftLeaves(node.left, true)+findSumOfLeftLeaves(node.right, false);
+    }
+	
 	// --------------------------------------------------------------------------------------
 	// binaryTreePaths find all the root->leaf paths and return a list of strings in format of "nodeValue1->nodeValue2->...->nodeValueN"
 	public static List<String> binaryTreePaths(TreeNode root) {
