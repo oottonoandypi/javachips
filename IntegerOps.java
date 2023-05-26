@@ -5,6 +5,56 @@ import java.util.ArrayList;
 
 public class IntegerOps {
 	// ---------------------------------------------------------
+	// Convert an Integer to Hexadecimal without using any built-in methods
+	public static String toHex(int num) {
+		// runtime O(lgn); additional memory usage O(lgn)
+        if(num==0) return "0";
+        
+        StringBuilder hexOfNum=new StringBuilder();
+        boolean isPositive=true;
+        if(num<0) isPositive=false;
+        
+        int carry=1;
+        if(num==Integer.MIN_VALUE) {
+            num=Integer.MAX_VALUE;
+            carry--;
+        }
+        
+        num=Math.abs(num);
+        
+        while(num>0){
+            int nextHex=num%16;
+            if(nextHex>9) hexOfNum.append((char)(nextHex%10+'a'));
+            else hexOfNum.append((char)(nextHex+'0'));
+            num/=16;
+        }
+        
+        if(!isPositive){
+            for(int i=0; i<hexOfNum.length(); i++){
+                char c=hexOfNum.charAt(i);
+                int hexVal;
+                
+                if(c>'9') hexVal=(int)(c-'a'+10);
+                else hexVal=(int)(c-'0');
+                
+                hexVal^=15;
+                hexVal+=carry;
+                // System.out.println(hexVal);
+                carry=hexVal/16;
+                hexVal%=16;
+                if(hexVal>9) hexOfNum.setCharAt(i, (char)(hexVal%10+'a'));
+                else hexOfNum.setCharAt(i, (char)(hexVal+'0'));
+                
+            }
+            
+            while(hexOfNum.length()<8) hexOfNum.append('f');
+        }
+        
+        return hexOfNum.reverse().toString();
+        
+    }
+	
+	// ---------------------------------------------------------
 	public static boolean isPerfectSquare(int num) {
 		// runtime O(lgn)
         if(num==1) return true;
