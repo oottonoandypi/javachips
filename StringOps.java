@@ -9,6 +9,53 @@ import java.util.HashSet;
 import java.util.Stack;
 
 public class StringOps {
+	// ---------------------------------------------------------
+	// Given a string s which consists of lowercase or uppercase letters, return the length of the longest palindrome that can be built with those letters.
+	// Letters are case sensitive, for example, "Aa" is not considered a palindrome here.
+	public static int longestPalindrome_countOdds(String s) {
+		// runtime O(n); additional memory O(1)
+		int[] letters=new int[58];
+        int odds=0;
+        
+        for(int i=0; i<s.length(); i++) {
+            int charToInt=(int)(s.charAt(i)-65);
+            if(letters[charToInt]==0){
+                letters[charToInt]=1;
+                odds++;
+            }else{
+                letters[charToInt]=0;
+                odds--;
+            }
+        }
+        
+        if(odds>0) return s.length()-odds+1;
+        else return s.length();
+    }
+	
+	public static int longestPalindrome_countEvens(String s) {
+		// runtime O(n); additional memory O(1)
+        int[] letters=new int[58];
+        int countSingles=0;
+        int longestLen=0;
+        
+        for(int i=0; i<s.length(); i++){
+            int charToInt=(int)(s.charAt(i)-65);
+            if(letters[charToInt]==0){
+                letters[charToInt]=1;
+                countSingles++;
+            }else{
+                letters[charToInt]=0;
+                longestLen+=2;
+                countSingles--;
+            }
+        }
+        
+        if(countSingles==0) return longestLen;
+        else return longestLen+1;
+        
+    }
+	
+	// ---------------------------------------------------------
 	// Given two strings s and t, return true if s is a subsequence of t, or false otherwise.
 	// A subsequence of a string is a new string that is formed from the original string by deleting some (can be none) of the characters without disturbing the relative positions of the remaining characters. (i.e., "ace" is a subsequence of "abcde" while "aec" is not).			 
 	public static boolean isSubsequence(String s, String t) {
