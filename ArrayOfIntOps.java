@@ -11,6 +11,65 @@ import java.util.Iterator;
 
 public class ArrayOfIntOps {
 	// ---------------------------------------------------------
+	// Given an integer array nums, return the third distinct maximum number in this array. 
+	// If the third maximum does not exist, return the maximum number.
+	public static int thirdBiggestInt_1pass(int[] nums) {
+		// runtime O(n); memory usage O(1)
+        int[] max=new int[3];
+        max[0]=nums[0];
+        max[1]=Integer.MIN_VALUE;
+        max[2]=Integer.MIN_VALUE;
+        
+        int count=1;
+        
+        for(int i=1; i<nums.length; i++){
+            int n=nums[i];
+            if(n>=max[0]){
+                if(n==max[0]) continue;
+                max[2]=max[1];
+                max[1]=max[0];
+                max[0]=n;
+                count++;
+            }else if(n>=max[1]){
+                if(n==max[1] && count>1) continue;
+                max[2]=max[1];
+                max[1]=n;
+                count++;
+            }else if(n>=max[2]) {
+                max[2]=n;
+                count++;
+            }
+        }
+        
+        if(count>=3) return max[2];
+        return max[0];
+    }
+	
+	public static int thirdBiggestInt_3pass(int[] nums) {
+		// runtime O(n); memory usage O(1)
+		int max1=nums[0];
+        int smallest=nums[0];
+        
+        for(int n:nums){
+            max1=Math.max(n, max1);
+            smallest=Math.min(smallest, n);
+        }
+        
+        int max2=smallest;
+        for(int n:nums){
+            if(n<max1 && n>=max2) max2=n;
+        }
+        
+        int max3=smallest;
+        for(int n:nums){
+            if(n<max2 && n>=max3) max3=n;
+        }
+        
+        if(max3<max2) return max3;
+        return max1;
+    }
+	
+	// ---------------------------------------------------------
 	// Given a set of distinct positive integers nums, return the largest subset answer such that every pair (answer[i], answer[j]) of elements in this subset satisfies:
 
 	//	answer[i] % answer[j] == 0, or
