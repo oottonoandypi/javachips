@@ -11,6 +11,25 @@ import java.util.Iterator;
 
 public class ArrayOfIntOps {
 	// ---------------------------------------------------------
+	// Find All Numbers Disappeared in an Array
+	// Given an array nums of n integers where nums[i] is in the range [1, n], 
+	// return an array of all the integers in the range [1, n] that do not appear in nums.
+	public static List<Integer> findDisappearedNumbersInRange_1ToN(int[] nums) {
+		// runtime O(n); memory usage O(n)
+        int[] numsAppeared=new int[nums.length+1];
+        for(int n: nums){
+            numsAppeared[n]=1;
+        }
+        
+        List<Integer> res=new ArrayList<Integer>();
+        for(int i=1; i<=nums.length; i++){
+            if(numsAppeared[i]==0) res.add(i);
+        }
+        
+        return res;
+    }
+	
+	// ---------------------------------------------------------
 	// Given an integer array nums, return the third distinct maximum number in this array. 
 	// If the third maximum does not exist, return the maximum number.
 	public static int thirdBiggestInt_1pass(int[] nums) {
