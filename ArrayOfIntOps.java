@@ -11,6 +11,28 @@ import java.util.Iterator;
 
 public class ArrayOfIntOps {
 	// ---------------------------------------------------------
+	// find the number of ints in an array S that are >= ints in an array G
+	public static int findIntsInS_GreaterThan_IntsInG(int[] g, int[] s) {
+		// runtime O(nlgn); memory usage O(1)
+        Arrays.sort(g);
+        Arrays.sort(s);
+        
+        int indexG=0;
+        int indexS=0;
+        int count=0;
+        
+        while(indexG<g.length && indexS<s.length){
+            if(s[indexS]>=g[indexG]){
+                indexS++;
+                indexG++;
+                count++;
+            }else indexS++;
+        }
+        
+        return count;
+    }
+	
+	// ---------------------------------------------------------
 	// Find All Numbers Disappeared in an Array
 	// Given an array nums of n integers where nums[i] is in the range [1, n], 
 	// return an array of all the integers in the range [1, n] that do not appear in nums.
