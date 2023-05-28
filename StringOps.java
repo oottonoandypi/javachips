@@ -10,6 +10,49 @@ import java.util.Stack;
 
 public class StringOps {
 	// ---------------------------------------------------------
+	// Given two non-negative integers, num1 and num2 represented as string, return the sum of num1 and num2 as a string.
+	// You must solve the problem without using any built-in library for handling large integers (such as BigInteger). You must also not convert the inputs to integers directly.
+	public static String sumOfTwoStr(String num1, String num2) {
+		// runtime O(n); memory usage O(1)
+		StringBuilder resBuilder=new StringBuilder();
+        int carry=0;
+        int index1=num1.length()-1;
+        int index2=num2.length()-1;
+        int charToInt1;
+        int charToInt2;
+        int sum;
+        int toAppend;
+        
+        while(index1>=0 && index2>=0){
+            charToInt1=num1.charAt(index1--)-'0';
+            charToInt2=num2.charAt(index2--)-'0';
+            sum=charToInt1+charToInt2+carry;
+            toAppend=sum%10;
+            carry=sum/10;
+            resBuilder.append((char)(toAppend+'0'));
+        }
+        
+        while(index1>=0){
+            charToInt1=num1.charAt(index1--)-'0';
+            sum=charToInt1+carry;
+            toAppend=sum%10;
+            carry=sum/10;
+            resBuilder.append((char)(toAppend+'0'));
+        }
+        
+        while(index2>=0){
+            charToInt2=num2.charAt(index2--)-'0';
+            sum=charToInt2+carry;
+            toAppend=sum%10;
+            carry=sum/10;
+            resBuilder.append((char)(toAppend+'0'));
+        }
+        
+        if(carry>0) resBuilder.append((char)(carry+'0'));
+        return resBuilder.reverse().toString();
+    }
+	
+	// ---------------------------------------------------------
 	// Given a string s which consists of lowercase or uppercase letters, return the length of the longest palindrome that can be built with those letters.
 	// Letters are case sensitive, for example, "Aa" is not considered a palindrome here.
 	public static int longestPalindrome_countOdds(String s) {
