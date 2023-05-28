@@ -5,6 +5,27 @@ import java.util.ArrayList;
 
 public class IntegerOps {
 	// ---------------------------------------------------------
+	// Given an integer n, return a string array answer (1-indexed) where:
+
+	// answer[i] == "FizzBuzz" if i is divisible by 3 and 5.
+	// answer[i] == "Fizz" if i is divisible by 3.
+	// answer[i] == "Buzz" if i is divisible by 5.
+	// answer[i] == i (as a string) if none of the above conditions are true.
+	public static List<String> fizzBuzz_3515(int n) {
+        List<String> res=new ArrayList<String>();
+        
+        for(int i=1; i<=n; i++){
+            if(i%15==0) res.add("FizzBuzz");
+            else if(i%3==0) res.add("Fizz");
+            else if(i%5==0) res.add("Buzz");
+            else res.add(Integer.toString(i));
+        }
+        
+        return res;
+    }
+	
+	
+	// ---------------------------------------------------------
 	// Convert an Integer to Hexadecimal without using any built-in methods
 	public static String toHex(int num) {
 		// runtime O(lgn); additional memory usage O(lgn)
