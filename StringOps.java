@@ -10,6 +10,25 @@ import java.util.Stack;
 
 public class StringOps {
 	// ---------------------------------------------------------
+	// Given a string s, return the number of segments in the string.
+	// A segment is defined to be a contiguous sequence of non-space characters.
+	public static int countSegments(String s) {
+		// runtime O(n); memory usage O(1)
+        int count=0;
+        int startIndex=0;
+        
+        for(int i=0; i<s.length(); i++){
+            if(s.charAt(i)==' '){
+                if(i>startIndex) count++;
+                startIndex=i+1;
+            }
+        }
+        
+        if(startIndex<s.length()) count++;
+        return count;
+    }
+	
+	// ---------------------------------------------------------
 	// Given two non-negative integers, num1 and num2 represented as string, return the sum of num1 and num2 as a string.
 	// You must solve the problem without using any built-in library for handling large integers (such as BigInteger). You must also not convert the inputs to integers directly.
 	public static String sumOfTwoStr(String num1, String num2) {
