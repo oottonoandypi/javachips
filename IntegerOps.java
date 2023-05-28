@@ -5,6 +5,37 @@ import java.util.ArrayList;
 
 public class IntegerOps {
 	// ---------------------------------------------------------
+	// You have n coins and you want to build a staircase with these coins. 
+	// The staircase consists of k rows where the ith row has exactly i coins. 
+	// The last row of the staircase may be incomplete.
+	// Given the integer n, return the number of complete rows of the staircase you will build.
+	public static int maxFullStairs_sqrt(int n){
+        // (1+k)*k<=2n
+        // (1/2+k)^2=k^2+k+1/4=(1+k)*k+1/4
+        // (1/2+k)^2-1/4<=2n
+        // (1/2+k)^2<=2n+1/4
+        // 1/2+k<=sqrt(2n+1/4)
+        // k<=sqrt(2n+1/4)-1/2
+        
+        return (int)(Math.sqrt(((long)n+(long)n+0.25))-0.5);
+    }
+	public static int maxFullStairs_lgn(int n) {
+        // (1+k)*k<=2n
+        long l=1;
+        long r=n;
+        long m;
+        
+        while(l<=r){
+            m=l+(r-l)/2;
+            if((m*m+m)/2==(long)n) return (int)m;
+            else if((m*m+m)/2<(long)n) l=m+1;
+            else r=m-1;
+        }
+        
+        return (int)(l-1);
+    } 
+	
+	// ---------------------------------------------------------
 	// Given an integer n, return a string array answer (1-indexed) where:
 
 	// answer[i] == "FizzBuzz" if i is divisible by 3 and 5.
