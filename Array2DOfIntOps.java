@@ -2,6 +2,45 @@ package javachips;
 
 public class Array2DOfIntOps {
 	// ---------------------------------------------------------
+	// grid[i][j]=0 => water; grid[i][j]=1 => land
+	// measure the perimeter of land
+	public static int landPerimeter(int[][] grid) {
+		// runtime O(n^2); memory usage O(1)
+        int p=0;
+        for(int i=0; i<grid.length; i++){
+            for(int j=0; j<grid[i].length; j++){
+                int isLand=grid[i][j];
+                if(isLand==1) {
+                    p+=4;
+                    
+                    if(i-1>=0 && grid[i-1][j]==1) p-=2;;
+                    if(j-1>=0 && grid[i][j-1]==1) p-=2;
+                }
+            }
+        }
+        
+        return p;
+        
+        /*
+         * int p=0;
+        for(int i=0; i<grid.length; i++){
+            for(int j=0; j<grid[i].length; j++){
+                int isLand=grid[i][j];
+                if(isLand==1) {
+                    p+=4;
+                    if(i-1>=0 && grid[i-1][j]==1) p--;
+                    if(i+1<grid.length && grid[i+1][j]==1) p--;
+                    if(j-1>=0 && grid[i][j-1]==1) p--;
+                    if(j+1<grid[i].length && grid[i][j+1]==1) p--;
+                }
+            }
+        }
+        
+        return p;
+         */
+    }
+	
+	// ---------------------------------------------------------
 	// Game of Life; find the next state
 	// The board is made up of an m x n grid of cells, where each cell has an initial state: live (represented by a 1) or dead (represented by a 0). 
 	// Each cell interacts with its eight neighbors (horizontal, vertical, diagonal) using the following four rules:
