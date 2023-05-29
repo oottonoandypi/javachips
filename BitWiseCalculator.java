@@ -2,6 +2,22 @@ package javachips;
 import java.util.Scanner;
 
 public class BitWiseCalculator {
+	// return complement of a given integer
+	public int findComplement(int num) {
+		// runtime O(lgn)
+        int xor=0;
+        int numCopy=num;
+        
+        while(numCopy>0){
+            xor=(xor<<1)+1;
+            numCopy/=2;
+        }
+        
+        return num^xor;
+    }
+	
+	// ---------------------------------------------------------
+	// count different bits of 2 integers
 	public int countBitDiff(int x, int y) {
 		// runtime O(lgn)
         int diff=x^y;
@@ -35,6 +51,7 @@ public class BitWiseCalculator {
          */
     }
 	
+	// ---------------------------------------------------------
 	public int getSum(int a, int b) {
 		// Approach: 0+1 or 1+0 is 1 with no carry; 1+1 is 0 with carry; 0+0 is 0 with no carry => xor can do the sum part
 		// and can do the carry part because only 1+1 has carry; so whenever the carry continues, carry move forward a digit to the left
