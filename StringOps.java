@@ -10,6 +10,28 @@ import java.util.Stack;
 
 public class StringOps {
 	// ---------------------------------------------------------
+	// Given a string s, check if it can be constructed by taking a substring of it and appending multiple copies of the substring together.
+	public static boolean isRepeatedSubstrings(String s) {
+        // runtime O(n^2); memory usage O(1)
+        int parts=2;
+        int partLen;
+        int index;
+        
+        while(parts<=s.length()){
+            if(s.length()%parts==0){
+                partLen=s.length()/parts;
+                index=partLen;
+                while(index<s.length() && s.charAt(index)==s.charAt(index%partLen)) index++;
+                if(index==s.length()) return true;
+            }
+            
+            parts++;
+        }
+        
+        return false;
+    }
+	
+	// ---------------------------------------------------------
 	// Given a string s, return the number of segments in the string.
 	// A segment is defined to be a contiguous sequence of non-space characters.
 	public static int countSegments(String s) {
