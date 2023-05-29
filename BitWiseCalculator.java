@@ -2,6 +2,39 @@ package javachips;
 import java.util.Scanner;
 
 public class BitWiseCalculator {
+	public int countBitDiff(int x, int y) {
+		// runtime O(lgn)
+        int diff=x^y;
+        int count=0;
+        while(diff>0){
+            count+=diff%2;
+            diff/=2;
+        }
+        return count;
+        
+        /* 
+         * int count=0;
+        
+        while(x>0 && y>0){
+            if(x%2!=y%2) count++;
+            x/=2;
+            y/=2;
+        }
+        
+        while(x>0){
+            count+=x%2;
+            x/=2;
+        }
+        
+        while(y>0){
+            count+=y%2;
+            y/=2;
+        }
+        
+        return count;
+         */
+    }
+	
 	public int getSum(int a, int b) {
 		// Approach: 0+1 or 1+0 is 1 with no carry; 1+1 is 0 with carry; 0+0 is 0 with no carry => xor can do the sum part
 		// and can do the carry part because only 1+1 has carry; so whenever the carry continues, carry move forward a digit to the left
