@@ -2,7 +2,48 @@
 More chips are coming on Every Thursday!</br>
 
 -----------------------------------</br>
-Last Updated on <b>May 18th, 2023</b></br>
+Last Updated on <b>May 29th, 2023</b></br>
+<b>ADDED: </b>
+- IntegerOps
+	- countNumbersWithUniqueDigits
+	- isPerfectSquare
+	- toHex
+	- fizzBuzz_3515
+	- maxFullStairs_sqrt and maxFullStairs_lgn
+- WaterJugProblem
+	- canMeasureWater_nlgn and canMeasureWater_lgn
+- ArrayOfIntOps
+	- largestDivisibleSubset
+	- thirdBiggestInt_1pass and thirdBiggestInt_3pass
+	- findDisappearedNumbersInRange_1ToN
+	- findIntsInS_GreaterThan_IntsInG
+- BitWiseCalculator
+	- getSum
+- SuperPowCalculator
+	- superPow
+- KPairsWithSmallestSums
+	- kSmallestPairs
+	- kSmallestPairs_priorityqueue
+- GuessGame
+	- guessNumber_solution1
+	- guessNumber_solution2
+- StringOps
+	- canConstruct
+	- firstUniqChar
+	- findOneLetterDifference
+	- isSubsequence
+	- longestPalindrome_countOdds and longestPalindrome_countEvens
+	- sumOfTwoStr
+	- countSegments
+	- isRepeatedSubstrings
+- BinaryWatch
+	- readBinaryWatch
+- BinaryTreeOps
+	- sumOfLeftLeaves_solution1
+	- sumOfLeftLeaves_solution2
+
+---------------------</br>
+<b>May 18th, 2023</b></br>
 <b>ADDED: </b>
 - GreedyHouseRobber2
 - IntegerOps.countBits_nlgn, .countBits_nlgnMemory_mathLog, .countBits_nMemory_optimized
