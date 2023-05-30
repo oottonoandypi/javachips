@@ -5,6 +5,23 @@ import java.util.ArrayList;
 
 public class IntegerOps {
 	// ---------------------------------------------------------
+	// Returns the {length, width} that will form the given area 
+	// where length>=width 
+	// and length and width has the smallest difference as possible
+	public static int[] constructSquarestRectangle(int area) {
+		// runtime O(sqrt(n)); memory usage O(1)
+        int low=(int)Math.sqrt(area);
+        if(low*low==area) return new int[]{low, low};
+        
+        while(low>1){
+            if(area%low==0) return new int[]{area/low, low};
+            low--;
+        }
+        
+        return new int[]{area, 1};
+    }
+	
+	// ---------------------------------------------------------
 	// You have n coins and you want to build a staircase with these coins. 
 	// The staircase consists of k rows where the ith row has exactly i coins. 
 	// The last row of the staircase may be incomplete.
