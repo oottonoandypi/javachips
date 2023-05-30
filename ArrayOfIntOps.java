@@ -11,6 +11,23 @@ import java.util.Iterator;
 
 public class ArrayOfIntOps {
 	// ---------------------------------------------------------
+	// Given a binary array nums, return the maximum number of consecutive 1's in the array.
+	public static int findMaxConsecutive1s(int[] nums) {
+        int maxLenOf1s=0;
+        int count1s=0;
+        
+        for(int n: nums){
+            if(n==0) {
+                maxLenOf1s=Math.max(maxLenOf1s, count1s);
+                count1s=0;
+            }else count1s++;
+        }
+        maxLenOf1s=Math.max(maxLenOf1s, count1s);
+        
+        return maxLenOf1s;
+    }
+	
+	// ---------------------------------------------------------
 	// find the number of ints in an array S that are >= ints in an array G
 	public static int findIntsInS_GreaterThan_IntsInG(int[] g, int[] s) {
 		// runtime O(nlgn); memory usage O(1)
