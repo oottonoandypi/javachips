@@ -8,8 +8,62 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.Stack;
 
 public class ArrayOfIntOps {
+	// ---------------------------------------------------------
+	// Given 2 arrays:
+	// nums2 contains integers with no duplicates in non-ordered manner
+	// nums1 contains integers from nums2
+	// EX. there is a 0<=i<nums1.length and a 0<=j<nums2.length where nums1[i]=nums2[j]
+	// return an array of the closest greater integer in the right sub-array of each nums1[i] in nums2 (if no greater integer, put -1)
+	// EX. nums1 = [4,1,2], nums2 = [1,3,4,2] => [-1,3,-1]
+	public static int[] nextGreaterElement_stack(int[] nums1, int[] nums2) {
+		// use a stack to store the closest greater elements
+		// to help eliminate some repeated visits
+		// runtime < O(n^2); memory usage O(n)
+        HashMap<Integer, Integer> nextGreater=new HashMap<Integer, Integer>();
+        Stack<Integer> greaters=new Stack<Integer>();
+        
+        for(int i=nums2.length-1; i>=0; i--){
+            while(!greaters.empty() && greaters.peek()<nums2[i]) greaters.pop();
+            if(!greaters.empty()) nextGreater.put(nums2[i], greaters.peek());
+            greaters.push(nums2[i]);
+        }
+        
+        int[] res=new int[nums1.length];
+        for(int i=0; i<res.length; i++){
+            if(nextGreater.containsKey(nums1[i])) res[i]=nextGreater.get(nums1[i]);
+            else res[i]=-1;
+        }
+        
+        return res;
+        
+    }
+	
+	public static int[] nextGreaterElement(int[] nums1, int[] nums2) {
+		// runtime < O(n^2); memory usage O(n)
+        HashMap<Integer, Integer> nextGreater=new HashMap<Integer, Integer>();
+        
+        for(int i=nums2.length-2; i>=0; i--){
+            for(int j=i+1; j<nums2.length; j++){
+                if(nums2[j]>nums2[i]) {
+                    nextGreater.put(nums2[i], nums2[j]);
+                    break;
+                }
+            }
+        }
+        
+        int[] res=new int[nums1.length];
+        for(int i=0; i<res.length; i++){
+            if(nextGreater.containsKey(nums1[i])) res[i]=nextGreater.get(nums1[i]);
+            else res[i]=-1;
+        }
+        
+        return res;
+        
+    }
+	
 	// ---------------------------------------------------------
 	// Given a binary array nums, return the maximum number of consecutive 1's in the array.
 	public static int findMaxConsecutive1s(int[] nums) {
