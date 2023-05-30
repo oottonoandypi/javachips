@@ -10,6 +10,31 @@ import java.util.Stack;
 
 public class StringOps {
 	// ---------------------------------------------------------
+	// Reformatting dash separated alphabetic letters to a string constructed by k-length segmented substrings
+	// Only the first segment can have a length<k
+	// EX. s = "5F3Z-2e-9-w", k = 4 => "5F3Z-2E9W"
+	// EX. s = "2-5g-3-J", k = 2 => "2-5G-3J"
+	public static String reformatting_I(String s, int k) {
+        StringBuilder build=new StringBuilder();
+        int countK=0;
+        
+        for(int i=s.length()-1; i>=0; i--){
+            char c=s.charAt(i);
+            if(c=='-') continue;
+            if(c>'Z') c=(char)(c-'a'+'A');
+            build.append(c);
+            countK++;
+            if(countK==k) {
+                countK=0;
+                build.append('-');
+            }
+        }
+        
+        if(build.length()>0 && build.charAt(build.length()-1)=='-') return build.reverse().substring(1);
+        return build.reverse().toString();
+    }
+	
+	// ---------------------------------------------------------
 	// Given a string s, check if it can be constructed by taking a substring of it and appending multiple copies of the substring together.
 	public static boolean isRepeatedSubstrings(String s) {
         // runtime O(n^2); memory usage O(1)
