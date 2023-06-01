@@ -10,6 +10,31 @@ import java.util.Stack;
 
 public class StringOps {
 	// ---------------------------------------------------------
+	// Given a String word
+	// Check if it's using Capitals correctly like the following:
+	// 1. All letters in this word are capitals, like "USA".
+	// 2. All letters in this word are not capitals, like "leetcode".
+	// 3. Only the first letter in this word is capital, like "Google".
+	
+	public static boolean checkCapitalUse(String word) {
+		// runtime O(n) memory usage O(1)
+		if(word.length()==1) return true;
+        boolean isCaps;
+        if(word.charAt(0)>'Z') isCaps=false;
+        else{
+            if(word.charAt(1)>'Z') isCaps=false;
+            else isCaps=true;
+        }
+        
+        for(int i=1; i<word.length(); i++){
+            char c=word.charAt(i);
+            if((isCaps && c>'Z') || (!isCaps && c<='Z')) return false;
+        }
+        
+        return true;
+    }
+	
+	// ---------------------------------------------------------
 	// Reformatting dash separated alphabetic letters to a string constructed by k-length segmented substrings
 	// Only the first segment can have a length<k
 	// EX. s = "5F3Z-2e-9-w", k = 4 => "5F3Z-2E9W"
