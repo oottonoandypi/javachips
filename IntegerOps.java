@@ -5,6 +5,23 @@ import java.util.ArrayList;
 
 public class IntegerOps {
 	// ---------------------------------------------------------
+	// Returns if a given integer is a perfect number
+	// Def: A perfect number = sum of all its divisors excluding itself
+	// EX: 28 is a perfect number = 1+2+4+7+14
+	public static boolean isPerfectNumber(int num) {
+		// runtime O(sqrt(n)) memory usage O(1)
+        int sum=1;
+        int sqrt=(int)Math.sqrt(num);
+        
+        while(sqrt>1){
+            if(num%sqrt==0) sum+=sqrt+num/sqrt;
+            sqrt--;
+        }
+        
+        return num>1 && sum==num;
+    }
+	
+	// ---------------------------------------------------------
 	// Convert a given integer num to its base7 in form of String
 	public static String convertToBase7(int num) {
 		// runtime O(lgn) memory usage O(1)
