@@ -5,6 +5,41 @@ import java.util.ArrayList;
 
 public class IntegerOps {
 	// ---------------------------------------------------------
+	// return the nth Fibonacci number
+	public static int fib(int n) {
+		// iterative approach: runtime O(n) memory usage O(n)
+        int[] ns=new int[n+1];
+        for(int i=1; i<=n; i++){
+            if(i==1) ns[1]=1;
+            else ns[i]=ns[i-1]+ns[i-2];
+        }
+        return ns[n];
+    }
+	
+	public static int fib_recur(int n) {
+		// recursive approach: runtime O(n) memory usage(n)
+        int[] ns=new int[n+1];
+        return findFib(n, ns);
+    }
+    // helper function for fib_recur()
+    private static int findFib(int n, int[] ns){
+        if(n<=1) {
+            ns[n]=n;
+            return n;
+        }
+        int f1;
+        if(ns[n-1]>0) f1=ns[n-1];
+        else f1=findFib(n-1, ns);
+        
+        int f2;
+        if(ns[n-2]>0) f2=ns[n-2];
+        else f2=findFib(n-2, ns);
+        
+        ns[n]=f1+f2;
+        return ns[n];
+    }
+	
+	// ---------------------------------------------------------
 	// Returns if a given integer is a perfect number
 	// Def: A perfect number = sum of all its divisors excluding itself
 	// EX: 28 is a perfect number = 1+2+4+7+14
