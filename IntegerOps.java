@@ -5,6 +5,27 @@ import java.util.ArrayList;
 
 public class IntegerOps {
 	// ---------------------------------------------------------
+	// Convert a given integer num to its base7 in form of String
+	public static String convertToBase7(int num) {
+		// runtime O(lgn) memory usage O(1)
+        if(num==0) return "0";
+        
+        int negative=-1;
+        if(num>0) negative=1;
+        
+        num*=negative;
+        StringBuilder build=new StringBuilder();
+        
+        while(num>0){
+            build.append(num%7);
+            num/=7;
+        }
+        
+        if(negative==-1) build.append('-');
+        return build.reverse().toString();
+    }
+	
+	// ---------------------------------------------------------
 	// Returns the {length, width} that will form the given area 
 	// where length>=width 
 	// and length and width has the smallest difference as possible
