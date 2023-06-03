@@ -2,7 +2,42 @@
 More chips are coming on Every Thursday!</br>
 
 -----------------------------------</br>
-Last Updated on <b>May 29th, 2023</b></br>
+Last Updated on <b>June 3rd, 2023</b></br>
+<b>ADDED: </b>
+- BitWiseCalculator
+	- countBitDiff
+	- findComplement
+- Array2DOfIntOps
+	- landPerimeter
+	- findShortestPathBinaryMatrix
+- StringOps
+	- reformatting_I
+	- checkCapitalUse
+	- findLongestUncommonSubsequence
+- ArrayOfIntOps
+	- findMaxConsecutive1s
+	- nextGreaterElement and nextGreaterElement_stack
+- ArrayOfStringOps
+	- findWords_I
+- IntegerOps
+	- constructSquarestRectangle
+	- convertToBase7
+	- isPerfectNumber
+	- fib and fib_recur
+- PoisonGame
+	- findPoisonedDuration
+- MyHashSet
+	- add
+	- remove
+	- contains
+- BinarySearchTreeOps
+	- findMode_InOrder and findMode_PostOrder
+- RelativeRank
+	- findRelativeRanks
+
+
+---------------------</br>
+<b>May 29th, 2023</b></br>
 <b>ADDED: </b>
 - IntegerOps
 	- countNumbersWithUniqueDigits
