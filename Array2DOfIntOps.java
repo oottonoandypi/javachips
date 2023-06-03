@@ -1,6 +1,100 @@
 package javachips;
 
+import java.util.Queue;
+import java.util.LinkedList;
+
 public class Array2DOfIntOps {
+	// ---------------------------------------------------------
+	// Given a nxn binary matrix (contains only 1s and 0s, 0s mean paths, 1s mean obstacles that can not be crossed)
+	// Return the shortest length of path from [0][0] to [n-1][n-1]
+	public static int findShortestPathBinaryMatrix(int[][] grid) {
+		// BFS approach: runtime O(n^2) memory usage(n^2)
+        int width=grid.length;
+        if(grid[0][0]==1 || grid[width-1][width-1]==1) return -1;
+        
+        Queue<int[]> q=new LinkedList<int[]>();
+        int len=0;
+        
+        q.add(new int[]{0,0});
+        int qLen=q.size();
+        
+        int[] cell;
+        int cellR;
+        int cellC;
+        
+        while(!q.isEmpty()){
+            ++len;
+            
+            while(qLen>0){
+                cell=q.poll();
+                cellR=cell[0];
+                cellC=cell[1];
+                
+                if(cellR==width-1 && cellC==width-1) return len;
+                
+                if(cellR-1>=0) {
+                    // if(cellR-1==width-1 && cellC==width-1) return len+1;
+                    
+                    if(grid[cellR-1][cellC]==0) {
+                        q.add(new int[]{cellR-1, cellC});
+                        grid[cellR-1][cellC]=1;
+                    }
+                    
+                    if(cellC+1<width && grid[cellR-1][cellC+1]==0){
+                        // if(cellR-1==width-1 && cellC+1==width-1) return len+1;
+                        q.add(new int[]{cellR-1, cellC+1});
+                        grid[cellR-1][cellC+1]=1;
+                    }
+                    
+                    if(cellC-1>=0 && grid[cellR-1][cellC-1]==0) {
+                        // if(cellR-1==width-1 && cellC-1==width-1) return len+1;
+                        q.add(new int[]{cellR-1, cellC-1});
+                        grid[cellR-1][cellC-1]=1;
+                    }
+                    
+                }
+                
+                if(cellC+1<width && grid[cellR][cellC+1]==0) {
+                    // if(cellR==width-1 && cellC+1==width-1) return len+1;
+                    q.add(new int[]{cellR, cellC+1});
+                    grid[cellR][cellC+1]=1;
+                }
+                if(cellC-1>=0 && grid[cellR][cellC-1]==0) {
+                    // if(cellR==width-1 && cellC-1==width-1) return len+1;
+                    q.add(new int[]{cellR, cellC-1});
+                    grid[cellR][cellC-1]=1;
+                }
+                
+                if(cellR+1<width) {
+                    if(cellC-1>=0 && grid[cellR+1][cellC-1]==0){
+                        // if(cellR+1==width-1 && cellC-1==width-1) return len+1;
+                        q.add(new int[]{cellR+1, cellC-1});
+                        grid[cellR+1][cellC-1]=1;
+                    }
+                    
+                    if(grid[cellR+1][cellC]==0){
+                        // if(cellR+1==width-1 && cellC==width-1) return len+1;
+                        q.add(new int[]{cellR+1, cellC});
+                        grid[cellR+1][cellC]=1;
+                    }
+                    
+                    if(cellC+1<width && grid[cellR+1][cellC+1]==0) {
+                        // if(cellR+1==width-1 && cellC+1==width-1) return len+1;
+                        q.add(new int[]{cellR+1, cellC+1});
+                        grid[cellR+1][cellC+1]=1;
+                    }
+                    
+                }
+                
+                grid[cellR][cellC]=1;
+                qLen--;
+            }
+            qLen=q.size();
+        }
+        
+        return -1;
+	}
+	
 	// ---------------------------------------------------------
 	// grid[i][j]=0 => water; grid[i][j]=1 => land
 	// measure the perimeter of land
