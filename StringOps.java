@@ -10,6 +10,21 @@ import java.util.Stack;
 
 public class StringOps {
 	// ---------------------------------------------------------
+	// Given 2 strings, return the length of longest uncommon subsequence of them
+	// An uncommon subsequence between two strings is a string that is a subsequence of one but not the other.
+	public static int findLongestUncommonSubsequence(String a, String b) {
+		// runtime O(n)
+        if(a.length()<b.length()) return b.length();
+        else if(a.length()>b.length()) return a.length();
+        
+        for(int i=0; i<a.length(); i++){
+            if(a.charAt(i)!=b.charAt(i)) return a.length();
+        }
+        
+        return -1;
+    }
+	
+	// ---------------------------------------------------------
 	// Given a String word
 	// Check if it's using Capitals correctly like the following:
 	// 1. All letters in this word are capitals, like "USA".
