@@ -17,6 +17,28 @@ public class BinarySearchTreeOps {
 	}
 	
 	// ---------------------------------------------------------
+	// Returns the minimum absolute difference in BST
+	private int minDiff_getMinimumDifference=Integer.MAX_VALUE;
+    private TreeNode prev_getMinimumDifference=null;
+    public int getMinimumDifference(TreeNode root) {
+    	// inorder dfs approach
+    	// runtime O(n) memory usage O(1)
+        findMinDiff(root);
+        return minDiff_getMinimumDifference;
+    }
+    
+    private void findMinDiff(TreeNode node){
+        if(node==null) return;
+        
+        findMinDiff(node.left);
+        if(prev_getMinimumDifference!=null) minDiff_getMinimumDifference=Math.min(minDiff_getMinimumDifference, node.val-prev_getMinimumDifference.val);
+        prev_getMinimumDifference=node;
+        
+        findMinDiff(node.right);
+        
+    }
+    
+	// ---------------------------------------------------------
 	// Find Mode: The value(s) that appear most frequent in a BST
 	private static int mostFreq=0;
     private static int count=0;
