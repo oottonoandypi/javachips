@@ -17,6 +17,26 @@ public class BinaryTreeOps {
 		}
 	}
 	
+	// --------------------------------------------------------------------------------------
+	// Given the root of a binary tree, return the diameter of it
+	// Note: a diameter is the longest path between any 2 nodes in a tree. The path may or may not pass the root.
+	// The length of a path between two nodes is represented by the number of edges between them.
+	private int maxDiameter=0;
+    public int diameter(TreeNode root) {
+        findDiameter(root);
+        return maxDiameter;
+    }
+    
+    private int findDiameter(TreeNode node){
+    	// runtime O(n) memory O(n)
+        if(node==null) return -1;
+        int leftDiameters=findDiameter(node.left);
+        int rightDiameters=findDiameter(node.right);
+        maxDiameter=Math.max(maxDiameter, leftDiameters+rightDiameters+2);
+        
+        return Math.max(leftDiameters, rightDiameters)+1;
+    }
+	
 	// Given the root of a binary tree, return the sum of all left leaves.
 	// A leaf is a node with no children. A left leaf is a leaf that is the left child of another node.
 	
