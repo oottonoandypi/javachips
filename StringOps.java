@@ -10,6 +10,30 @@ import java.util.Stack;
 
 public class StringOps {
 	// ---------------------------------------------------------
+	// Reverse k characters for every 2k characters counting from start of the given string
+	public static String reverse_k_chars(String s, int k) {
+		// runtime O(n) memory O(n)
+        char[] chars=s.toCharArray();
+        int l;
+        int r;
+        char t;
+        int len=s.length();
+        
+        for(int i=0; i<len; i+=k+k){
+            l=i;
+            r=Math.min(i+k, len)-1;
+            while(l<r){
+                t=chars[l];
+                chars[l]=chars[r];
+                chars[r]= t;
+                l++;
+                r--;
+            }
+        }
+        return new String(chars);
+    }
+	
+	// ---------------------------------------------------------
 	// Given 2 strings, return the length of longest uncommon subsequence of them
 	// An uncommon subsequence between two strings is a string that is a subsequence of one but not the other.
 	public static int findLongestUncommonSubsequence(String a, String b) {
