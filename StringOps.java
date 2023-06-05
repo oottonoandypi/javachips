@@ -10,6 +10,33 @@ import java.util.Stack;
 
 public class StringOps {
 	// ---------------------------------------------------------
+	// Given a string that represents a student's attendance record
+	// 'A' => Absent; 'L' => Late; 'P' => Present
+	// return true if a student was absent ('A') for strictly fewer than 2 days total and was never late ('L') for 3 or more consecutive days.
+	public static boolean checkAttendance(String s) {
+		// runtime O(n) memory O(1)
+        int countAbsent=0;
+        int countLate=0;
+        char c;
+        
+        for(int i=0; i<s.length(); i++){
+            c=s.charAt(i);
+            if(c=='L'){
+                if(countLate==2) return false;
+                countLate++;
+            }else{
+                countLate=0;
+                if(c=='A') {
+                    if(countAbsent==1) return false;
+                    countAbsent++;
+                }
+            }
+        }
+        
+        return true;
+    }
+	
+	// ---------------------------------------------------------
 	// Reverse k characters for every 2k characters counting from start of the given string
 	public static String reverse_k_chars(String s, int k) {
 		// runtime O(n) memory O(n)
