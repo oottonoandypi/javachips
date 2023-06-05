@@ -12,6 +12,49 @@ import java.util.Stack;
 
 public class ArrayOfIntOps {
 	// ---------------------------------------------------------
+	// Given an integer array nums of 2n integers, (not ordered)
+	// group these integers into n pairs (a1, b1), (a2, b2), ..., (an, bn) such that 
+	// sum of min(ai, bi) for all i is maximized. Return the maximized sum.
+	public static int maxSumOfminPairs_countSort(int[] nums) {
+        // Count Sort runtime O(n) memory O(~); ~:depends on the range of integers in nums
+        int max=nums[0];
+        int min=nums[0];
+        
+        for(int i=1; i<nums.length; i++){
+            if(nums[i]<min) min=nums[i];
+            else if(nums[i]>max) max=nums[i];
+        }
+        
+        int[] range=new int[max-min+1];
+        
+        for(int n:nums) range[n-min]++;
+        
+        int remain=0;
+        int count=0;
+        int sum=0;
+        for(int i=0; i<range.length; i++){
+            if(range[i]>0){
+                count=(range[i]-remain)/2;
+                remain=(range[i]-remain)%2;
+
+                sum+=(i+min)*(count+remain);
+            }
+        }
+        
+        return sum;
+    }
+	
+	public static int maxSumOfminPairs_Sort(int[] nums) {
+        // Sort runtime O(nlgn) memory O(1)
+        Arrays.sort(nums);
+        int sum=0;
+        for(int i=0; i<nums.length; i+=2){
+            sum+=nums[i];
+        }
+        return sum;
+    }
+	
+	// ---------------------------------------------------------
 	// Given 2 arrays:
 	// nums2 contains integers with no duplicates in non-ordered manner
 	// nums1 contains integers from nums2
