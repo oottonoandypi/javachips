@@ -10,6 +10,33 @@ import java.util.Stack;
 
 public class StringOps {
 	// ---------------------------------------------------------
+	// Given a string s, reverse characters in each word separated by a space (' ') while keeping the order of words
+	// EX. "Let's take LeetCode contest" => "s'teL ekat edoCteeL tsetnoc"
+	public static String reverseWords(String s) {
+		// runtime O(n) memory O(n)
+        char[] build=s.toCharArray();
+        int l=0;
+        int r;
+        char c;
+        
+        for(int i=0; i<build.length; i++){
+            if(i==build.length-1 || build[i+1]==' ') {
+                r=i;
+                
+                while(l<r){
+                    c=build[l];
+                    build[l++]=build[r];
+                    build[r--]=c;
+                }
+                
+                l=i+2;
+            }
+        }
+        
+        return new String(build);
+    }
+	
+	// ---------------------------------------------------------
 	// Given a string that represents a student's attendance record
 	// 'A' => Absent; 'L' => Late; 'P' => Present
 	// return true if a student was absent ('A') for strictly fewer than 2 days total and was never late ('L') for 3 or more consecutive days.
