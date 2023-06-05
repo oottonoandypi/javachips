@@ -10,7 +10,7 @@ public class Array2DOfIntOps {
 	// places that are directly/indirectly connected counts as 1 component
 	// findComponents() returns the number of components
 	
-	public static int findComponents_matchComponent(int[][] isConnected) {
+	public static int findComponents_grouping(int[][] isConnected) {
 		// runtime O(n^2) memory O(n)
         int[] component=new int[isConnected.length];
         int minComponent;
