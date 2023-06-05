@@ -5,6 +5,90 @@ import java.util.LinkedList;
 
 public class Array2DOfIntOps {
 	// ---------------------------------------------------------
+	// Given a nxn matrix that represents direct and indirect connections between n places
+	// if there are 4 places in total, place 0 is only directly connected to place 3, matrix[0]=[1, 0, 0, 1]
+	// places that are directly/indirectly connected counts as 1 component
+	// findComponents() returns the number of components
+	
+	public static int findComponents_matchComponent(int[][] isConnected) {
+		// runtime O(n^2) memory O(n)
+        int[] component=new int[isConnected.length];
+        int minComponent;
+        
+        for(int i=0; i<component.length; i++) component[i]=i;
+        
+        for(int i=0; i<isConnected.length; i++){
+            minComponent=component[i];
+            for(int j=0; j<isConnected.length; j++){
+                if(isConnected[i][j]==1) {
+                    if(component[component[j]]<minComponent) {
+                        component[j]=component[component[j]];
+                        minComponent=component[j];
+                    }else component[component[j]]=minComponent;
+                }
+            }
+        }
+        
+        int count=0;
+        for(int i=0; i<component.length; i++){
+            if(i==0 || component[i]>i-1) count++;
+        }
+        return count;
+    }
+	
+	public static int findCircleNum_bfs(int[][] isConnected) {
+        // bfs runtime O(n^2) memory O(n)
+        boolean[] isVisited=new boolean[isConnected.length];
+        Queue<Integer> queue=new LinkedList<Integer>();
+        
+        int components=isVisited.length;
+        int checkout;
+        
+        for(int v=0; v<isVisited.length; v++){
+            if(isVisited[v]) continue;
+            
+            queue.add(v);
+            isVisited[v]=true;
+            
+            while(!queue.isEmpty()){
+                checkout=queue.poll();
+                for(int i=0; i<isVisited.length; i++){
+                    if(isVisited[i]) continue;
+                    if(isConnected[checkout][i]==1){
+                        components--;
+                        isVisited[i]=true;
+                        queue.add(i);
+                    }
+                }
+            }
+        }
+        
+        return components;
+    }
+	
+	public static int findCircleNum_dfs(int[][] isConnected) {
+        // dfs runtime O(n^2) memory O(n)
+        boolean[] isVisited=new boolean[isConnected.length];
+        int components=0;
+        for(int i=0; i<isVisited.length; i++){
+            if(isVisited[i]) continue;
+            components++;
+            coverConnections(isConnected[i], isVisited, isConnected);
+        }
+        return components;
+    }
+    // helper function for findCircleNum_dfs() ^^
+    private static void coverConnections(int[] connections, boolean[] isVisited, int[][] isConnected){
+        for(int i=0; i<connections.length; i++){
+            if(isVisited[i]) continue;
+            if(connections[i]==1) {
+                isVisited[i]=true;
+                coverConnections(isConnected[i], isVisited, isConnected);
+            }
+        }
+    }
+	
+	// ---------------------------------------------------------
 	// Given a nxn binary matrix (contains only 1s and 0s, 0s mean paths, 1s mean obstacles that can not be crossed)
 	// Return the shortest length of path from [0][0] to [n-1][n-1]
 	public static int findShortestPathBinaryMatrix(int[][] grid) {
