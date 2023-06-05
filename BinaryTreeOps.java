@@ -18,6 +18,44 @@ public class BinaryTreeOps {
 	}
 	
 	// --------------------------------------------------------------------------------------
+	// Given the root of a binary tree, return the sum of tilts of all the nodes in the tree
+	public static int sumOfTilt_solution1(TreeNode root) {
+        return tiltOf_1(root);
+    }
+    
+    private static int tiltOf_1(TreeNode node){
+        if(node==null || (node.left==null && node.right==null)) return 0;
+        
+        int t=tiltOf_1(node.left)+tiltOf_1(node.right);
+        
+        if(node.left==null){
+            node.val+=node.right.val;
+            t+=Math.abs(node.right.val);
+        }else if(node.right==null){
+            node.val+=node.left.val;
+            t+=Math.abs(node.left.val);
+        }else {
+            node.val+=node.left.val+node.right.val;
+            t+=Math.abs(node.left.val-node.right.val);
+        }
+        
+        return t;
+    }
+    
+    public static int sumOfTilt_solution2(TreeNode root) {
+        return tiltOf_2(root)[0];
+    }
+    
+    private static int[] tiltOf_2(TreeNode node){
+        if(node==null) return new int[]{0, 0};
+        
+        int[] leftTilt=tiltOf_2(node.left);
+        int[] rightTilt=tiltOf_2(node.right);
+        
+        return new int[]{leftTilt[0]+rightTilt[0]+Math.abs(leftTilt[1]-rightTilt[1]), leftTilt[1]+rightTilt[1]+node.val};
+    }
+	
+	// --------------------------------------------------------------------------------------
 	// Given the root of a binary tree, return the diameter of it
 	// Note: a diameter is the longest path between any 2 nodes in a tree. The path may or may not pass the root.
 	// The length of a path between two nodes is represented by the number of edges between them.
