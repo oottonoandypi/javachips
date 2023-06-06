@@ -11,6 +11,35 @@ import java.util.Iterator;
 import java.util.Stack;
 
 public class ArrayOfIntOps {
+	// Given an array of distinct non-negative integers nums and a target integer target, 
+	// return the number of possible combinations that add up to target.
+	public static int countCombinationsThatSumToTarget(int[] nums, int target) {
+		// runtime O(n^target) memory O(target)
+        int[] visited=new int[target+1];
+        int res=findComboThatSumToTarget(nums, visited, target);
+        // for(int n: visited) System.out.println(n);
+        if(res==-1) return 0;
+        return res;
+    }
+    
+    private static int findComboThatSumToTarget(int[] nums, int[] visited, int target){
+        if(target<0) return -1;
+        if(target==0) return 1;
+        if(visited[target]!=0) return visited[target];
+        
+        int countCombos=0;
+        int count;
+        for(int n: nums){
+            count=findComboThatSumToTarget(nums, visited, target-n);
+            if(count>-1) countCombos+=count;
+        }
+        
+        if(countCombos==0) visited[target]=-1;
+        else visited[target]=countCombos;
+        
+        return visited[target];
+    }
+	
 	// ---------------------------------------------------------
 	// Given an unordered array, returns true if array can be arranged to an arithmetic progression
 	// Note; arithmetic progression is a sequence of numbers where the difference between any two consecutive elements is the same
