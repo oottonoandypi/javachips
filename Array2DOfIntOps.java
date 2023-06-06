@@ -5,6 +5,31 @@ import java.util.LinkedList;
 
 public class Array2DOfIntOps {
 	// ---------------------------------------------------------
+	// Reshape a 2D array mxn to a 2D array rxc
+	// matrix=[[1,2],[3,4]], r = 1, c = 4 => [[1,2,3,4]]
+	public static int[][] matrixReshape(int[][] mat, int r, int c) {
+        int originalR=mat.length;
+        int originalC=mat[0].length;
+        
+        if(originalR*originalC==r*c){
+            int[][] newMat=new int[r][c];
+            int indexR=0;
+            int indexC=0;
+            
+            for(int i=0; i<originalR; i++){
+                for(int j=0; j<originalC; j++){
+                    newMat[indexR][indexC++]=mat[i][j];
+                    if(indexC==c){
+                        indexR++;
+                        indexC=0;
+                    }
+                }
+            }
+            return newMat;
+        }else return mat;
+    }
+	
+	// ---------------------------------------------------------
 	// Given a nxn matrix that represents direct and indirect connections between n places
 	// if there are 4 places in total, place 0 is only directly connected to place 3, matrix[0]=[1, 0, 0, 1]
 	// places that are directly/indirectly connected counts as 1 component
