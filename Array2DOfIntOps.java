@@ -5,6 +5,55 @@ import java.util.LinkedList;
 
 public class Array2DOfIntOps {
 	// ---------------------------------------------------------
+	// Given an integer array nums, return the length of the longest wiggle subsequence of nums.
+	public static int maxLengthOfWiggleSubsequence_n(int[] nums) {
+		// Linear greedy approach runtime O(n) memory O(1)
+		// when nums[i-1]-nums[i] stay in the previous status (increasing/decreasing), max length stay the same
+		// until the status of (increasing/decreasing) changes
+        int numsLen=nums.length;
+        if(numsLen==1) return numsLen;
+        
+        int prevStatus=0;
+        if((nums[0]-nums[1])!=0) prevStatus=(nums[0]-nums[1])/Math.abs(nums[0]-nums[1]);
+        //int prev=1;
+        int maxLen=2;
+        if(prevStatus==0) maxLen=1;
+        
+        for(int i=2; i<nums.length; i++){
+            if(nums[i-1]-nums[i]==0) continue;
+            if((nums[i-1]-nums[i])/Math.abs(nums[i-1]-nums[i])!=prevStatus){
+                maxLen++;
+                prevStatus=(nums[i-1]-nums[i])/Math.abs(nums[i-1]-nums[i]);
+            }
+            //prev=i;
+        }
+        return maxLen;
+    }
+	
+	public static int maxLengthOfWiggleSubsequence_nn(int[] nums) {
+		// Brute force approach, runtime O(n^2) memory O(n)
+		// for i in range nums.length; record the max length of next increasing and next decreasing seq
+        int numsLen=nums.length;
+        int[][] sequenceLength=new int[numsLen][2];
+        int currNum;
+        
+        for(int i=nums.length-1; i>=0; i--){
+            currNum=nums[i];
+            for(int j=i+1; j<numsLen; j++){
+                if(nums[j]>currNum){
+                    sequenceLength[i][0]=Math.max(sequenceLength[i][0], sequenceLength[j][1]+1);
+                }else if(nums[j]<currNum){
+                    sequenceLength[i][1]=Math.max(sequenceLength[i][1], sequenceLength[j][0]+1);
+                }
+            }
+            if(sequenceLength[i][0]==0) sequenceLength[i][0]=1;
+            if(sequenceLength[i][1]==0) sequenceLength[i][1]=1;
+        }
+        
+        return Math.max(sequenceLength[0][0],sequenceLength[0][1]);
+    }
+	
+	// ---------------------------------------------------------
 	// Reshape a 2D array mxn to a 2D array rxc
 	// matrix=[[1,2],[3,4]], r = 1, c = 4 => [[1,2,3,4]]
 	public static int[][] matrixReshape(int[][] mat, int r, int c) {
