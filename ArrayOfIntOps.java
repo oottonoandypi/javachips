@@ -12,6 +12,77 @@ import java.util.Stack;
 
 public class ArrayOfIntOps {
 	// ---------------------------------------------------------
+	// Given an unordered array, returns true if array can be arranged to an arithmetic progression
+	// Note; arithmetic progression is a sequence of numbers where the difference between any two consecutive elements is the same
+	public static boolean canMakeArithmeticProgression_n(int[] arr) {
+		// runtime O(n) memory O(1)
+        int min=arr[0];
+        int max=arr[0];
+        int len=arr.length;
+        for(int n: arr){
+            if(n<min) min=n;
+            else if(n>max) max=n;
+        }
+        
+        if(min==max) return true;
+        if((max-min)%(len-1)!=0) return false;
+        
+        int diff=(max-min)/(len-1);
+        int index=0;
+        int findIndex;
+        int t;
+        
+        while(index<len){
+            if((arr[index]-min)%diff!=0) return false;
+            findIndex=(arr[index]-min)/diff;
+            if(findIndex!= index) {
+                if(arr[findIndex]==arr[index]) return false;
+                t=arr[findIndex];
+                arr[findIndex]=arr[index];
+                arr[index]=t;
+            }else index++;
+        }
+        
+        return true;
+    }
+	
+	public static boolean canMakeArithmeticProgression_n_set(int[] arr) {
+		// runtime O(n) memory O(n)
+        int min=arr[0];
+        int max=arr[0];
+        HashSet<Integer> set=new HashSet<Integer>();
+        boolean hasMultiple=false;
+        
+        for(int n: arr){
+            if(n<min) min=n;
+            else if(n>max) max=n;
+            if(set.contains(n)) hasMultiple=true;
+            set.add(n);
+        }
+        if(min==max) return true;
+        if(hasMultiple) return false;
+        if((max-min)%(arr.length-1)!=0) return false;
+        int diff=(max-min)/(arr.length-1);
+        for(int n: arr){
+            if((n-min)%diff!=0) return false;
+        }
+        
+        return true;
+    }
+	
+	public static boolean canMakeArithmeticProgression_nlgn(int[] arr) {
+		// runtime O(nlgn) memory O(1)
+        Arrays.sort(arr);
+        int diff=arr[1]-arr[0];
+        
+        for(int i=2; i<arr.length; i++){
+            if(arr[i]-arr[i-1]!=diff) return false;
+        }
+        
+        return true;
+    }
+	
+	// ---------------------------------------------------------
 	// Given an integer array nums of 2n integers, (not ordered)
 	// group these integers into n pairs (a1, b1), (a2, b2), ..., (an, bn) such that 
 	// sum of min(ai, bi) for all i is maximized. Return the maximized sum.
