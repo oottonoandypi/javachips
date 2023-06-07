@@ -11,6 +11,47 @@ import java.util.Iterator;
 import java.util.Stack;
 
 public class ArrayOfIntOps {
+	// ---------------------------------------------------------
+	// Given an array of candies, each entry candies[i] represents a candy type
+	// Knowing the maximum candies can be distributed is array.size/2
+	// Return the maximum different candy types can be distributed
+	public static int distributeCandies_array(int[] candyType) {
+		//runtime O(n) memory O(k)
+        int countTypes=0;
+        int maxCandies=candyType.length/2;
+        int smallestType=candyType[0];
+        int largestType=candyType[0];
+        
+        for(int ct: candyType){
+            if(ct<smallestType) smallestType=ct;
+            else if(ct>largestType) largestType=ct;
+        }
+        
+        boolean[] countCandies=new boolean[largestType-smallestType+1];
+        for(int ct: candyType){
+            if(!countCandies[ct-smallestType]) {
+                countTypes++;
+                countCandies[ct-smallestType]=true;
+            }
+            if(countTypes>=maxCandies) return maxCandies;
+        }
+        
+        return countTypes;
+    }
+	
+	public static int distributeCandies_hashset(int[] candyType) {
+		//runtime O(n) memory O(k)
+        HashSet<Integer> candyTypes=new HashSet<Integer>();
+        int maxCandy=candyType.length/2;
+        for(int ct: candyType) {
+            candyTypes.add(ct);
+            if(candyTypes.size()>maxCandy) return maxCandy;
+        }
+        return candyTypes.size();
+    }
+	
+	
+	// ---------------------------------------------------------
 	// Given an array of distinct non-negative integers nums and a target integer target, 
 	// return the number of possible combinations that add up to target.
 	public static int countCombinationsThatSumToTarget(int[] nums, int target) {
