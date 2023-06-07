@@ -2,6 +2,35 @@ package javachips;
 import java.util.Scanner;
 
 public class BitWiseCalculator {
+	// ---------------------------------------------------------
+	// Given integer a, b, and c, Find minimum flips to make a|b=c
+	public int minFlipsMakeAorBequalsC(int a, int b, int c) {
+		// runtime O(lg(Max(a, b, c))) memory O(1)
+		int digitC;
+        int digitA;
+        int digitB;
+        int count=0;
+        
+        while(c>0 || b>0 || a>0){
+            digitA=a%2;
+            digitB=b%2;
+            digitC=c%2;
+            
+            if((digitA|digitB)!=digitC){
+                if(digitC==1) count++;
+                else{
+                    if((digitA^digitB)==0) count+=2;
+                    else count++;
+                }
+            }
+            
+            c/=2;
+            b/=2;
+            a/=2;
+        }
+        return count;
+	}
+	
 	// return complement of a given integer
 	public int findComplement(int num) {
 		// runtime O(lgn)
