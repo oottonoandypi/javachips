@@ -18,6 +18,31 @@ public class BinaryTreeOps {
 	}
 	
 	// --------------------------------------------------------------------------------------
+	// Given the roots of two binary trees root and subRoot,
+	// return true if there is a subtree of root with the same structure and node values of subRoot and false otherwise.
+	// Note: A subtree of a binary tree tree is a tree that consists of a node in tree and all of this node's descendants. The tree tree could also be considered as a subtree of itself.
+	public static boolean hasSubtree(TreeNode root, TreeNode subRoot) {
+        // bottom-up dfs
+        // runtime O(n*k)
+        if(root==null) return false;
+        
+        if(hasSubtree(root.left, subRoot)) return true;
+        if(hasSubtree(root.right, subRoot)) return true;
+        
+        return isSameAsSubtree(root, subRoot);
+    }
+    
+    private static boolean isSameAsSubtree(TreeNode node, TreeNode subNode){
+        if(node==null && subNode==null) return true;
+        else if(node==null || subNode==null) return false;
+        
+        if(node.val==subNode.val){
+            if(isSameAsSubtree(node.left, subNode.left) && isSameAsSubtree(node.right, subNode.right)) return true;
+            return false;
+        }else return false;
+    }
+	
+	// --------------------------------------------------------------------------------------
 	// Given the root of a binary tree, return the sum of tilts of all the nodes in the tree
 	public static int sumOfTilt_solution1(TreeNode root) {
         return tiltOf_1(root);
