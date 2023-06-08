@@ -5,6 +5,80 @@ import java.util.LinkedList;
 
 public class Array2DOfIntOps {
 	// ---------------------------------------------------------
+	// Count negative numbers in a sorted 2D matrix that is in non-increasing order both row-wise and column-wise.
+	public static int countNegativesInSortedMatrix_log(int[][] grid) {
+		// runtime O(lgm+lgn) memory O(1)
+        int rows=grid.length;
+        int cols=grid[0].length;
+        int count=0;
+        int j=cols-1;
+        int i=0;
+        boolean onRow=true;
+        int biggestNegIndex;
+            
+        while(i<rows && j>=0){
+            if(onRow){
+                biggestNegIndex=__binSearchNegRow__(0, j, grid[i]);
+                //System.out.println("rowIndex "+biggestNegIndex);
+                if(biggestNegIndex<cols && grid[i][biggestNegIndex]<0) count+=(j-biggestNegIndex+1)*(rows-i);
+                j=biggestNegIndex-1;
+                i++;
+                onRow=false;
+            }else{
+                biggestNegIndex=__binSearchNegCol__(i, rows-1, grid, j);
+                //System.out.println("colIndex "+biggestNegIndex);
+                if(biggestNegIndex<rows && grid[biggestNegIndex][j]<0) count+=rows-biggestNegIndex;
+                i=biggestNegIndex;
+                j--;
+                onRow=true;
+            }
+        }
+        
+        return count;
+    }
+    // helper function for countNegatives_log()^^
+    private static int __binSearchNegRow__(int l, int r, int[] row){
+        int mid;
+        while(l<=r){
+            mid=l+(r-l)/2;
+            if(row[mid]<0) r=mid-1;
+            else l=mid+1;
+        }
+        
+        return l;
+    }
+    // helper function for countNegatives_log()^^
+    private static int __binSearchNegCol__(int t, int d, int[][] grid, int col){
+        int mid;
+        while(t<=d){
+            mid=t+(d-t)/2;
+            if(grid[mid][col]<0) d=mid-1;
+            else t=mid+1;
+        }
+        
+        return t;
+    }
+	
+	public static int countNegativesInSortedMatrix_linear(int[][] grid) {
+		// runtime O(row+col) memory O(1)
+        int rows=grid.length;
+        int cols=grid[0].length;
+        int count=0;
+        int j=cols-1;
+        
+        for(int i=0; i<rows; i++){
+            while(j>=0){
+                if(grid[i][j]<0) {
+                    count+=rows-i;
+                    j--;
+                }else break;
+            }
+        }
+        
+        return count;
+    }
+	
+	// ---------------------------------------------------------
 	// Given an integer array nums, return the length of the longest wiggle subsequence of nums.
 	public static int maxLengthOfWiggleSubsequence_n(int[] nums) {
 		// Linear greedy approach runtime O(n) memory O(1)
