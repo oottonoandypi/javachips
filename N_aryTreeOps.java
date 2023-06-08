@@ -23,6 +23,23 @@ class N_aryTreeNode {
 public class N_aryTreeOps {
 	// ---------------------------------------------------------
 	// Given the root of a n-ary tree
+	// Returns the postorder traversal of its nodes' values
+	public List<Integer> postorderList(N_aryTreeNode root) {
+        List<Integer> list=new ArrayList<Integer>();
+        postorderTraverse(list, root);
+        return list;
+    }
+    
+    private void postorderTraverse(List<Integer> list, N_aryTreeNode node){
+        if(node==null) return;
+        for(int i=0; i<node.children.size(); i++){
+            postorderTraverse(list, node.children.get(i));
+        }
+        list.add(node.val);
+    }
+
+	// ---------------------------------------------------------
+	// Given the root of a n-ary tree
 	// Returns the preorder traversal of its nodes' values
 	public List<Integer> preorderList(N_aryTreeNode root) {
         List<Integer> list=new ArrayList<Integer>();
