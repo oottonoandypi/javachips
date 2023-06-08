@@ -1,6 +1,7 @@
 package javachips;
 
 import java.util.List;
+import java.util.ArrayList;
 
 // helper class N_aryTreeNode that every node has a value and a list of children
 class N_aryTreeNode {
@@ -20,6 +21,24 @@ class N_aryTreeNode {
 };
 
 public class N_aryTreeOps {
+	// ---------------------------------------------------------
+	// Given the root of a n-ary tree
+	// Returns the preorder traversal of its nodes' values
+	public List<Integer> preorderList(N_aryTreeNode root) {
+        List<Integer> list=new ArrayList<Integer>();
+        preorderTraverse(list, root);
+        return list;
+    }
+    
+    private void preorderTraverse(List<Integer> list, N_aryTreeNode node){
+        if(node==null) return;
+        list.add(node.val);
+        for(int i=0; i<node.children.size(); i++){
+            preorderTraverse(list, node.children.get(i));
+        }
+    }
+	
+	// ---------------------------------------------------------
 	// Given the root of a n-ary tree
 	// Returns the max. depth
 	public int maxDepth(N_aryTreeNode root) {
