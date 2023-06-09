@@ -2,8 +2,69 @@ package javachips;
 
 import java.util.Queue;
 import java.util.LinkedList;
+import java.util.Comparator;
+import java.util.PriorityQueue;
 
 public class Array2DOfIntOps {
+	// ---------------------------------------------------------
+	// Given a non-decreasing ordered matrix
+	// Return the k-th smallest value in the matrix (not the kth distinct)
+	public static int kthSmallest_binsearch(int[][] matrix, int k) {
+        // binary search runtime <O(klgn) memory O(1)
+        int width=matrix.length;
+        int smallestVal=matrix[0][0];
+        int biggestVal=matrix[width-1][width-1]+1;
+        int middleVal;
+        int count;
+        int j;
+        
+        while(smallestVal<biggestVal){
+            middleVal=smallestVal+(biggestVal-smallestVal)/2;
+            count=0;
+            for(int i=0; i<width; i++){
+                j=width-1;
+                while(j>=0 && matrix[i][j]>middleVal) j--;  
+                count+=j+1;
+            }
+            if(count<k) smallestVal=middleVal+1;
+            else biggestVal=middleVal;
+        }
+        return smallestVal;
+    }
+	
+	public static int kthSmallest_priorityqueue(int[][] matrix, int k) {
+        // runtime O(klgn) memory O(n)
+        PriorityQueue<int[]> coordinates=new PriorityQueue<int[]>(new MatrixComparator());
+        int width=matrix.length;
+        int last=matrix[0][0];
+        int[] checkout;
+        for(int i=0; i<width; i++){
+            coordinates.add(new int[]{i, 0, matrix[i][0]});
+        }
+        
+        while(k>0 && !coordinates.isEmpty()){
+            checkout=coordinates.poll();
+            last=checkout[2];
+            checkout[1]++;
+            if(checkout[1]<width) {
+                checkout[2]=matrix[checkout[0]][checkout[1]];
+                coordinates.add(checkout);
+            }
+            k--;
+        }
+        
+        return last;
+    }
+    // helper class for kthSmallest_priorityqueue() ^^
+    static class MatrixComparator implements Comparator<int[]>{
+        @Override
+        public int compare(int[] a, int[] b){
+            if(a[2]<=b[2]) return -1;
+            else return 1;
+        }
+    }
+	
+	
 	// ---------------------------------------------------------
 	// Count negative numbers in a sorted 2D matrix that is in non-increasing order both row-wise and column-wise.
 	public static int countNegativesInSortedMatrix_log(int[][] grid) {
