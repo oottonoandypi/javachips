@@ -12,6 +12,69 @@ import java.util.Stack;
 
 public class ArrayOfIntOps {
 	// ---------------------------------------------------------
+	// Longest Harmonious Subsequence: an array where the difference between its maximum value and its minimum value is exactly 1
+	// Given an integer array nums, 
+	// return the length of its longest harmonious subsequence among all its possible subsequences
+	public static int lenOflongestHarmonuousSubsequence_nlgn(int[] nums) {
+		// runtime O(lgn) memory O(1)
+        Arrays.sort(nums);
+        int maxLen=0;
+        int first=nums[0];
+        int countFirst=0;
+        int second=first;
+        int countSecond=0;
+        
+        for(int n:nums){
+            if(n==first) countFirst++;
+            else if(n==second) countSecond++;
+            else if(first==second) {
+                if(first-n==-1) {
+                    second=n;
+                    countSecond=1;
+                }else {
+                    first=n;
+                    countFirst=1;
+                    second=first;
+                    // countSecond=0;
+                }
+            }else {
+                // System.out.println("count first "+first+" "+countFirst);
+                // System.out.println("count second "+second+" "+countSecond);
+                maxLen=Math.max(maxLen, countFirst+countSecond);
+                if(second-n==-1){
+                    first=second;
+                    countFirst=countSecond;
+                    second=n;
+                    countSecond=1;
+                }else{
+                    first=n;
+                    countFirst=1;
+                    second=first;
+                    countSecond=0;
+                }
+            }
+        }
+        
+        if(countFirst>0 && countSecond>0) maxLen=Math.max(maxLen, countFirst+countSecond);
+        return maxLen;
+    }
+	
+	public static int lenOflongestHarmonuousSubsequence_hash_n(int[] nums) {
+		// runtime O(n) memory O(n)
+        HashMap<Integer, Integer> integerCounts=new HashMap<Integer, Integer>();
+        int maxLen=0;
+        
+        for(int n: nums){
+            if(!integerCounts.containsKey(n)) integerCounts.put(n, 1);
+            else integerCounts.put(n, integerCounts.get(n)+1);
+            
+            if(integerCounts.containsKey(n-1)) maxLen=Math.max(maxLen, integerCounts.get(n-1)+integerCounts.get(n));
+            if(integerCounts.containsKey(n+1)) maxLen=Math.max(maxLen, integerCounts.get(n+1)+integerCounts.get(n));
+        }
+        return maxLen;
+    }
+	
+	// ---------------------------------------------------------
 	// Given an array of candies, each entry candies[i] represents a candy type
 	// Knowing the maximum candies can be distributed is array.size/2
 	// Return the maximum different candy types can be distributed
