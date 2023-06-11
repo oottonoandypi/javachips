@@ -30,6 +30,7 @@ Last Updated on <b>June 11th, 2023</b></br>
 	- countCombinationsThatSumToTarget
 	- distributeCandies_array, and distributeCandies_hashset
 	- lenOflongestHarmonuousSubsequence_nlgn, and lenOflongestHarmonuousSubsequence_hash_n
+	- maxValueAtIndexOfArray0ToN_binsearch, and maxValueAtIndexOfArray0ToN_bruteforce
 - Array2DOfIntOps
 	- matrixReshape
 	- maxLengthOfWiggleSubsequence_n, and maxLengthOfWiggleSubsequence_nn
@@ -53,6 +54,8 @@ Last Updated on <b>June 11th, 2023</b></br>
 	- insert
 	- remove
 	- getRandom
+- GuessGameII
+	- getMoneyAmount
 
 ---------------------</br>
 <b>June 3rd, 2023</b></br>
