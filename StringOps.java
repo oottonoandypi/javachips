@@ -10,6 +10,35 @@ import java.util.Stack;
 
 public class StringOps {
 	// ---------------------------------------------------------
+	// Given a 0-indexed string s that consists of digits from 0 to 9
+	// Return the length of the longest semi-repetitive substring inside s
+	
+	// Note: A substring is semi-repetitive if there is at most one consecutive pair of the same digits inside t. 
+	// For example, 0010, 002020, 0123, 2002, and 54944 are semi-repetitive while 00101022, and 1101234883 are not.
+	public static int longestSemiRepetitiveSubstring(String s) {
+		// runtime O(n*k) memory O(1)
+        int startIndex=0;
+        int longest=0;
+        int repetitiveAt=-1;
+        
+        for(int i=1; i<s.length(); i++){
+            // System.out.println(i);
+            if(s.charAt(i)==s.charAt(i-1)) {
+                if(repetitiveAt==-1) repetitiveAt=i;
+                else{
+                    longest=Math.max(longest, i-startIndex);
+                    startIndex=repetitiveAt;
+                    i=startIndex;
+                    repetitiveAt=-1;
+                }
+            }
+        }
+        
+        longest=Math.max(longest, s.length()-startIndex);
+        return longest;
+	}
+	
+	// ---------------------------------------------------------
 	// Given a string s, reverse characters in each word separated by a space (' ') while keeping the order of words
 	// EX. "Let's take LeetCode contest" => "s'teL ekat edoCteeL tsetnoc"
 	public static String reverseWords(String s) {
