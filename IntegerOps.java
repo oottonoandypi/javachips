@@ -5,6 +5,47 @@ import java.util.ArrayList;
 
 public class IntegerOps {
 	// ---------------------------------------------------------
+	// given an integer n that consists of exactly 3 digits.
+	// We call the number n fascinating if, after the following modification, the resulting number contains all the digits from 1 to 9 exactly once and does not contain any 0's:
+	// Concatenate n with the numbers 2 * n and 3 * n.
+	// Return true if n is fascinating, or false otherwise.
+	public static boolean isFascinating(int n) {
+		// runtime O(1) memory O(1)
+        boolean[] digits=new boolean[10];
+        int digit;
+        int times2=n*2;
+        if(times2>999) return false;
+        int times3=n*3;
+        if(times3>999) return false;
+        
+        while(n>0){
+            digit=n%10;
+            if(digit==0) return false;
+            if(digits[digit]) return false;
+            else digits[digit]=true;
+            n/=10;
+        }
+        
+        while(times2>0){
+            digit=times2%10;
+            if(digit==0) return false;
+            if(digits[digit]) return false;
+            else digits[digit]=true;
+            times2/=10;
+        }
+        
+        while(times3>0){
+            digit=times3%10;
+            if(digit==0) return false;
+            if(digits[digit]) return false;
+            else digits[digit]=true;
+            times3/=10;
+        }
+        
+        return true;
+    }
+	
+	// ---------------------------------------------------------
 	// return the nth Fibonacci number
 	public static int fib(int n) {
 		// iterative approach: runtime O(n) memory usage O(n)
