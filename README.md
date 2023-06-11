@@ -1,8 +1,61 @@
 # Javachips 🍪
-More chips are coming on Every Thursday!</br>
+More chips are coming on Every Sunday!</br>
 
 -----------------------------------</br>
-Last Updated on <b>June 3rd, 2023</b></br>
+Last Updated on <b>June 11th, 2023</b></br>
+<b>ADDED: </b>
+- BinarySearchTreeOps
+	- getMinimumDifference
+- BinaryTreeOps
+	- diameter
+	- sumOfTilt_solution1, and sumOfTilt_solution2
+	- hasSubtree
+- StringOps
+	- reverse_k_chars
+	- checkAttendance
+	- reverseWords
+	- longestSemiRepetitiveSubstring
+- IntegerOps
+	- isFascinating
+- Slope
+	- checkStraightLine
+- N_aryTreeOps
+	- maxDepth
+	- preorderList
+	- postorderList
+- ArrayOfIntOps
+	- maxSumOfminPairs_countSort, and maxSumOfminPairs_Sort
+	- findComponents_grouping, findComponents_bfs, and findComponents_dfs
+	- canMakeArithmeticProgression_n, canMakeArithmeticProgression_n_set, and canMakeArithmeticProgression_nlgn
+	- countCombinationsThatSumToTarget
+	- distributeCandies_array, and distributeCandies_hashset
+	- lenOflongestHarmonuousSubsequence_nlgn, and lenOflongestHarmonuousSubsequence_hash_n
+- Array2DOfIntOps
+	- matrixReshape
+	- maxLengthOfWiggleSubsequence_n, and maxLengthOfWiggleSubsequence_nn
+	- countNegativesInSortedMatrix_log, and countNegativesInSortedMatrix_linear
+	- kthSmallest_priorityqueue, and kthSmallest_binsearch
+- ArrayOfCharOps
+	- smallestLargerLetter
+- BitWiseCalculator
+	- minFlipsMakeAorBequalsC
+- SubwaySystem
+	- checkIn
+	- checkOut
+	- getAverageTime
+- SnapshotArray
+	- set
+	- snap
+	- get
+- MovementOfRobots
+	- sumDistance
+- RandomizedSet
+	- insert
+	- remove
+	- getRandom
+
+---------------------</br>
+<b>June 3rd, 2023</b></br>
 <b>ADDED: </b>
 - BitWiseCalculator
 	- countBitDiff
