@@ -12,6 +12,132 @@ import java.util.Stack;
 
 public class ArrayOfIntOps {
 	// ---------------------------------------------------------
+	// Given three positive integers: n, index, and maxSum. 
+	// You want to construct an array nums (0-indexed) that satisfies the following conditions:
+	/*
+	 * nums.length == n
+		nums[i] is a positive integer where 0 <= i < n.
+		abs(nums[i] - nums[i+1]) <= 1 where 0 <= i < n-1.
+		The sum of all the elements of nums does not exceed maxSum.
+		nums[index] is MAXIMIZED.
+
+	 */
+	// Return nums[index] of the constructed array
+	public static int maxValueAtIndexOfArray0ToN_binsearch(int n, int index, int maxSum){
+		// runtime O(lgn) memory O(1)
+		int leftBound=maxSum/n;
+        int rightBound=maxSum;
+        int middle;
+        long sum=0;
+        
+        long smallestLeft;
+        long smallestRight;
+        
+        while(leftBound<rightBound){
+            //System.out.println("leftBound: "+leftBound);
+            //System.out.println("rightBound: "+rightBound);
+            middle=leftBound+(rightBound-leftBound)/2;
+            //System.out.println("middle: "+middle);
+            
+            smallestLeft=Math.max(1, middle-index)+(middle-1);
+        
+            if(middle-1<index) {
+                smallestLeft=smallestLeft*(middle-1)/2;
+                smallestLeft+=index-(middle-1);
+            }else{
+                smallestLeft=smallestLeft*index/2;
+            }
+            
+            //System.out.println(smallestLeft);
+            
+            smallestRight=Math.max(1, middle-(n-index-1))+(middle-1);
+            if(middle-1<n-index-1){
+                smallestRight=smallestRight*(middle-1)/2;
+                smallestRight+=(n-index-1)-(middle-1);
+            }else{
+                smallestRight=smallestRight*(n-index-1)/2;
+            }
+            
+            //System.out.println(smallestRight);
+            
+            sum=middle+smallestLeft+smallestRight;
+            if(sum==maxSum) return middle;
+            else if(sum<maxSum) leftBound=middle+1;
+            else rightBound=middle-1;
+        }
+        
+        smallestLeft=Math.max(1, leftBound-index)+(leftBound-1);
+        
+        if(leftBound-1<index) {
+            smallestLeft=smallestLeft*(leftBound-1)/2;
+            smallestLeft+=index-(leftBound-1);
+        }else{
+            smallestLeft=smallestLeft*index/2;
+        }
+
+        smallestRight=Math.max(1, leftBound-(n-index-1))+(leftBound-1);
+        if(leftBound-1<n-index-1){
+            smallestRight=smallestRight*(leftBound-1)/2;
+            smallestRight+=(n-index-1)-(leftBound-1);
+        }else{
+            smallestRight=smallestRight*(n-index-1)/2;
+        }
+
+        sum=leftBound+smallestLeft+smallestRight;
+        if(sum>maxSum) return leftBound-1;
+        return leftBound;
+		
+	}
+	
+	public static int maxValueAtIndexOfArray0ToN_bruteforce(int n, int index, int maxSum){
+		// runtime O(n) memory O(1);
+		int maxVal=maxSum/n;
+        int smallestLeft=Math.max(1, maxVal-index)+(maxVal-1);
+        
+        if(maxVal-1<index) {
+            smallestLeft=smallestLeft*(maxVal-1)/2;
+            smallestLeft+=index-(maxVal-1);
+        }else{
+            smallestLeft=smallestLeft*index/2;
+        }
+        //System.out.println("smallestLeft: "+smallestLeft);
+        
+        int smallestRight=Math.max(1, maxVal-(n-index-1))+(maxVal-1);
+        if(maxVal-1<n-index-1){
+            smallestRight=smallestRight*(maxVal-1)/2;
+            smallestRight+=(n-index-1)-(maxVal-1);
+        }else{
+            smallestRight=smallestRight*(n-index-1)/2;
+        }
+        //System.out.println("smallestRight: "+smallestRight);
+        
+        while(maxVal+smallestLeft+smallestRight<=maxSum){
+            maxVal++;
+            
+            smallestLeft=Math.max(1, maxVal-index)+(maxVal-1);
+        
+            if(maxVal-1<index) {
+                smallestLeft=smallestLeft*(maxVal-1)/2;
+                smallestLeft+=index-(maxVal-1);
+            }else{
+                smallestLeft=smallestLeft*index/2;
+            }
+            //System.out.println("smallestLeft: "+smallestLeft);
+            
+            
+            smallestRight=Math.max(1, maxVal-(n-index-1))+(maxVal-1);
+            if(maxVal-1<n-index-1){
+                smallestRight=smallestRight*(maxVal-1)/2;
+                smallestRight+=(n-index-1)-(maxVal-1);
+            }else{
+                smallestRight=smallestRight*(n-index-1)/2;
+            }
+            //System.out.println("smallestRight: "+smallestRight);
+        }
+        
+        return maxVal-1;
+	}
+	// ---------------------------------------------------------
 	// Longest Harmonious Subsequence: an array where the difference between its maximum value and its minimum value is exactly 1
 	// Given an integer array nums, 
 	// return the length of its longest harmonious subsequence among all its possible subsequences
