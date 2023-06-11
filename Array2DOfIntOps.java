@@ -245,7 +245,7 @@ public class Array2DOfIntOps {
         return count;
     }
 	
-	public static int findCircleNum_bfs(int[][] isConnected) {
+	public static int findComponents_bfs(int[][] isConnected) {
         // bfs runtime O(n^2) memory O(n)
         boolean[] isVisited=new boolean[isConnected.length];
         Queue<Integer> queue=new LinkedList<Integer>();
@@ -275,7 +275,7 @@ public class Array2DOfIntOps {
         return components;
     }
 	
-	public static int findCircleNum_dfs(int[][] isConnected) {
+	public static int findComponents_dfs(int[][] isConnected) {
         // dfs runtime O(n^2) memory O(n)
         boolean[] isVisited=new boolean[isConnected.length];
         int components=0;
