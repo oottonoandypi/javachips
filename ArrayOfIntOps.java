@@ -1169,6 +1169,42 @@ public class ArrayOfIntOps {
         return res;
     }
 	
+	public static List<String> summaryRanges_stringbuilder(int[] nums) {
+		// runtime O(n) memory O(1)
+        List<String> res=new ArrayList<String>();
+        int length=nums.length;
+        if(length==0) return res;
+        
+        StringBuilder range=new StringBuilder();
+        int startNum=nums[0];
+        int endNum=startNum;
+        int num;
+        
+        for(int i=1; i<length; i++){
+            num=nums[i];
+            if(num-1>endNum) {
+                range.append(startNum);
+                if(endNum>startNum){
+                    range.append("->");
+                    range.append(endNum);
+                }
+                res.add(range.toString());
+                range.delete(0, range.length());
+                startNum=num;
+                endNum=startNum;
+                
+            }else endNum=num;
+        }
+        
+        range.append(startNum);
+        if(endNum>startNum){
+            range.append("->");
+            range.append(endNum);
+        }
+        res.add(range.toString());
+        return res;
+    }
+	
 	// ---------------------------------------------------------
 	// check if any dupliated numbers in the array
 	// test cases to be added...
