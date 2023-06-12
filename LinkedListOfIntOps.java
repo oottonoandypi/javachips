@@ -1,6 +1,7 @@
 package javachips;
 import java.io.File;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 // utility class
 class ListNode{
@@ -16,6 +17,58 @@ class ListNode{
 }
 
 public class LinkedListOfIntOps {
+	// ---------------------------------------------------------
+	// Given a singly linked list, 
+	// return a random node's value from the linked list. 
+	// Each node must have the same probability of being chosen.
+	public static int getRandom_n(ListNode head) {
+		// runtime O(n) memory O(1)
+		int range=1;
+        int index=0;
+        int randomPick;
+        int num=head.val;
+        
+        while(head!=null){
+            randomPick=(int)(Math.random()*range++);
+            if(randomPick<=index){
+                index=randomPick;
+                num=head.val;
+            }
+            head=head.next;
+        }
+        
+        return num;
+	}
+	
+	public static int getRandom_n_array(ListNode head) {
+		// runtime O(n) memory O(n)
+		int count=0;
+        ListNode curr=head;
+        while(curr!=null){
+            count++;
+            curr=curr.next;
+        }
+        int[] values=new int[count];
+        curr=head;
+        
+        while(curr!=null){
+            values[--count]=curr.val;
+            curr=curr.next;
+        }
+        return values[(int)(Math.random()*values.length)];
+    }
+	
+	public static int getRandom_n_arraylist(ListNode head) {
+		// runtime O(n) memory O(n)
+		ArrayList<Integer> values=new ArrayList<Integer>();
+		while(head!=null){
+            values.add(head.val);
+            head=head.next;
+        }
+        return values.get((int)(Math.random()*values.size()));
+    }
+	
+	// ---------------------------------------------------------
 	// Given a linkedlist, return the linkedlist with all the odd nodes in front of the even nodes;
 	// EX. Input: head = [1,2,3,4,5] Output: [1,3,5,2,4]
 	public static ListNode oddEvenList(ListNode head) {
