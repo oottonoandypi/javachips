@@ -12,6 +12,20 @@ import java.util.Stack;
 
 public class ArrayOfIntOps {
 	// ---------------------------------------------------------
+	public static void randomShuffleArray(int[] nums) {
+		// runtime O(n) memory O(1)
+        int randomPick;
+        int length=nums.length;
+        int t;
+        for(int i=0; i<length; i++){
+            randomPick=(int)(Math.random()*(length-i))+i;
+            t=nums[i];
+            nums[i]=nums[randomPick];
+            nums[randomPick]=t;
+        }
+    }
+	
+	// ---------------------------------------------------------
 	// Given three positive integers: n, index, and maxSum. 
 	// You want to construct an array nums (0-indexed) that satisfies the following conditions:
 	/*
