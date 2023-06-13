@@ -4,8 +4,104 @@ import java.util.Queue;
 import java.util.LinkedList;
 import java.util.Comparator;
 import java.util.PriorityQueue;
+import java.util.HashMap;
 
 public class Array2DOfIntOps {
+	// ---------------------------------------------------------
+	// Given a 0-indexed n x n integer matrix grid, 
+	// return the number of pairs (ri, cj) such that row ri and column cj are equal.
+
+	// Note: A row and column pair is considered equal if they contain the same elements in the same order (i.e., an equal array).
+	// EX. grid = [[3,2,1],[1,7,6],[2,7,7]] => There is 1 equal row and column pair (Row 2, Column 1): [2,7,7]
+	public static int equalRowColPairs_hashmap(int[][] grid) {
+		// runtime O(n^2) memory (n^2)
+		int n=grid.length;
+		NumberPaths_HashMap startOfPaths=new NumberPaths_HashMap();
+        int count=0;
+        NumberPaths_HashMap parent;
+        
+        for(int r=0; r<n; r++){
+            parent=startOfPaths;
+            for(int c=0; c<n; c++) parent=parent.addPath(grid[r][c]);
+            parent.endCount++;
+        }
+        
+        for(int c=0; c<n; c++){
+            parent=startOfPaths;
+            for(int r=0; r<n; r++){
+                parent=parent.getNext(grid[r][c]);
+                if(parent==null) break;
+            }
+            if(parent!=null) count+=parent.endCount;
+        }
+        
+        return count;
+	}
+	// helper class for function equalRowColPairs_hashmap() ^^
+	static class NumberPaths_HashMap{
+        public HashMap<Integer, NumberPaths_HashMap> nextPaths;
+        public int endCount;
+        
+        public NumberPaths_HashMap(){
+            this.nextPaths=new HashMap<Integer, NumberPaths_HashMap>();
+            this.endCount=0;
+        }
+        
+        public NumberPaths_HashMap addPath(int val){
+            if(!this.nextPaths.containsKey(val)) this.nextPaths.put(val, new NumberPaths_HashMap());
+            return this.nextPaths.get(val);
+        }
+        
+        public NumberPaths_HashMap getNext(int val){
+            return this.nextPaths.get(val);
+        }
+    }
+	
+	public static int equalRowColPairs_math(int[][] grid) {
+		// runtime O(n^2) memory O(n)
+		int n=grid.length;
+        int count=0;
+        long[] row= new long[n];
+        long[] col= new long[n];
+        
+        for(int i=0; i<n; i++){
+            for(int j=0; j<n; j++){
+                row[i]=row[i]*5+grid[i][j];
+            }
+        }
+        
+        for(int j=0; j<n; j++){
+            for(int i=0; i<n; i++){
+                col[j]=col[j]*5+grid[i][j];
+            }
+        }
+        
+        for(int i=0; i<n; i++){
+            for(int j=0; j<n; j++){
+                if(row[i]==col[j]) count++;
+            }
+        }
+        return count;
+	}
+	
+	public static int equalRowColPairs_bruteforce(int[][] grid) {
+		// runtime O(n^3) memory O(1)
+        int n=grid.length;
+        int count=0;
+        int i;
+        for(int[] row: grid){
+            for(int j=0; j<n; j++){
+                i=0;
+                while(i<n){
+                    if(grid[i][j]!=row[i]) break;
+                    i++;
+                }
+                if(i==n) count++;
+            }
+        }
+        return count;
+    }
+	
 	// ---------------------------------------------------------
 	// Given a non-decreasing ordered matrix
 	// Return the k-th smallest value in the matrix (not the kth distinct)
