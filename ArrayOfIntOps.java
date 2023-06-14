@@ -12,6 +12,31 @@ import java.util.Stack;
 
 public class ArrayOfIntOps {
 	// ---------------------------------------------------------
+	// Given two sorted arrays nums1 and nums2 of size m and n respectively, 
+	// return the median of the two sorted arrays.
+	public static double findMedianSortedArrays(int[] nums1, int[] nums2) {
+		// runtime O(n) memory O(n)
+        int nums1Len=nums1.length;
+        int nums2Len=nums2.length;
+        
+        int[] nums=new int[nums1Len+nums2Len];
+        int index=0;
+        int index1=0;
+        int index2=0;
+        
+        while(index1<nums1Len && index2<nums2Len){
+            if(nums1[index1]<=nums2[index2]) nums[index++]=nums1[index1++];
+            else nums[index++]=nums2[index2++];
+        }
+        
+        while(index1<nums1Len) nums[index++]=nums1[index1++];
+        while(index2<nums2Len) nums[index++]=nums2[index2++];
+        
+        if(nums.length%2==0) return ((double)nums[(nums.length-1)/2]+nums[(nums.length-1)/2+1])/2;
+        else return (double)nums[(nums.length-1)/2];
+    }
+	
+	// ---------------------------------------------------------
 	public static void randomShuffleArray(int[] nums) {
 		// runtime O(n) memory O(1)
         int randomPick;
