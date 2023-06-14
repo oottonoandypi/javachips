@@ -10,6 +10,73 @@ import java.util.Stack;
 
 public class StringOps {
 	// ---------------------------------------------------------
+	// Given an input string s and a pattern p, implement regular expression matching with support for '.' and '*' where:
+	// '.' Matches any single character.​​​​
+	// '*' Matches zero or more of the preceding element.
+	// The matching should cover the entire input string (not partial).
+	public boolean miniRegex_isMatchPattern(String s, String p) {
+		// recursive approach with memorization; runtime O(s*p) memory O(s*p)
+        boolean[][] visited=new boolean[s.length()+1][p.length()+1];
+        boolean[][] match=new boolean[s.length()+1][p.length()+1];
+        return isMatch(s, p, 0, 0, visited, match);
+    } 
+    // helper function for isMatchPattern()^^
+    private static boolean isMatch(String s, String p, int sIndex, int pIndex, boolean[][] visited, boolean[][] match){
+        if(sIndex==s.length() && pIndex==p.length()) return true;
+        if(pIndex==p.length()) return false;
+        if(visited[sIndex][pIndex]) return match[sIndex][pIndex];
+        
+        if(sIndex==s.length()){
+            if(p.charAt(pIndex)=='*'){
+                match[sIndex][pIndex]=isMatch(s,p,sIndex,pIndex+1, visited, match);
+                visited[sIndex][pIndex]=true;
+                return match[sIndex][pIndex];
+            }else{
+                if(pIndex+1<p.length() && p.charAt(pIndex+1)=='*') {
+                    match[sIndex][pIndex]=isMatch(s,p,sIndex,pIndex+2, visited, match);
+                    visited[sIndex][pIndex]=true;
+                    return match[sIndex][pIndex];
+                }else return false;
+            }
+        }
+        
+        char sChar=s.charAt(sIndex);
+        char pChar=p.charAt(pIndex);
+        
+        boolean foundMatch=false;
+        if(pChar=='.'){
+            foundMatch=isMatch(s,p,sIndex+1,pIndex+1, visited, match);
+            if(pIndex+1<p.length() && p.charAt(pIndex+1)=='*'){
+                for(int i=0; i<=s.length()-sIndex && !foundMatch; i++){
+                    foundMatch=foundMatch || isMatch(s,p,sIndex+i,pIndex+2, visited, match);
+                }
+            }
+            match[sIndex][pIndex]=foundMatch;
+            visited[sIndex][pIndex]=true;
+            return foundMatch;
+        }else if(pChar=='*'){
+            match[sIndex][pIndex]=isMatch(s,p,sIndex,pIndex+1, visited, match);
+            visited[sIndex][pIndex]=true;
+            return match[sIndex][pIndex];
+        }else{
+            if(sChar==pChar) {
+                match[sIndex][pIndex]=isMatch(s,p,sIndex+1,pIndex+1, visited, match);
+                visited[sIndex][pIndex]=true;
+                foundMatch=match[sIndex][pIndex];
+            }
+            if(pIndex+1<p.length() && p.charAt(pIndex+1)=='*'){
+                for(int i=0; i<=s.length()-sIndex && !foundMatch; i++){
+                    foundMatch=foundMatch || isMatch(s,p,sIndex+i, pIndex+2, visited, match);
+                    if(sIndex+i<s.length() && s.charAt(sIndex+i)!=pChar) break;
+                }
+            }
+            match[sIndex][pIndex]=foundMatch;
+            visited[sIndex][pIndex]=true;
+            return foundMatch;
+        }
+    }
+	
+	// ---------------------------------------------------------
 	// Given a 0-indexed string s that consists of digits from 0 to 9
 	// Return the length of the longest semi-repetitive substring inside s
 	
