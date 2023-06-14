@@ -5,6 +5,30 @@ import java.util.ArrayList;
 
 public class IntegerOps {
 	// ---------------------------------------------------------
+	// Given an integer n, return all the numbers in the range [1, n] sorted in lexicographical order.
+	public static List<Integer> oneToN_lexicalOrder(int n) {
+		// preorder dfs approach
+		//  runtime O(n) memory O(1)
+        List<Integer> res=new ArrayList<Integer>();
+        numbersInLexicalOrder(res, n, 0);
+        return res;
+    }
+    
+    private static void numbersInLexicalOrder(List<Integer> res, int maxVal, int num){
+        if(num>maxVal) return;
+        
+        int nextNum;
+        for(int i=0; i<10; i++){
+            if(num==0 && i==0) continue;
+            nextNum=num*10+i;
+            if(nextNum<=maxVal) {
+                res.add(nextNum);
+                numbersInLexicalOrder(res, maxVal, nextNum);
+            }else return;
+        }
+    }
+	
+	// ---------------------------------------------------------
 	// given an integer n that consists of exactly 3 digits.
 	// We call the number n fascinating if, after the following modification, the resulting number contains all the digits from 1 to 9 exactly once and does not contain any 0's:
 	// Concatenate n with the numbers 2 * n and 3 * n.
