@@ -18,6 +18,71 @@ public class BinaryTreeOps {
 	}
 	
 	// --------------------------------------------------------------------------------------
+	// Given the root of a binary tree, the level of its root is 1, the level of its children is 2, and so on.
+	// Return the smallest level x such that the sum of all the values of nodes at level x is maximal.
+	public static int maxLevelSum_dfs(TreeNode root) {
+		// postorder dfs approach
+		// runtime O(n+k) memory O(k) where k is the depth of tree
+        List<Integer> sums=new ArrayList<Integer>();
+        int maxValue=Integer.MIN_VALUE;
+        int maxValueAtMinLevel=0;
+        
+        findMaxLevelSum_postorder(root, sums, 1);
+        
+        for(int i=0; i<sums.size(); i++){
+            if(sums.get(i)>maxValue){
+                maxValue=sums.get(i);
+                maxValueAtMinLevel=i;
+            }
+        }
+        
+        return maxValueAtMinLevel+1;
+    }
+    // helper function for maxLevelSum_postorder() ^^
+    private static void findMaxLevelSum_postorder(TreeNode node, List<Integer> sums, int level){
+        if(node==null) return;
+        
+        if(level-1==sums.size()) sums.add(0);
+        findMaxLevelSum_postorder(node.left, sums, level+1);
+        findMaxLevelSum_postorder(node.right, sums, level+1);
+        
+        sums.set(level-1, sums.get(level-1)+node.val);
+    }
+	
+	public static int maxLevelSum_bfs(TreeNode root) {
+        // bfs approach with ArrayList
+		// runtime O(2n) memory O(n)
+        int maxVal=Integer.MIN_VALUE;
+        int maxValAtLevel=0;
+        int sum;
+        int level=0;
+        List<TreeNode> list=new ArrayList<TreeNode>();
+        list.add(root);
+        int startIndex=0;
+        int endIndex;
+        TreeNode curr;
+        
+        while(startIndex<list.size()){
+            endIndex=list.size()-1;
+            sum=0;
+            level++;
+            while(startIndex<=endIndex){
+                curr=list.get(startIndex);
+                sum+=curr.val;
+                if(curr.left!=null) list.add(curr.left);
+                if(curr.right!=null) list.add(curr.right);
+                startIndex++;
+            }
+            if(maxVal<sum){
+                maxVal=sum;
+                maxValAtLevel=level;
+            }
+        }
+        
+        return maxValAtLevel;
+    }
+	
+	// --------------------------------------------------------------------------------------
 	// Given the roots of two binary trees root and subRoot,
 	// return true if there is a subtree of root with the same structure and node values of subRoot and false otherwise.
 	// Note: A subtree of a binary tree tree is a tree that consists of a node in tree and all of this node's descendants. The tree tree could also be considered as a subtree of itself.
