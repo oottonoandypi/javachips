@@ -8,6 +8,24 @@ import java.util.HashMap;
 
 public class Array2DOfIntOps {
 	// ---------------------------------------------------------
+	// Given an m x n matrix M initialized with all 0's 
+	// and an array of operations ops, where ops[i] = [ai, bi] 
+		// means M[x][y] should be incremented by one for all 0 <= x < ai and 0 <= y < bi.
+	// Count and return the number of maximum integers in the matrix after performing all the operations.
+	public static int countMaxNums(int m, int n, int[][] ops) {
+		// runtime O(ops.length) memory O(1)
+        int[] area=new int[]{m, n};
+        
+        for(int[] op: ops){
+            if(op[0]<area[0]) area[0]=op[0];
+            if(op[1]<area[1]) area[1]=op[1];
+        }
+        
+        return area[0]*area[1];
+    }
+
+	
+	// ---------------------------------------------------------
 	// Given a 0-indexed n x n integer matrix grid, 
 	// return the number of pairs (ri, cj) such that row ri and column cj are equal.
 
