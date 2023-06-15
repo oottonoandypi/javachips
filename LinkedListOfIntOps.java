@@ -1,7 +1,9 @@
 package javachips;
+
 import java.io.File;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Stack;
 
 // utility class
 class ListNode{
@@ -17,6 +19,79 @@ class ListNode{
 }
 
 public class LinkedListOfIntOps {
+	// ---------------------------------------------------------
+	// Given the head of a linked list, 
+	// reverse the nodes of the list k at a time, and return the modified list.
+	// If the number of nodes is not a multiple of k then left-out nodes, in the end, should remain as it is.
+	public ListNode reverseKGroup_n(ListNode head, int k) {
+		// runtime O(n+n%k) additional memory O(1)
+        ListNode res=new ListNode();
+        res.next=head;
+        
+        ListNode lastEnd=res;
+        ListNode newEnd;
+        ListNode swap;
+        int count=0;
+        
+        while(head!=null){
+            newEnd=head;
+            count=1;
+            head=head.next;
+            
+            while(count<k && head!=null){
+                swap=lastEnd.next;
+                lastEnd.next=head;
+                newEnd.next=head.next;
+                head.next=swap;
+                head=newEnd.next;
+                count++;
+            }
+            // System.out.println(head.val);
+            if(count<k){
+                newEnd=lastEnd.next;
+                head=newEnd.next;
+                while(head!=null){
+                    swap=lastEnd.next;
+                    lastEnd.next=head;
+                    newEnd.next=head.next;
+                    head.next=swap;
+                    head=newEnd.next;
+                }
+                
+                return res.next;
+            }
+            
+            lastEnd=newEnd;
+        }
+        return res.next;
+    }
+	
+	
+	public static ListNode reverseKGroup_kn(ListNode head, int k) {
+        // runtime O(k*n) additional memory O(k)
+        Stack<ListNode> stack=new Stack<ListNode>();
+        ListNode res=new ListNode();
+        ListNode curr=res;
+        
+        while(head!=null){
+            curr.next=head;
+            
+            while(stack.size()<k && head!=null){
+                stack.push(head);
+                head=head.next;
+            }
+            if(stack.size()<k) return res.next;
+            
+            while(!stack.empty()){
+                curr.next=stack.pop();
+                curr=curr.next;
+                curr.next=null;
+            }
+        }
+        
+        return res.next;
+    }
+	
 	// ---------------------------------------------------------
 	// Given a singly linked list, 
 	// return a random node's value from the linked list. 
