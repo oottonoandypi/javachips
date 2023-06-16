@@ -10,11 +10,53 @@ import java.util.Stack;
 
 public class StringOps {
 	// ---------------------------------------------------------
+	// Input: a string containing just the characters '(' and ')', 
+	// Return: the length of the longest valid (well-formed) parentheses substring.
+	public static int longestValidParentheses(String s) {
+		// runtime O(n^2) memory O(n)
+        Stack<Integer> openIndex=new Stack<Integer>();
+        int maxLength=0;
+        int[][] validRange=new int[s.length()/2+1][2];
+        int lastValidRange=-1;
+        char c;
+        int open;
+        
+        for(int i=0; i<s.length(); i++){
+            c=s.charAt(i);
+            if(c=='('){
+                openIndex.push(i);
+            }else{
+                if(!openIndex.isEmpty()){
+                    open=openIndex.pop();
+                    validRange[++lastValidRange][0]=open;
+                    validRange[lastValidRange][1]=i;
+                    
+                    while(lastValidRange>0){
+                        if(validRange[lastValidRange][0]<validRange[lastValidRange-1][0]){
+                            validRange[lastValidRange-1][0]=validRange[lastValidRange][0];
+                            validRange[lastValidRange-1][1]=validRange[lastValidRange][1];
+                        }else if(validRange[lastValidRange-1][1]+1==validRange[lastValidRange][0]){
+                            validRange[lastValidRange-1][1]=validRange[lastValidRange][1];
+                        }else break;
+                        lastValidRange--;
+                    }
+                    
+                    if(validRange[lastValidRange][1]+1-validRange[lastValidRange][0]>maxLength){
+                        maxLength=validRange[lastValidRange][1]+1-validRange[lastValidRange][0];
+                    }
+                }
+            }
+        }
+        
+        return maxLength;
+    }
+	
+	// ---------------------------------------------------------
 	// Given an input string s and a pattern p, implement regular expression matching with support for '.' and '*' where:
 	// '.' Matches any single character.​​​​
 	// '*' Matches zero or more of the preceding element.
 	// The matching should cover the entire input string (not partial).
-	public boolean miniRegex_isMatchPattern(String s, String p) {
+	public static boolean miniRegex_isMatchPattern(String s, String p) {
 		// recursive approach with memorization; runtime O(s*p) memory O(s*p)
         boolean[][] visited=new boolean[s.length()+1][p.length()+1];
         boolean[][] match=new boolean[s.length()+1][p.length()+1];
