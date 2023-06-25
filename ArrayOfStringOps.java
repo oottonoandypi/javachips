@@ -10,6 +10,44 @@ import java.util.Arrays;
 
 public class ArrayOfStringOps {
 	// ---------------------------------------------------------
+	// Minimum Index Sum of Two Lists
+	public static String[] findMinIndexSumOfTwoLists(String[] list1, String[] list2) {
+		// time complexity O(n) memory O(n)
+        int leastIndexSum=list1.length+list2.length;
+        String[] lookupList=list1;
+        String[] iterList=list2;
+        
+        if(list2.length<list1.length) {
+            lookupList=list2;
+            iterList=list1;
+        }
+        
+        HashMap<String, Integer> map=new HashMap<String, Integer>();
+        for(int i=0; i<lookupList.length; i++){
+            if(!map.containsKey(lookupList[i])) map.put(lookupList[i], i);
+        }
+        
+        List<String> resList=new ArrayList<String>();
+        String curr;
+        
+        for(int i=0; i<iterList.length; i++){
+            curr=iterList[i];
+            if(!map.containsKey(curr) || map.get(curr)+i>leastIndexSum) continue;
+            
+            if(map.get(curr)+i==leastIndexSum) resList.add(curr);
+            else {
+                resList.clear();
+                resList.add(curr);
+                leastIndexSum=map.get(curr)+i;
+            }
+        }
+        
+        String[] res=new String[resList.size()];
+        for(int i=0; i<res.length; i++) res[i]=resList.get(i);
+        return res;
+    }
+	
+	// ---------------------------------------------------------
 	// Find Substring with Concatenation of All Words
 	// Inputs: a string s and an array of strings words. 
 	// All the strings of words are of the same length.
@@ -19,7 +57,7 @@ public class ArrayOfStringOps {
 	// EX. if words = ["ab","cd","ef"], then "abcdef", "abefcd", "cdabef", "cdefab", "efabcd", and "efcdab" are all concatenated strings
 	
 	// Approach #3: same idea as _binarysearch below, but use hashmap instead so searching is faster than lgn
-	public List<Integer> findConcatenatedSubstrings_hashmap(String s, String[] words) {
+	public static List<Integer> findConcatenatedSubstrings_hashmap(String s, String[] words) {
         int wordsLen=words.length;
         int wLen=words[0].length();
         int substrLen=wordsLen*wLen;
