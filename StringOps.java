@@ -17,7 +17,7 @@ public class StringOps {
 	// Return: the length of the longest absolute path to a file in the abstracted file system. If there is no file in the system, return 0.
 	
 	// Solution #1
-	// recursive approach
+	// recursive approach using preorder traversal
 	// time complexity O(input.length+directories)  memory O(directories)
 	private static int longestLength=0;
     private static int index=0;
