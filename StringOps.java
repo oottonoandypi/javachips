@@ -10,6 +10,114 @@ import java.util.Stack;
 
 public class StringOps {
 	// ---------------------------------------------------------
+	// Longest Absolute File Path
+	// Input: a string input representing the file system in the explained format: 
+		// "dir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\tsubsubdir2\n\t\t\tfile2.ext". Note that the '\n' and '\t' are the new-line and tab characters.
+
+	// Return: the length of the longest absolute path to a file in the abstracted file system. If there is no file in the system, return 0.
+	
+	// Solution #1
+	// recursive approach
+	// time complexity O(input.length+directories)  memory O(directories)
+	private static int longestLength=0;
+    private static int index=0;
+    private static int currHrchy=-1;
+    
+    public static int findLongestFilePath_recursive(String input) {
+        findLongestLength(input, currHrchy, -1);
+        return longestLength;
+    }
+    // helper function for findLongestFilePath_recursive() ^^
+    private static void findLongestLength(String s, int prevHrchy, int prevHrchyLen){
+        char c;
+        int hrchyLen=0;
+        
+        while(index<s.length()){
+            c=s.charAt(index);
+            if(c=='\n'){
+                index++;
+                currHrchy=0;
+                findLongestLength(s, prevHrchy+1, prevHrchyLen+1+hrchyLen);
+                if(prevHrchy!=-1 && prevHrchy+1>currHrchy) return;
+                hrchyLen=0;
+            }else if(c=='\t'){
+                while(c=='\t'){
+                    currHrchy++;
+                    c=s.charAt(++index);
+                }
+            }else if(c=='.'){
+                hrchyLen++;
+                index++;
+                while(index<s.length()) {
+                    c=s.charAt(index++);
+                    if(c!='\n') hrchyLen++;
+                    else {
+                        longestLength=Math.max(longestLength, prevHrchyLen+1+hrchyLen);
+                        break;
+                    }
+                }
+                
+                if(index==s.length()) longestLength=Math.max(longestLength, prevHrchyLen+1+hrchyLen);
+                currHrchy=0;
+                hrchyLen=0;
+            }else {
+                if(prevHrchy!=-1 && prevHrchy+1>currHrchy) return;
+                hrchyLen++;
+                index++;
+            }
+            
+        }
+    }
+	
+	// Solution #2
+    // iterative approach using stack to store directories
+ 	// time complexity O(input.length+depth*directories) memory O(depth)
+	public static int findLongestFilePath_iterative(String input) {
+        Stack<Integer> hrchyLength=new Stack<Integer>();
+        int longestLength=0;
+        int currHrchyLength=0;
+        char c;
+        int currHrchy=0;
+        
+        for(int i=0; i<input.length(); i++){
+            c=input.charAt(i);
+            
+            if(c=='\n'){
+                if(hrchyLength.empty()) hrchyLength.push(currHrchyLength);
+                else {
+                    while(currHrchy<hrchyLength.size()) hrchyLength.pop();
+                    if(hrchyLength.empty()) hrchyLength.push(currHrchyLength);
+                    else hrchyLength.push(currHrchyLength+1+hrchyLength.peek());
+                }
+                currHrchyLength=0;
+                currHrchy=0;
+            }else if(c=='\t'){
+                while(c=='\t'){
+                    currHrchy++;
+                    c=input.charAt(++i);
+                }
+                i--;
+            }else if(c=='.'){
+                while(c!='\n'){
+                    currHrchyLength++;
+                    if(++i<input.length()) c=input.charAt(i);
+                    else break;
+                }
+                while(currHrchy<hrchyLength.size()) hrchyLength.pop();
+                if(!hrchyLength.empty()) currHrchyLength+=hrchyLength.peek()+1;
+                longestLength=Math.max(longestLength, currHrchyLength);
+                currHrchyLength=0;
+                currHrchy=0;
+            }else{
+                currHrchyLength++;
+            }
+        }
+        return longestLength;
+        
+    }
+	
+	
+	// ---------------------------------------------------------
 	// Input: a string containing just the characters '(' and ')', 
 	// Return: the length of the longest valid (well-formed) parentheses substring.
 	public static int longestValidParentheses(String s) {
