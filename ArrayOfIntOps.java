@@ -12,6 +12,33 @@ import java.util.Stack;
 
 public class ArrayOfIntOps {
 	// ---------------------------------------------------------
+	// Input: an integer array flowerbed containing 0's and 1's, where 0 means empty and 1 means not empty
+	// 		  and an integer k
+	// Returns: true if n new flowers can be planted in the flowerbed without violating the no-adjacent-flowers rule and false otherwise.
+	// Rule: flowers cannot be planted in adjacent plots
+	// Assume the input flowerbed is NOT violating the rule
+	public static boolean canPlaceKFlowers(int[] flowerbed, int k) {
+        if(k==0) return true;
+        int len=flowerbed.length;
+        for(int i=0; i<len; i++){
+            if(flowerbed[i]==1) {
+                i++;
+                continue;
+            }
+            
+            if((i-1<0 || flowerbed[i-1]==0) && (i+1==len || flowerbed[i+1]==0)){
+                // flowerbed[i]=1;
+                // System.out.println(i);
+                if(--k==0) return true;
+                i++;
+            }
+        }
+        
+        return false;
+    }
+	
+	
+	// ---------------------------------------------------------
 	// Given two sorted arrays nums1 and nums2 of size m and n respectively, 
 	// return the median of the two sorted arrays.
 	public static double findMedianSortedArrays(int[] nums1, int[] nums2) {
