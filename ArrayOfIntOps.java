@@ -12,6 +12,28 @@ import java.util.Stack;
 
 public class ArrayOfIntOps {
 	// ---------------------------------------------------------
+	// Input: an unsorted integer array nums
+	// Returns: the smallest missing positive integer
+	public int smallestMissingPositive(int[] nums) {
+		// time complexity O(n) space complexity O(1)
+        int toSwap;
+        
+        for(int i=0; i<nums.length; i++){
+            if(nums[i]<=nums.length && nums[i]>0 && nums[i]!=i+1 && nums[nums[i]-1]!=nums[i]) {
+                toSwap=nums[nums[i]-1];
+                nums[nums[i]-1]=nums[i];
+                nums[i--]=toSwap;
+            }
+        }
+        
+        for(int i=0; i<nums.length; i++){
+            if(nums[i]!=i+1) return i+1;
+        }
+        
+        return nums.length+1;
+    }
+	
+	// ---------------------------------------------------------
 	// Input: an integer array flowerbed containing 0's and 1's, where 0 means empty and 1 means not empty
 	// 		  and an integer k
 	// Returns: true if n new flowers can be planted in the flowerbed without violating the no-adjacent-flowers rule and false otherwise.
