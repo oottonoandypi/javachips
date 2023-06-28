@@ -18,6 +18,39 @@ public class BinaryTreeOps {
 	}
 	
 	// --------------------------------------------------------------------------------------
+	// Binary Tree To String
+	// Input: root of a binary tree
+	// Output: String form of the given binary tree, consisting of parenthesis and integers from a binary tree with the preorder traversal way.
+	// Note: Returned string must omit all the empty parenthesis pairs that do not affect the one-to-one mapping relationship between the string and the original binary tree
+	// EX. Input: root = [1,2,3,4]; Output: "1(2(4))(3)"
+	// EX. Input: root = [1,2,3,null,4]; Output: "1(2()(4))(3)"
+	
+	public static String toStringWithParentheses(TreeNode root) {
+		// time complexity O(tree size+edges) space complexity O(tree size+edges)
+		StringBuilder treeInStrForm=new StringBuilder();
+        traverse(root, treeInStrForm);
+        return treeInStrForm.toString();
+    }
+    
+    private static void traverse(TreeNode node, StringBuilder treeInStrForm){
+        if(node==null) return;
+        
+        treeInStrForm.append(node.val);
+        if(node.left!=null || node.right!=null){
+            treeInStrForm.append('(');
+            traverse(node.left, treeInStrForm);
+            treeInStrForm.append(')');
+        }
+        
+        if(node.right!=null){
+            treeInStrForm.append('(');
+            traverse(node.right, treeInStrForm);
+            treeInStrForm.append(')');
+        }
+        
+    }
+	
+	// --------------------------------------------------------------------------------------
 	// Given the root of a binary tree, the level of its root is 1, the level of its children is 2, and so on.
 	// Return the smallest level x such that the sum of all the values of nodes at level x is maximal.
 	public static int maxLevelSum_dfs(TreeNode root) {
