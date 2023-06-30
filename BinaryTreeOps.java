@@ -18,6 +18,22 @@ public class BinaryTreeOps {
 	}
 	
 	// --------------------------------------------------------------------------------------
+	// Merge 2 Binary Trees
+	// Input: roots of 2 trees, root1 and root2
+	// Returns: root of the merged tree
+	// Merge Rule: if two nodes overlap, then sum node values up as the new value of the merged node. 
+	// Otherwise, the NOT null node will be used as the node of the new tree.
+	public static TreeNode mergeTwoTrees(TreeNode root1, TreeNode root2) {
+		// time complexity O(min(root1, root2)) space complexity O(min(root1, root2))
+        if(root1==null) return root2;
+        if(root2==null) return root1;
+        root1.val+=root2.val;
+        root1.left=mergeTwoTrees(root1.left, root2.left);
+        root1.right=mergeTwoTrees(root1.right, root2.right);
+        return root1;
+    }
+	
+	// --------------------------------------------------------------------------------------
 	// Binary Tree To String
 	// Input: root of a binary tree
 	// Output: String form of the given binary tree, consisting of parenthesis and integers from a binary tree with the preorder traversal way.
