@@ -2,7 +2,55 @@
 More chips are coming on Every Sunday!</br>
 
 -----------------------------------</br>
-Last Updated on <b>June 11th, 2023</b></br>
+Last Updated on <b>July 2nd, 2023</b></br>
+<b>ADDED: </b>
+- IntegerOps.java
+	- oneToN_lexicalOrder
+- ArrayOfIntOps.java
+	- summaryRanges_stringbuilder
+	- randomShuffleArray
+	- findMedianSortedArrays
+	- canPlaceKFlowers
+	- smallestMissingPositive
+- ArrayOfStringOps.java
+	- findConcatenatedSubstrings_hashmap, findConcatenatedSubstrings_binarysearch, findConcatenatedSubstrings_triesearch
+	- findMinIndexSumOfTwoLists
+	- findLongestFilePath_recursive, findLongestFilePath_iterative
+- Array2DOfIntOps.java
+	- equalRowColPairs_hashmap, equalRowColPairs_math, equalRowColPairs_bruteforce
+	- countMaxNums
+- ArrayAndBinarySearchTreeOps.java
+	- numOfWaysToSameBST_BST, numOfWaysToSameBST_arraylist
+- StringOps.java
+	- miniRegex_isMatchPattern
+	- longestValidParentheses
+- LinkedListOfIntOps.java
+	- getRandom_n, getRandom_n_array, getRandom_n_arraylist
+	- reverseKGroup_n, reverseKGroup_kn
+- BinaryTreeOps.java
+	- maxLevelSum_dfs
+	- toStringWithParentheses
+	- mergeTwoTrees
+- MiniStringParserToNestedInteger.java
+	- deserialize_recursive, deserialize_iterative
+- MakeArrayStrictlyIncreasing.java
+	- minChanges_recursive, minChanges_iterative
+- EliminationGame.java
+	- lastRemainingInteger
+- SudokuSolver.java
+	- solveSudoku
+- MiniAdventureGame.java
+	- shortestPathAllKeys_BFSBitsArray, shortestPathAllKeys_BFSBitsHashMap, shortestPathAllKeys_BFSStringHashMap
+- FairDistribution.java
+	- distribute_Solution1, distribute_Solution2
+- UTF8Validation.java
+	- validUtf8
+- MaxNumOfAchievableTransferRequests.java
+	- maximumRequests
+
+
+-------------------</br>
+June 11th, 2023</b></br>
 <b>ADDED: </b>
 - BinarySearchTreeOps
 	- getMinimumDifference
