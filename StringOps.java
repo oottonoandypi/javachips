@@ -10,6 +10,35 @@ import java.util.Stack;
 
 public class StringOps {
 	// ---------------------------------------------------------
+	public static boolean canMakeStrMatchGoalBySwapping2Letters(String s, String goal) {
+        if(s.length()!=goal.length()) return false;
+        char[][] toSwap=new char[2][2];
+        int countSwap=0;
+        
+        int[] countLetters=new int[26];
+        boolean ifDuplicate=false;
+        char cS;
+        char cG;
+        for(int i=0; i<s.length(); i++){
+            cS=s.charAt(i);
+            cG=goal.charAt(i);
+            if(cS!=cG) {
+                if(countSwap<2) {
+                    toSwap[countSwap][0]=cS;
+                    toSwap[countSwap][1]=cG;
+                    countSwap++;
+                } else return false;
+            }
+            countLetters[cS-97]++;
+            if(countLetters[cS-97]>1) ifDuplicate=true;
+        }
+        
+        if(countSwap==0) return ifDuplicate;
+        else if(countSwap==1) return false;
+        else return toSwap[0][0]==toSwap[1][1] && toSwap[0][1]==toSwap[1][0];
+    }
+	
+	// ---------------------------------------------------------
 	// Longest Absolute File Path
 	// Input: a string input representing the file system in the explained format: 
 		// "dir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\tsubsubdir2\n\t\t\tfile2.ext". Note that the '\n' and '\t' are the new-line and tab characters.
