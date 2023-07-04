@@ -12,9 +12,60 @@ import java.util.Stack;
 
 public class ArrayOfIntOps {
 	// ---------------------------------------------------------
+	// Maximum Product of Three Numbers
+	// Input: an unsorted integer array nums
+	// Return: maximum product of 3 numbers from the given array
+	public static int maxProductOfThreeIntegers_n(int[] nums) {
+		// time complexity O(n) space complexity O(1)
+        int[] biggestThree=new int[3];
+        biggestThree[0]=Integer.MIN_VALUE;
+        biggestThree[1]=Integer.MIN_VALUE;
+        biggestThree[2]=Integer.MIN_VALUE;
+        
+        int[] smallestTwo=new int[2];
+        smallestTwo[0]=Integer.MAX_VALUE;
+        smallestTwo[1]=Integer.MAX_VALUE;
+        
+        for(int n: nums){
+            if(n>biggestThree[0]) {
+                biggestThree[0]=n;
+                if(n>biggestThree[1]) {
+                    biggestThree[0]=biggestThree[1];
+                    biggestThree[1]=n;
+                }
+                if(n>biggestThree[2]){
+                    biggestThree[1]=biggestThree[2];
+                    biggestThree[2]=n;
+                }
+            }
+            if(n<smallestTwo[1]){
+                smallestTwo[1]=n;
+                if(n<smallestTwo[0]){
+                    smallestTwo[1]=smallestTwo[0];
+                    smallestTwo[0]=n;
+                }
+            }
+        }
+        
+        /*
+        for(int i: biggestThree) System.out.print(i+" ");
+        System.out.println();
+        for(int i: smallestTwo) System.out.print(i+" ");
+        System.out.println();
+        */
+        return Math.max(smallestTwo[0]*smallestTwo[1]*biggestThree[2], biggestThree[0]*biggestThree[1]*biggestThree[2]); 
+    }
+	
+	public static int maxProductOfThreeIntegers_nlgn(int[] nums) {
+		// time complexity O(n) space complexity O(0)
+        Arrays.sort(nums);
+        return Math.max(nums[0]*nums[1]*nums[nums.length-1], nums[nums.length-1]*nums[nums.length-2]*nums[nums.length-3]);
+    }
+	
+	// ---------------------------------------------------------
 	// Input: an unsorted integer array nums
 	// Returns: the smallest missing positive integer
-	public int smallestMissingPositive(int[] nums) {
+	public static int smallestMissingPositive(int[] nums) {
 		// time complexity O(n) space complexity O(1)
         int toSwap;
         
