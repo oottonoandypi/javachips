@@ -10,6 +10,42 @@ import java.util.Stack;
 
 public class StringOps {
 	// ---------------------------------------------------------
+	// Decode String that is composed of lowercase letters, [], and 0-9
+	// Input: an encoded String s
+	// Returns: its decoded string
+	// The encoding rule is: k[encoded_string], where the encoded_string inside the square brackets is being repeated exactly k times. 
+	// Assume that k is guaranteed to be a positive integer and the input string s is always valid.
+	private int index_decodeString;
+    private String s_index_decodeString;
+    public String decodeString(String s) {
+    	// time complexity O(n) space complexity O(n)
+        this.index_decodeString=0;
+        this.s_index_decodeString=s;
+        return decoded().toString();
+    }
+    // helper function for decodeString() ^^
+    private StringBuilder decoded(){
+        StringBuilder build=new StringBuilder();
+        StringBuilder next;
+        int count=0;
+        char c;
+        while(index_decodeString<s_index_decodeString.length()){
+            c=s_index_decodeString.charAt(index_decodeString++);
+            if(c>='a' && c<='z') build.append(c);
+            else if(c>='0' && c<='9') count=count*10+(c-48);
+            else if(c=='['){
+                next=decoded();
+                while(count>0){
+                    build.append(next);
+                    count--;
+                }
+            }else if(c==']') return build;
+        }
+        
+        return build;
+    }
+	
+	// ---------------------------------------------------------
 	public static boolean canMakeStrMatchGoalBySwapping2Letters(String s, String goal) {
         if(s.length()!=goal.length()) return false;
         char[][] toSwap=new char[2][2];
