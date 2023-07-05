@@ -10,6 +10,135 @@ import java.util.Stack;
 
 public class StringOps {
 	// ---------------------------------------------------------
+	// Longest Substring with At Least K Repeating Characters
+	// Input: a string s and an integer k
+	// Returns: the length of the longest substring of s such that the frequency of each character in this substring is greater than or equal to k
+	// EX. s="aaabb" k=3 => 3 which is "aaa"
+	
+	// Solution #2
+	public static int longestSubstringContainsKRepeatingCharacters_divide(String s, int k) {
+		// time complexity O(n^2) space complexity O(n)
+        // a: [0,1] [2,3]
+        // b: [1,2] [3,5]
+        // c: [5,6]
+        if(k==1) return s.length();
+        return findLongestSubstring_lsckrc(s, k, 0, s.length());
+    }
+    // helper function for longestSubstringContainsKRepeatingCharacters_divide() ^^
+    private static int findLongestSubstring_lsckrc(String s, int k, int leftIndex, int rightIndex){
+        if(rightIndex-leftIndex<k) return 0;
+        
+        int[] letters=new int[26];
+        for(int i=leftIndex; i<rightIndex; i++) letters[s.charAt(i)-97]++;
+        
+        
+        HashSet<Character> lessK=new HashSet<Character>();
+        for(int i=0; i<26; i++){
+            if(letters[i]<k && letters[i]>0) lessK.add((char)(i+97));
+        }
+        if(lessK.isEmpty()) return rightIndex-leftIndex;
+        
+        int start=leftIndex;
+        int longest=0;
+        for(int i=leftIndex; i<rightIndex; i++){
+            if(lessK.contains(s.charAt(i))){
+                longest=Math.max(longest, findLongestSubstring_lsckrc(s,k,start,i));
+                start=i+1;
+            }
+        }
+        longest=Math.max(longest, findLongestSubstring_lsckrc(s,k,start,rightIndex));
+        return longest;
+    }
+	
+	// Solution #1
+	public static int longestSubstringContainsKRepeatingCharacters_brute(String s, int k) {
+		// time complexity O(n^2) space complexity O(n)
+        int len=s.length();
+        if(k==1) return len;
+        
+        HashMap<Character, Integer> count=new HashMap<Character, Integer>();
+        HashMap<Character, Integer> lessK=new HashMap<Character, Integer>();
+        char c;
+        for(int i=0; i<s.length(); i++){
+            c=s.charAt(i);
+            if(!count.containsKey(c)) count.put(c, 1);
+            else count.put(c, count.get(c)+1);
+            
+            if(count.get(c)>=k) lessK.remove(c);
+            else lessK.put(c, count.get(c));
+        }
+        // System.out.println(count.size());
+        // System.out.println(lessK.size());
+        
+        boolean startLeft=true;
+        
+        while(len>=k){
+            if(startLeft){
+                for(int i=0; i<=s.length()-len; i++){
+                    // System.out.println(s.substring(i, i+len));
+                    // System.out.println("a: "+meetK.get('a'));
+                    if(lessK.size()==0) return len;
+                    else if(i<s.length()-len){
+                        // remove i
+                        count.put(s.charAt(i), count.get(s.charAt(i))-1);
+                        if(count.get(s.charAt(i))<k) {
+                            if(count.get(s.charAt(i))==0) lessK.remove(s.charAt(i));
+                            else lessK.put(s.charAt(i), count.get(s.charAt(i)));
+                        }
+                        
+                        // add i+len
+                        count.put(s.charAt(i+len), count.get(s.charAt(i+len))+1);
+                        if(count.get(s.charAt(i+len))<k) lessK.put(s.charAt(i+len), count.get(s.charAt(i+len)));
+                        else lessK.remove(s.charAt(i+len));
+                        
+                    }
+                }
+            }else{
+                for(int i=s.length()-len; i>=0; i--){
+                    // System.out.println(s.substring(i, i+len));
+                    // System.out.println("a: "+meetK.get('a'));
+                    // System.out.println(count.get('a'));
+                    if(lessK.size()==0) return len;
+                    else if(i>0){
+                        // remove i+len-1
+                        count.put(s.charAt(i+len-1), count.get(s.charAt(i+len-1))-1);
+                        if(count.get(s.charAt(i+len-1))<k) {
+                            if(count.get(s.charAt(i+len-1))==0) lessK.remove(s.charAt(i+len-1));
+                            else lessK.put(s.charAt(i+len-1), count.get(s.charAt(i+len-1)));
+                        }
+                        
+                        // add i-1
+                        count.put(s.charAt(i-1), count.get(s.charAt(i-1))+1);
+                        if(count.get(s.charAt(i-1))<k) lessK.put(s.charAt(i-1), count.get(s.charAt(i-1)));
+                        else lessK.remove(s.charAt(i-1));
+                    }
+                }
+            }
+            
+            len--;
+            startLeft=!startLeft;
+            if(startLeft){
+                // remove len
+                count.put(s.charAt(len), count.get(s.charAt(len))-1);
+                if(count.get(s.charAt(len))<k) {
+                    if(count.get(s.charAt(len))==0) lessK.remove(s.charAt(len));
+                    else lessK.put(s.charAt(len), count.get(s.charAt(len)));
+                }
+            }else{
+                // remove s.length()-len-1
+                count.put(s.charAt(s.length()-len-1), count.get(s.charAt(s.length()-len-1))-1);
+                if(count.get(s.charAt(s.length()-len-1))<k) {
+                    if(count.get(s.charAt(s.length()-len-1))==0) lessK.remove(s.charAt(s.length()-len-1));
+                    else lessK.put(s.charAt(s.length()-len-1), count.get(s.charAt(s.length()-len-1)));
+                }
+            }
+        }
+        
+        if(len<k) return 0;
+        return len;
+    }
+	
+	// ---------------------------------------------------------
 	// Decode String that is composed of lowercase letters, [], and 0-9
 	// Input: an encoded String s
 	// Returns: its decoded string
