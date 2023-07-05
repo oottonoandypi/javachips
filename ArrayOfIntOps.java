@@ -12,6 +12,101 @@ import java.util.Stack;
 
 public class ArrayOfIntOps {
 	// ---------------------------------------------------------
+	// Longest Subarray of 1's After Deleting One Element
+	// Input: a binary array nums (only has 1's and 0's)
+	// Returns: size of the longest non-empty subarray containing only 1's in the resulting array; 0 if there is no such subarray.
+	public static int longestSubarrayOfOnesAfterDeletingOneElement_n(int[] nums) {
+		// time complexity O(n) space complexity O(1)
+        int[] consectiveOnes=new int[]{-1, -1};
+        int prevLen=0;
+        int prevEndAt=-1;
+        int currLen;
+        int longest=0;
+        
+        for(int i=0; i<nums.length; i++){
+            if(nums[i]==1){
+                if(consectiveOnes[0]==-1){
+                    consectiveOnes[0]=i;
+                    consectiveOnes[1]=i;
+                }else consectiveOnes[1]=i;
+            }
+            
+            if(nums[i]==0 || i==nums.length-1){
+                if(consectiveOnes[0]==-1) continue;
+                currLen=consectiveOnes[1]-consectiveOnes[0]+1;
+                
+                if(prevEndAt==-1){
+                    if(consectiveOnes[0]==0 && consectiveOnes[1]+1==nums.length) longest=currLen-1;
+                    else longest=currLen;
+                }else{
+                    if(consectiveOnes[0]-prevEndAt>2) longest=Math.max(longest, currLen);
+                    else longest=Math.max(longest, currLen+prevLen);
+                }
+                
+                prevLen=currLen;
+                prevEndAt=consectiveOnes[1];
+                consectiveOnes[0]=-1;
+                consectiveOnes[1]=-1;
+            }
+        }
+        
+        return longest;
+    }
+	
+	public static int longestSubarrayOfOnesAfterDeletingOneElement_2n(int[] nums) {
+		// time complexity O(n) space complexity O(n)
+        List<int[]> consectiveOnes=new ArrayList<>();
+        int startI=-1;
+        int endI=startI;
+        
+        for(int i=0; i<nums.length; i++){
+            if(nums[i]==1){
+                if(startI==-1) {
+                    startI=i;
+                    endI=startI;
+                }else endI=i;
+            }else{
+                if(startI>-1){
+                    consectiveOnes.add(new int[]{startI, endI});
+                    startI=-1;
+                }
+            }
+        }
+        
+        if(startI>-1) consectiveOnes.add(new int[]{startI, endI});
+        /*
+        for(int i=0; i<consectiveOnes.size(); i++){
+            System.out.println("start: "+consectiveOnes.get(i)[0]+" end: "+consectiveOnes.get(i)[1]);
+        }
+        */
+        
+        int longest=0;
+        if(consectiveOnes.size()==0) return longest;
+        
+        int prev=0;
+        int prevEnd=-1;
+        int curr;
+        int[] checkout;
+        for(int i=0; i<consectiveOnes.size(); i++){
+            checkout=consectiveOnes.get(i);
+            curr=checkout[1]-checkout[0]+1;
+            
+            if(i==0) {
+                if(checkout[0]==0 && checkout[1]+1==nums.length) longest=curr-1;
+                else longest=curr;
+            }else{
+                if(checkout[0]-prevEnd>2) longest=Math.max(longest, curr);
+                else longest=Math.max(longest, curr+prev);
+            }
+            
+            prev=curr;
+            prevEnd=checkout[1];
+        }
+        
+        return longest;
+    }
+	
+	// ---------------------------------------------------------
 	// Maximum Product of Three Numbers
 	// Input: an unsorted integer array nums
 	// Return: maximum product of 3 numbers from the given array
