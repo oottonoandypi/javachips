@@ -1,6 +1,19 @@
 package javachips;
 
 public class Sprinkles {
+	public static int greatestLessThanK(int[] arr, int left, int right, int k){
+        int m;
+        while(left<right){
+            m=left+(right-left)/2;
+            if(arr[m]==k) return m;
+            else if(arr[m]>k) right=m-1;
+            else left=m+1;
+        }
+        
+        if(arr[left]>k) return -1;
+        return left;
+    }
+	
 	public static int[][] stringTo2DArrayOfInt(String str, int rows, int cols){
 		int[][] _2DArray = new int[rows][cols];
     	int index = 0;
