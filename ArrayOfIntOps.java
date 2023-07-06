@@ -12,6 +12,34 @@ import java.util.Stack;
 
 public class ArrayOfIntOps {
 	// ---------------------------------------------------------
+	// Maximum rotation function 
+	// Input: an unsorted integer array nums of length n
+	// Returns: the maximum value of F(0), F(1), ..., F(n-1)
+	// where F(k)= 0*arrK[0] + 1*arrK[1] + ... + (n-1)*arrK[n-1]
+	// EX. nums = [4,3,2,6] => 26
+			// F(0) = (0 * 4) + (1 * 3) + (2 * 2) + (3 * 6) = 0 + 3 + 4 + 18 = 25
+			// F(1) = (0 * 6) + (1 * 4) + (2 * 3) + (3 * 2) = 0 + 4 + 6 + 6 = 16
+			// F(2) = (0 * 2) + (1 * 6) + (2 * 4) + (3 * 3) = 0 + 6 + 8 + 9 = 23
+			// F(3) = (0 * 3) + (1 * 2) + (2 * 6) + (3 * 4) = 0 + 2 + 12 + 12 = 26
+			// So the maximum value of F(0), F(1), F(2), F(3) is F(3) = 26.
+	public static int maxRotateFunction(int[] nums) {
+		// time complexity O(n) space complexity O(1)
+        int sum=0;
+        int fSum=0;
+        for(int i=0; i<nums.length; i++){
+            sum+=nums[i];
+            fSum+=nums[i]*i;
+        }
+        // System.out.println(fSum);
+        int maxVal=fSum;
+        for(int i=nums.length-1; i>0; i--){
+            fSum=fSum-(nums.length-1)*nums[i]+sum-nums[i];
+            if(fSum>maxVal) maxVal=fSum;
+        }
+        return maxVal;
+    }
+	
+	// ---------------------------------------------------------
 	// Longest Subarray of 1's After Deleting One Element
 	// Input: a binary array nums (only has 1's and 0's)
 	// Returns: size of the longest non-empty subarray containing only 1's in the resulting array; 0 if there is no such subarray.
