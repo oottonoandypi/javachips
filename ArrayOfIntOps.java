@@ -1531,30 +1531,56 @@ public class ArrayOfIntOps {
     // ---------------------------------------------------------
 	// minSubArratLen takes a target val and an array os integers;
 	// returns the minimum length of a subarray of the array that has a sum >= target.
-	public static int minSubArrayLen(int target, int[] nums) { // runtime O(n)
-        int minLen =nums.length+1;
-        int startIndex = 0;
-        int endIndex = startIndex;
-        int sum = nums[startIndex];
+    public static int minSubArrayLen_nlgn(int target, int[] nums) {
+        // nlgn
+        int[] sums=new int[nums.length];
+        sums[0]=nums[0];
+        //System.out.print(sums[0]+" ");
+        for(int i=1; i<nums.length; i++) {
+            sums[i]=nums[i]+sums[i-1];
+            //System.out.print(sums[i]+" ");
+        }
+        //System.out.println();
+        if(sums[sums.length-1]<target) return 0;
         
-        while(startIndex<nums.length){
-            while(endIndex+1<nums.length && sum+nums[endIndex+1]<target) {
-                sum+=nums[++endIndex];
-            }
-            
-            if(endIndex+1<nums.length && sum<target) {
-                sum+=nums[++endIndex];
-                minLen=Math.min(endIndex-startIndex+1, minLen);
-                sum-=nums[startIndex++];
-            }else{
-                if(sum>=target){
-                    minLen=Math.min(endIndex-startIndex+1, minLen);
-                    sum-=nums[startIndex++];
-                }else startIndex=nums.length;
+        int minLen=nums.length;
+        int cut;
+        for(int i=minLen-1; i>=0 && sums[i]>=target; i--){
+            if(sums[i]==target) minLen=Math.min(minLen, i+1);
+            else{
+                cut=Sprinkles.greatestLessThanK(sums, 0, i+1, sums[i]-target);
+                //System.out.println(i+" cut: "+cut);
+                if(cut>-1) minLen=Math.min(minLen, i-cut);
+                else minLen=Math.min(minLen, i+1);
             }
         }
         
-        if(minLen>nums.length) return 0;
+        return minLen;
+    }
+    
+	public static int minSubArrayLen_n(int target, int[] nums) { // runtime O(n)
+		int minLen=nums.length;
+        int leftIndex=0;
+        int rightIndex=leftIndex;
+        int sum=0;
+        while(rightIndex<nums.length && sum<target) sum+=nums[rightIndex++];
+        if(sum<target) return 0;
+        //System.out.println("right: "+rightIndex);
+        rightIndex--;
+        while(rightIndex<nums.length){
+            if(sum>=target){
+                minLen=Math.min(minLen, rightIndex+1-leftIndex);
+                sum-=nums[leftIndex];
+                leftIndex++;
+                //System.out.println("left: "+leftIndex);
+            }else{
+                if(rightIndex+1<nums.length) sum+=nums[++rightIndex];
+                else rightIndex=nums.length;
+                //System.out.println("right2: "+rightIndex);
+            }
+            
+        }
+        
         return minLen;
     }
 	
@@ -1564,7 +1590,7 @@ public class ArrayOfIntOps {
 			int[] nums = new int[inScan.nextInt()];
 			for(int i=0; i<nums.length; i++) nums[i]=inScan.nextInt();
 			
-			int result = minSubArrayLen(target, nums);
+			int result = minSubArrayLen_n(target, nums);
 			int expected = outScan.nextInt();
 			
 			System.out.print("Result: "+result+"; ");
