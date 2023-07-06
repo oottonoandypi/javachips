@@ -5,6 +5,37 @@ import java.util.ArrayList;
 
 public class IntegerOps {
 	// ---------------------------------------------------------
+	// Nth digit of an infinite integer sequence 12345678910111213141516....N
+	// Input: an integer n
+	// Returns: the nth digit of the infinite integer sequence 12345678910111213141516....N
+	public static int findNthDigitOfInfiniteIntegerSequence(int n) {
+		// time complexity O(lgn) space complexity O(1)
+		int nextDigitSmallest=10;
+        int currDigitSmallest=1;
+        int currDigitLen=1;
+        int totalLen=0;
+        
+        while(totalLen+(long)currDigitLen*(nextDigitSmallest-currDigitSmallest)<n){
+            totalLen+=currDigitLen*(nextDigitSmallest-currDigitSmallest);
+            currDigitSmallest=nextDigitSmallest;
+            nextDigitSmallest*=10;
+            currDigitLen++;
+        }
+        
+        int num=(n-totalLen)/currDigitLen;
+        int remain=(n-totalLen)%currDigitLen;
+        //System.out.println(totalLen);
+        num+=currDigitSmallest-1;
+        if(remain==0) return num%10;
+        
+        remain=currDigitLen-remain;
+        num++;
+        //System.out.println(num);
+        while(remain-->0) num/=10;
+        return num%10;
+    }
+	
+	// ---------------------------------------------------------
 	// Given an integer n, return all the numbers in the range [1, n] sorted in lexicographical order.
 	public static List<Integer> oneToN_lexicalOrder(int n) {
 		// preorder dfs approach
