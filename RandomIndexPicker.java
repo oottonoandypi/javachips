@@ -10,13 +10,24 @@ public class RandomIndexPicker {
     // time complexity: initialization O(1) pick O(n)
     // space complexity: O(1)
     // Only efficient when pick is called once
-	/*
+	
 	private int[] nums;
-    public RandomIndexPicker(int[] nums) {
-        this.nums=nums;
+	private HashMap<Integer, ArrayList<Integer>> indiceMap;
+	
+    public RandomIndexPicker(int[] nums, int pick) {
+    	this.nums=nums;
+        
+        // below part is only used for pick_solution1
+    	if(pick==1) {
+    		indiceMap=new HashMap<Integer, ArrayList<Integer>>();
+            for(int i=0; i<nums.length; i++){
+                if(!indiceMap.containsKey(nums[i])) indiceMap.put(nums[i], new ArrayList<Integer>());
+                indiceMap.get(nums[i]).add(i);
+            }
+    	}
     }
     
-    public int pick(int target) {
+    public int pick_solution2(int target) {
         int countIndice=0;
         int pickedIndex=-1;
         int newPick=-1;
@@ -31,20 +42,11 @@ public class RandomIndexPicker {
         
         return pickedIndex;
     }
-	*/
 	
 	// Solution 1: time complexity: initialization O(n) pick() O(1); space complexity O(n)
     // Efficient when pick is called many times
-    private HashMap<Integer, ArrayList<Integer>> indiceMap;
-    public RandomIndexPicker(int[] nums) {
-        indiceMap=new HashMap<Integer, ArrayList<Integer>>();
-        for(int i=0; i<nums.length; i++){
-            if(!indiceMap.containsKey(nums[i])) indiceMap.put(nums[i], new ArrayList<Integer>());
-            indiceMap.get(nums[i]).add(i);
-        }
-    }
     
-    public int pick(int target) {
+    public int pick_solution1(int target) {
         if(!indiceMap.containsKey(target)) return -1;
         ArrayList<Integer> targetIndice=indiceMap.get(target);
         return targetIndice.get((int)(Math.random()*targetIndice.size()));
