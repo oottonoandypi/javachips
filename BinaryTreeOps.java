@@ -2,6 +2,8 @@ package javachips;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class BinaryTreeOps {
 	private class TreeNode {
@@ -16,6 +18,37 @@ public class BinaryTreeOps {
 			this.right = right;
 		}
 	}
+	
+	// --------------------------------------------------------------------------------------
+	// Average values of every Levels in Binary Tree
+	// Input: root of a binary tree
+	// Returns: the average value of the nodes on each level in the form of an array. 
+	// (Answers within 10^(-5) of the actual answer is accepted)
+	public static List<Double> averageOfLevels(TreeNode root) {
+		// time complexity O(n) space complexity O(n)
+        Queue<TreeNode> next=new LinkedList<TreeNode>();
+        next.add(root);
+        List<Double> res=new ArrayList<Double>();
+        int count;
+        long sum;
+        int average;
+        TreeNode nextNode;
+        while(!next.isEmpty()){
+            count=next.size();
+            average=count;
+            sum=0;
+            while(count>0){
+                nextNode=next.poll();
+                sum+=nextNode.val;
+                if(nextNode.left!=null) next.add(nextNode.left);
+                if(nextNode.right!=null) next.add(nextNode.right);
+                count--;
+            }
+            res.add(sum/(double)average);
+        }
+        
+        return res;
+    }
 	
 	// --------------------------------------------------------------------------------------
 	// Merge 2 Binary Trees
