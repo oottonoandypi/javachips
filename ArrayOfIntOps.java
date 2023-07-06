@@ -12,6 +12,27 @@ import java.util.Stack;
 
 public class ArrayOfIntOps {
 	// ---------------------------------------------------------
+	// Maximum Average Subarray
+	// Input: an integer array nums, an integer k
+	// Returns: the maximum average value of a contiguous subarray whose length is equal to k
+	public static double maxAverageOfSubarray(int[] nums, int k) {
+		// time complexity O(n) space complexity O(1)
+        if(k>nums.length) return 0;
+        int sum=0;
+        int maxSum=Integer.MIN_VALUE;
+        for(int i=0; i<nums.length; i++){
+            if(i<k) sum+=nums[i];
+            else{
+                maxSum=Math.max(maxSum, sum);
+                sum-=nums[i-k];
+                sum+=nums[i];
+            }
+        }
+        maxSum=Math.max(maxSum, sum);
+        return (double)maxSum/k;
+    }
+	
+	// ---------------------------------------------------------
 	// Maximum rotation function 
 	// Input: an unsorted integer array nums of length n
 	// Returns: the maximum value of F(0), F(1), ..., F(n-1)
