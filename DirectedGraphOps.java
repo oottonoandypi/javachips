@@ -17,7 +17,7 @@ public class DirectedGraphOps {
     private static boolean[] validatedSafeNodes;
     private static int[][] graphRef;
     public static List<Integer> eventualSafeNodes(int[][] graph) {
-        // not the most efficient approach
+        // time complexity O(n+links) space complexity O(n)
         List<Integer> safeNodes=new ArrayList<Integer>();
         graphRef=graph;
         visited=new boolean[graphRef.length];
