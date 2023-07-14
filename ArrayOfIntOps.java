@@ -12,6 +12,25 @@ import java.util.Stack;
 
 public class ArrayOfIntOps {
 	// ---------------------------------------------------------
+	// Input: an integer array arr and an integer difference
+	// Return: the length of the longest subsequence in arr which is an arithmetic sequence such that the difference between adjacent elements in the subsequence equals difference
+	// 
+	public static int longestSubsequenceOfDifference(int[] arr, int difference) {
+		// time complexity O(n) space complexity O(n)
+        int longest=1;
+        HashMap<Integer, Integer> lookupNext=new HashMap<Integer, Integer>();
+        
+        for(int n: arr){
+            if(lookupNext.containsKey(n)) {
+                lookupNext.put(n+difference, lookupNext.get(n)+1);
+                if(lookupNext.get(n+difference)>longest) longest=lookupNext.get(n+difference);
+            }else lookupNext.put(difference+n, 1);
+        }
+        
+        return longest;
+    }
+	
+	// ---------------------------------------------------------
 	// Maximum Average Subarray
 	// Input: an integer array nums, an integer k
 	// Returns: the maximum average value of a contiguous subarray whose length is equal to k
