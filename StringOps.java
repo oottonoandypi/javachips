@@ -7,8 +7,88 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Stack;
+import java.util.Comparator;
+import java.util.PriorityQueue;
+import java.util.LinkedList;
+
+// utility class for removeKdigitsToGetSmallestInteger
+class CharComparator implements Comparator<Character>{
+    @Override
+    public int compare(Character a, Character c){
+        if(a<=c) return -1;
+        else return 1;
+    }
+}
 
 public class StringOps {
+	// ---------------------------------------------------------
+	// Remove K Digits from String to Get the Smallest Possible Integer
+	// Input: string num representing a non-negative integer
+	// Return: the smallest possible integer after removing k digits from num
+	
+    public static String removeKdigitsToGetSmallestInteger(String num, int k) {
+    	// time complexity O(n) space complexity O(n)
+        if(k==num.length()) return "0";
+        
+        PriorityQueue<Character> selections=new PriorityQueue<Character>(new CharComparator());
+        HashSet<Character> hasSelection=new HashSet<Character>();
+        HashMap<Character, LinkedList<Integer>> indexMap=new HashMap<Character, LinkedList<Integer>>();
+        
+        char next;
+        for(int i=0; i<=k; i++){
+            next=num.charAt(i);
+            if(!hasSelection.contains(next)){
+                selections.add(next);
+                hasSelection.add(next);
+            }
+            if(!indexMap.containsKey(next)) indexMap.put(next, new LinkedList<Integer>());
+            indexMap.get(next).add(i);
+        }
+        
+        int digit=0;
+        int start=-1;
+        int resLength=num.length()-k;
+        int remain=k;
+        
+        StringBuilder build=new StringBuilder();
+        char nextSelection;
+        int nextIndex;
+        boolean foundNext;
+        while(digit<resLength){
+            foundNext=false;
+            while(!foundNext){
+                nextSelection=selections.peek();
+                while(!indexMap.get(nextSelection).isEmpty()) {
+                    nextIndex=indexMap.get(nextSelection).poll();
+                    if(nextIndex>start) {
+                        foundNext=true;
+                        start=nextIndex;
+                        break;
+                    }
+                }
+                if(!foundNext) hasSelection.remove(selections.poll());
+                else build.append(nextSelection);
+            }
+            
+            digit++;
+            if(++remain<num.length()){
+                next=num.charAt(remain);
+                if(!hasSelection.contains(next)){
+                    selections.add(next);
+                    hasSelection.add(next);
+                }
+                if(!indexMap.containsKey(next)) indexMap.put(next, new LinkedList<Integer>());
+                indexMap.get(next).add(remain);
+            }
+        }
+        
+        int startOfRes=0;
+        while(startOfRes<build.length() && build.charAt(startOfRes)=='0') startOfRes++;
+        
+        if(build.length()-startOfRes==0) return "0";
+        return build.substring(startOfRes);
+    }
+	
 	// ---------------------------------------------------------
 	// Longest Substring with At Least K Repeating Characters
 	// Input: a string s and an integer k
