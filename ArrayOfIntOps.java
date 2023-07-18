@@ -12,6 +12,121 @@ import java.util.Stack;
 
 public class ArrayOfIntOps {
 	// ---------------------------------------------------------
+	// Max Marble Distribution Cost Difference
+	// Input: 0-indexed integer array weights where weights[i] is the weight of the ith marble; and an integer k represents k bags
+	// Return: the difference between the maximum and minimum scores
+	// Scores: the sum of the costs of all the k bags
+	// Rule:
+	/*
+	 * Divide the marbles into the k bags according to the following rules:
+	 * No bag is empty.
+	 * If the ith marble and jth marble are in a bag, then all marbles with an index between the ith and jth indices should also be in that same bag.
+	 * If a bag consists of all the marbles with an index from i to j inclusively, then the cost of the bag is weights[i] + weights[j].
+	 */
+	
+	public static long MaxMarbleDistributionDiff(int[] weights, int k) {
+		// Solution #1: find the max possible k costs and the min possible k costs
+		// time complexity O(nlgn) space complexity O(n)
+        if(k==weights.length) return 0;
+        
+        int[][] costs=new int[weights.length][2];
+        for(int i=1; i<weights.length; i++){
+            costs[i][0]=i;
+            costs[i][1]=weights[i]+weights[i-1];
+            //System.out.println("i: "+i+" "+weights[i]+" "+weights[i-1]+" "+ (weights[i]+weights[i-1]));
+        }
+        
+        sortCosts(costs, 1, costs.length-1);
+        // System.out.println(costs[0][0]+ " "+costs[0][1]);
+        
+        boolean[][] visited=new boolean[weights.length][2];
+        int kMax=k;
+        int kMin=k;
+        
+        int[] nextMax;
+        int[] nextMin;
+        
+        long max=weights[0]+weights[weights.length-1];
+        long min=max;
+        
+        for(int i=1; i<costs.length && (kMax>0 || kMin>0); i++){
+            if(kMin>1){
+                nextMin=costs[i];
+                if(!visited[nextMin[0]][0] && !visited[nextMin[0]-1][0]){
+                    min+=nextMin[1];
+                    kMin--;
+                }
+            }
+            
+            if(kMax>1){
+                nextMax=costs[costs.length-i];
+                if(!visited[nextMax[0]][1] && !visited[nextMax[0]-1][1]){
+                    max+=nextMax[1];
+                    kMax--;
+                }
+            }
+        }
+        
+        return max-min;
+    }
+    // helper function for MaxMarbleDistributionDiff ^^
+    private static void sortCosts(int[][] costs, int left, int right){
+        // System.out.println("left: "+left+" right: "+right);
+        if(left<right){
+            int m=left+(right-left)/2;
+            // System.out.println(m);
+            sortCosts(costs, left, m);
+            sortCosts(costs, m+1, right);
+            mergeSorted(costs, left, m, right);
+        }
+    }
+    // helper function for sortCosts ^^
+    private static void mergeSorted(int[][] costs, int left, int mid, int right){
+        int[][] leftCosts=new int[mid+1-left][2];
+        for(int i=left; i<=mid; i++){
+            leftCosts[i-left][0]=costs[i][0];
+            leftCosts[i-left][1]=costs[i][1];
+            // System.out.println("copy left "+i+" "+leftCosts[i-left][0]+" "+leftCosts[i-left][1]);
+        }
+        int[][] rightCosts=new int[right-mid][2];
+        for(int i=mid+1; i<=right; i++){
+            rightCosts[i-mid-1][0]=costs[i][0];
+            rightCosts[i-mid-1][1]=costs[i][1];
+            // System.out.println("copy right "+i+" "+rightCosts[i-mid-1][0]+" "+rightCosts[i-mid-1][1]);
+        }
+        
+        int leftIndex=0;
+        int rightIndex=leftIndex;
+        int index=left;
+        while(leftIndex<leftCosts.length && rightIndex<rightCosts.length){
+            if(leftCosts[leftIndex][1]<=rightCosts[rightIndex][1]) {
+                costs[index][0]=leftCosts[leftIndex][0];
+                costs[index][1]=leftCosts[leftIndex][1];
+                leftIndex++;
+            }else{
+                costs[index][0]=rightCosts[rightIndex][0];
+                costs[index][1]=rightCosts[rightIndex][1];
+                rightIndex++;
+            }
+            index++;
+        }
+        
+        while(leftIndex<leftCosts.length){
+            costs[index][0]=leftCosts[leftIndex][0];
+            costs[index][1]=leftCosts[leftIndex][1];
+            leftIndex++;
+            index++;
+        }
+        
+        while(rightIndex<rightCosts.length){
+            costs[index][0]=rightCosts[rightIndex][0];
+            costs[index][1]=rightCosts[rightIndex][1];
+            rightIndex++;
+            index++;
+        }
+    }
+	
+	// ---------------------------------------------------------
 	// Input: an integer array arr and an integer difference
 	// Return: the length of the longest subsequence in arr which is an arithmetic sequence such that the difference between adjacent elements in the subsequence equals difference
 	// 
