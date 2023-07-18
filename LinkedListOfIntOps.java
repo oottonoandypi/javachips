@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Stack;
+import java.util.List;
 
 // utility class
 class ListNode{
@@ -20,10 +21,72 @@ class ListNode{
 
 public class LinkedListOfIntOps {
 	// ---------------------------------------------------------
+	// Integer Addition 
+	// Input: heads of 2 non-empty linked lists representing two non-negative integers. 
+	// 		 The most significant digit comes first and each of their nodes contains a single digit.
+	// Return: return the sum as a linked list.
+	// Note: assume the two numbers do not contain any leading zero, except the number 0 itself
+	
+	public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+		// time complexity O(n) space complexity O(n)
+        // Improvement: can use a stack instead of arraylist 
+        List<Integer> num1=new ArrayList<Integer>();
+        List<Integer> num2=new ArrayList<Integer>();
+        
+        while(l1!=null){
+            num1.add(l1.val);
+            l1=l1.next;
+        }
+        
+        while(l2!=null){
+            num2.add(l2.val);
+            l2=l2.next;
+        }
+        
+        ListNode res=new ListNode();
+        int carry=0;
+        int index1=num1.size()-1;
+        int index2=num2.size()-1;
+        int sum;
+        
+        while(index1>=0 && index2>=0){
+            sum=carry+num1.get(index1--)+num2.get(index2--);
+            ListNode newDigit=new ListNode(sum%10);
+            newDigit.next=res.next;
+            res.next=newDigit;
+            carry=sum/10;
+        }
+        
+        while(index1>=0){
+            sum=carry+num1.get(index1--);
+            ListNode newDigit=new ListNode(sum%10);
+            newDigit.next=res.next;
+            res.next=newDigit;
+            carry=sum/10;
+        }
+        
+        while(index2>=0){
+            sum=carry+num2.get(index2--);
+            ListNode newDigit=new ListNode(sum%10);
+            newDigit.next=res.next;
+            res.next=newDigit;
+            carry=sum/10;
+        }
+        
+        if(carry>0){
+            ListNode newDigit=new ListNode(carry);
+            newDigit.next=res.next;
+            res.next=newDigit;
+        }
+        
+        return res.next;
+    }
+	
+	// ---------------------------------------------------------
 	// Given the head of a linked list, 
 	// reverse the nodes of the list k at a time, and return the modified list.
 	// If the number of nodes is not a multiple of k then left-out nodes, in the end, should remain as it is.
-	public ListNode reverseKGroup_n(ListNode head, int k) {
+	public static ListNode reverseKGroup_n(ListNode head, int k) {
 		// runtime O(n+n%k) additional memory O(1)
         ListNode res=new ListNode();
         res.next=head;
