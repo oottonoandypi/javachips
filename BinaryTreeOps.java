@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class BinaryTreeOps {
 	private class TreeNode {
@@ -18,6 +20,64 @@ public class BinaryTreeOps {
 			this.right = right;
 		}
 	}
+	
+	// --------------------------------------------------------------------------------------
+	// Nodes with distance k from target
+	// Input: root of a binary tree and the value of a target node target
+	// Return: a list of the values of all nodes that have a distance k from the target node
+	// Note: All nodes have distinct values
+	private static HashMap<Integer, List<Integer>> graph;
+    public static List<Integer> distanceKToTarget(TreeNode root, TreeNode target, int k) {
+    	// Solution #1: dfs to build graph + bfs to find nodes
+    	// time complexity O(n+edges) space complexity O(n+edges)
+        graph=new HashMap<Integer, List<Integer>>();
+        buildGraph(root);
+        
+        LinkedList<Integer> checkout=new LinkedList<Integer>();
+        checkout.add(target.val);
+        int count;
+        List<Integer> res=new ArrayList<Integer>();
+        HashSet<Integer> visited=new HashSet<Integer>();
+        visited.add(target.val);
+        int next;
+        
+        while(!checkout.isEmpty() && k>0){
+            count=checkout.size();
+            while(count>0){
+                next=checkout.poll();
+                for(int i=0; i<graph.get(next).size(); i++){
+                    if(!visited.contains(graph.get(next).get(i))) {
+                        checkout.add(graph.get(next).get(i));
+                        visited.add(graph.get(next).get(i));
+                    }
+                }
+                count--;
+            }
+            k--;
+        }
+        
+        while(!checkout.isEmpty()) res.add(checkout.poll());
+        return res;
+    }
+    
+    private static void buildGraph(TreeNode node){
+        if(node==null) return;
+        
+        if(!graph.containsKey(node.val)) graph.put(node.val, new ArrayList<Integer>());
+        if(node.left!=null){
+            graph.get(node.val).add(node.left.val);
+            if(!graph.containsKey(node.left.val)) graph.put(node.left.val, new ArrayList<Integer>());
+            graph.get(node.left.val).add(node.val);
+            buildGraph(node.left);
+        }
+        
+        if(node.right!=null){
+            graph.get(node.val).add(node.right.val);
+            if(!graph.containsKey(node.right.val)) graph.put(node.right.val, new ArrayList<Integer>());
+            graph.get(node.right.val).add(node.val);
+            buildGraph(node.right);
+        }
+    }
 	
 	// --------------------------------------------------------------------------------------
 	// Average values of every Levels in Binary Tree
