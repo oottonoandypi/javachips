@@ -12,6 +12,41 @@ import java.util.Stack;
 
 public class ArrayOfIntOps {
 	// ---------------------------------------------------------
+	// Number of Arithmetic Slices
+	// INput: an integer array nums
+	// Return:  the number of arithmetic subarrays of nums.
+	// Note: arithmetic if it consists of at least three elements and if the difference between any two consecutive elements is the same
+	// subarray is a contiguous subsequence of the array
+	public static int numberOfArithmeticSlices(int[] nums) {
+		// Time complexity O(n) space complexity O(1)
+        if(nums.length<3) return 0;
+        
+        int left=0;
+        int right=1;
+        int diff=nums[right]-nums[left];
+        int count=0;
+        
+        while(right<nums.length){
+            //System.out.println("left: "+left+" right: "+right);
+            if(right+1<nums.length && nums[right+1]-nums[right]==diff) right++;
+            else{
+                while(right-left>=2){
+                    count+=right+1-left-3+1;
+                    left++;
+                }
+                
+                left=right;
+                right++;
+                if(right<nums.length){
+                    diff=nums[right]-nums[left];
+                }
+            }
+        }
+        
+        return count;
+    }
+	
+	// ---------------------------------------------------------
 	// Max Marble Distribution Cost Difference
 	// Input: 0-indexed integer array weights where weights[i] is the weight of the ith marble; and an integer k represents k bags
 	// Return: the difference between the maximum and minimum scores
