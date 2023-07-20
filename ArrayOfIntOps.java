@@ -12,6 +12,33 @@ import java.util.Stack;
 
 public class ArrayOfIntOps {
 	// ---------------------------------------------------------
+	// Remaining Asteroids after Collisions
+	// Input: an array asteroids of integers representing asteroids in a row
+	// Return: Array of remaining asteroids
+	// Collision RULE: For each asteroid, the absolute value represents its size, and the sign represents its direction (positive meaning right, negative meaning left, 0 doesn't exist). Each asteroid moves at the same speed.
+	// If two asteroids meet, the smaller one will explode. If both are the same size, both will explode. Two asteroids moving in the same direction will never meet.
+	public static int[] remainingAsteroidAfterCollisions(int[] asteroids) {
+		// time complexity O(n) space complexity O(1) (excluding the result array)
+        int right=0;
+        int left=-1;
+        
+        while(right<asteroids.length){
+            asteroids[++left]=asteroids[right++];
+            while(left-1>=0 && asteroids[left]<0 && asteroids[left-1]>0){
+                // System.out.println("left: "+asteroids[left]+" left-1: "+asteroids[left-1]);
+                if(Math.abs(asteroids[left])>asteroids[left-1]){
+                    asteroids[left-1]=asteroids[left];
+                }else if(Math.abs(asteroids[left])==asteroids[left-1]){
+                    left--;
+                }
+                left--;
+            }
+        }
+        
+        return Arrays.copyOfRange(asteroids, 0, left+1);
+    }
+	
+	// ---------------------------------------------------------
 	// Number of Arithmetic Slices
 	// INput: an integer array nums
 	// Return:  the number of arithmetic subarrays of nums.
