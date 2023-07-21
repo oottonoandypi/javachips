@@ -12,6 +12,47 @@ import java.util.Stack;
 
 public class ArrayOfIntOps {
 	// ---------------------------------------------------------
+	// Count of Longest Increasing Subsequences
+	// Input: an integer array nums
+	// Return: the number of longest increasing subsequences that are strictly increasing. (doesn't have to consecutive subsequences)
+	// 
+	public static int findNumberOfLIS(int[] nums) {
+		// time complexity O(n^2) space complexity O(n)
+        int maxLength=1;
+        int maxCount=1;
+        
+        int[][] maxLIS=new int[nums.length][2];
+        maxLIS[nums.length-1][0]=maxLength;
+        maxLIS[nums.length-1][1]=maxCount;
+        
+        int localMaxLength;
+        int localMaxCount;
+        for(int i=nums.length-2; i>=0; i--){
+            localMaxLength=0;
+            localMaxCount=0;
+            for(int j=i+1; j<nums.length; j++){
+                if(nums[j]>nums[i]){
+                    if(maxLIS[j][0]>localMaxLength){
+                        localMaxLength=maxLIS[j][0];
+                        localMaxCount=maxLIS[j][1];
+                    }else if(maxLIS[j][0]==localMaxLength) localMaxCount+=maxLIS[j][1];
+                }
+            }
+            
+            maxLIS[i][0]=localMaxLength+1;
+            if(maxLIS[i][0]==1) maxLIS[i][1]=localMaxCount+1;
+            else maxLIS[i][1]=localMaxCount;
+            
+            if(maxLIS[i][0]>maxLength) {
+                maxLength=maxLIS[i][0];
+                maxCount=maxLIS[i][1];
+            }else if(maxLIS[i][0]==maxLength) maxCount+=maxLIS[i][1];
+        }
+        
+        return maxCount;
+    }
+	
+	// ---------------------------------------------------------
 	// Remaining Asteroids after Collisions
 	// Input: an array asteroids of integers representing asteroids in a row
 	// Return: Array of remaining asteroids
