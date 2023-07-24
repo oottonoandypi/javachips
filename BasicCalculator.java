@@ -3,8 +3,39 @@ package javachips;
 import java.util.Stack;
 
 public class BasicCalculator {
+	public static double myPow(double x, int n){
+		// time complexity O(lgn) space complexity O(lgn)
+        if(n<0) x=1/x;
+        double res=1;
+        if(n==Integer.MIN_VALUE) {
+            res*=x;
+            n++;
+        }
+        n=Math.abs(n);
+        
+        return res*powOf(x, n);
+    }
+    // helper function for myPow() ^^
+    private static double powOf(double x, int n){
+        if(n==0) return 1;
+        if(x==0) return 0;
+        if(n==1) return x;
+        if(x==1) return 1;
+        else if(x==-1){
+            if(n%2==0) return 1;
+            else return -1;
+        }
+        
+        double half=powOf(x, n/2);
+        if(n%2==0) {
+            return half*half;
+        }else{
+            return x*half*half;
+        }
+    }
+	
 	// use 1 stack for tracking numbers
-    public int calculate_1stack(String s) {
+    public static int calculate_1stack(String s) {
         Stack<Integer> nums = new Stack<Integer>();
         char op = '+';
         
