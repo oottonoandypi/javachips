@@ -12,6 +12,25 @@ import java.util.Stack;
 
 public class ArrayOfIntOps {
 	// ---------------------------------------------------------
+	// Peak Index in a Mountain Array
+	// Input: An array mountain, arr (s.t. arr.length >= 3 and There exists some i with 0 < i < arr.length - 1 such that
+	// arr[0] < arr[1] < ... < arr[i - 1] < arr[i] and arr[i] > arr[i + 1] > ... > arr[arr.length - 1])
+	// Return: peek index i (s.t. arr[0] < arr[1] < ... < arr[i - 1] < arr[i] > arr[i + 1] > ... > arr[arr.length - 1])
+	public static int peakIndexInMountainArray(int[] arr) {
+        int l=1;
+        int r=arr.length-1;
+        int m;
+        while(l<r){
+            m=l+(r-l)/2;
+            if(arr[m]>arr[m-1] && arr[m]>arr[m+1]) return m;
+            else if(arr[m]<arr[m-1] || arr[m]>arr[m+1]) r=m-1;
+            else l=m+1;
+        }
+        return l;
+    }
+	
+	
+	// ---------------------------------------------------------
 	// Count of Longest Increasing Subsequences
 	// Input: an integer array nums
 	// Return: the number of longest increasing subsequences that are strictly increasing. (doesn't have to consecutive subsequences)
