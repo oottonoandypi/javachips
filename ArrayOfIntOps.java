@@ -12,6 +12,47 @@ import java.util.Stack;
 
 public class ArrayOfIntOps {
 	// ---------------------------------------------------------
+	// Minimum Speed to Arrive on Time
+	// Input: An integer array dist of length n, where dist[i] describes the distance (in kilometers) of the i-th train ride
+			// and a floating-point number hour, representing the amount of time you have to reach the office
+	// Return: the minimum positive integer speed (in kilometers per hour) that all the trains must travel at for you to reach the office on time, or -1 if it is impossible to be on time
+	// Rule: Each train can only depart at an integer hour, so you may need to wait in between each train ride/
+	// EX. if the 1st train ride takes 1.5 hours, you must wait for an additional 0.5 hours before you can depart on the 2nd train ride at the 2 hour mark.
+	public static int minSpeedOnTime(int[] dist, double hour) {
+		// time complexity O(nlg(maxSpeed)) space complexity O(1)
+        if(dist.length-1>=hour) return -1;
+        int totalDist=0;
+        int maxDist=dist[0];
+        for(int d: dist) {
+            totalDist+=d;
+            if(d>maxDist) maxDist=d;
+        }
+        
+        int min=(int)(totalDist/hour);
+        int max=Math.max(maxDist, (int)Math.ceil(dist[dist.length-1]/(hour-(int)hour)));
+        // System.out.println("min: "+min);
+        // System.out.println("max: "+max);
+        int m;
+        
+        while(min<=max){
+            m=min+(max-min)/2;
+            if(!canMakeOnTime(dist, hour, m)) min=m+1;
+            else max=m-1;
+        }
+        
+        if(min>10000000) return -1;
+        return min;
+    }
+    // helper function for minSpeedOnTime() ^^
+    private static boolean canMakeOnTime(int[] dist, double hour, int speed){
+        double h=0;
+        for(int d: dist) h=Math.ceil(h)+(double)d/speed;
+        // System.out.println("Speed: "+speed+" Hour: "+h);
+        if(h>hour) return false;
+        return true;
+    }
+	
+	// ---------------------------------------------------------
 	// Peak Index in a Mountain Array
 	// Input: An array mountain, arr (s.t. arr.length >= 3 and There exists some i with 0 < i < arr.length - 1 such that
 	// arr[0] < arr[1] < ... < arr[i - 1] < arr[i] and arr[i] > arr[i + 1] > ... > arr[arr.length - 1])
