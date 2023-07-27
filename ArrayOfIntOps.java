@@ -12,6 +12,52 @@ import java.util.Stack;
 
 public class ArrayOfIntOps {
 	// ---------------------------------------------------------
+	// Maximum Running Time of N Computers Simultaneously w/ K batteries
+	// Input: an integer n and a 0-indexed integer array batteries where the ith battery can run a computer for batteries[i] minutes.
+	// Return: the maximum number of minutes you can run all the n computers simultaneously
+	// Note: Initially, you can insert at most one battery into each computer. 
+	// After that and at any integer time moment, you can remove a battery from a computer 
+	// and insert another battery any number of times. 
+	// The inserted battery can be a totally new battery or a battery from another computer. 
+	
+	public static long maxRunTime(int n, int[] batteries) {
+		// time complexity O(klg(average batteryLife)) space complexity O(1)
+        if(batteries.length<n) return 0;
+        
+        long sum=0;
+        long min=batteries[0];
+        for(int b: batteries) {
+            sum+=(long)b;
+            if(b<min) min=b;
+        }
+        long max=sum/n;
+        //System.out.println("min: "+min+" max: "+max);
+        long checkout;
+        while(min<=max){
+            checkout=min+(max-min)/2;
+            //System.out.println(checkout+": "+canRun(n, checkout, batteries));
+            if(canRun(n, checkout, batteries)) min=checkout+1;
+            else max=checkout-1;
+        }
+        if(min>=max) min--;
+        return min;
+    }
+    
+    private static boolean canRun(int n, long averageMin, int[] arr){
+        long remain=0;
+        int count=0;
+        for(int a: arr){
+            if(a>=averageMin) count++;
+            else{
+                count+=(remain+a)/averageMin;
+                remain=(remain+a)%averageMin;
+            }
+        }
+        
+        return count>=n;
+    }
+	
+	// ---------------------------------------------------------
 	// Minimum Speed to Arrive on Time
 	// Input: An integer array dist of length n, where dist[i] describes the distance (in kilometers) of the i-th train ride
 			// and a floating-point number hour, representing the amount of time you have to reach the office
